@@ -16,7 +16,7 @@ const meta: Meta<typeof Chip> = {
       },
     },
     size: {
-      control: 'select',
+      control: 'radio',
       options: ['small', 'medium', 'large'],
       description: 'Size of the chip',
       table: {
@@ -25,7 +25,7 @@ const meta: Meta<typeof Chip> = {
       },
     },
     variant: {
-      control: 'select',
+      control: 'radio',
       options: ['filled', 'outlined'],
       description: 'Variant of the chip',
       table: {
