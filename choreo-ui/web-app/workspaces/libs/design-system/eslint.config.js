@@ -28,7 +28,9 @@ export default [
       '**/.storybook/**',
       '**/storybook-static/**',
       "**.config.js",
-      "**.config.cjs"
+      "**.config.cjs",
+      "**/*.test.tsx",
+      "**/*.mjs",
     ],
   }
 ]
