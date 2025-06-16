@@ -10,6 +10,10 @@ export const StyledChip: ComponentType<MUIChipProps> = styled(MUIChip)(
   ({ theme, disabled, variant = 'filled' }) => ({
     opacity: disabled ? 0.5 : 1,
     cursor: disabled ? 'not-allowed' : 'default',
+
+    '& .MuiTouchRipple-root': {
+      display: 'none',
+    },
     '&.MuiChip-sizeSmall': {
       fontSize: theme.spacing(1.25),
       borderRadius: theme.spacing(0.375),
@@ -21,7 +25,7 @@ export const StyledChip: ComponentType<MUIChipProps> = styled(MUIChip)(
       '& .MuiChip-icon': {
         marginLeft: theme.spacing(0.5),
         marginRight: 0,
-        fontSize: theme.spacing(1.25), // Small icon size
+        fontSize: theme.spacing(1.25),
         '& > *': {
           fontSize: 'inherit',
         },
@@ -38,7 +42,7 @@ export const StyledChip: ComponentType<MUIChipProps> = styled(MUIChip)(
       '& .MuiChip-icon': {
         marginLeft: theme.spacing(1),
         marginRight: 0,
-        fontSize: theme.spacing(1.5), // Medium icon size
+        fontSize: theme.spacing(1.5),
         '& > *': {
           fontSize: 'inherit',
         },
@@ -54,16 +58,14 @@ export const StyledChip: ComponentType<MUIChipProps> = styled(MUIChip)(
       '& .MuiChip-icon': {
         marginLeft: theme.spacing(1.5),
         marginRight: 0,
-        fontSize: theme.spacing(1.75), // Large icon size
+        fontSize: theme.spacing(1.75),
         '& > *': {
           fontSize: 'inherit',
         },
       },
     },
 
-    // Variant styles
     ...(variant === 'filled' && {
-      // Filled variant styles
       '&.MuiChip-colorDefault': {
         backgroundColor: theme.palette.grey[200],
       },
@@ -72,7 +74,8 @@ export const StyledChip: ComponentType<MUIChipProps> = styled(MUIChip)(
         color: theme.palette.common.white,
       },
       '&.MuiChip-colorSecondary': {
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: theme.palette.secondary.contrastText,
+        color: theme.palette.secondary.dark,
       },
       '&.MuiChip-colorSuccess': {
         backgroundColor: theme.palette.success.main,
@@ -93,7 +96,6 @@ export const StyledChip: ComponentType<MUIChipProps> = styled(MUIChip)(
     }),
 
     ...(variant === 'outlined' && {
-      // Outlined variant styles
       '&.MuiChip-colorDefault': {
         backgroundColor: theme.palette.grey[100],
         border: `1px solid ${theme.palette.grey[200]}`,
@@ -106,6 +108,7 @@ export const StyledChip: ComponentType<MUIChipProps> = styled(MUIChip)(
       '&.MuiChip-colorSecondary': {
         backgroundColor: theme.palette.common.white,
         border: `1px solid ${theme.palette.grey[200]}`,
+        color: theme.palette.secondary.dark,
       },
       '&.MuiChip-colorSuccess': {
         border: `1px solid ${theme.palette.success.main}`,
