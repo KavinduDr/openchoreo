@@ -31,7 +31,22 @@ export interface NavItemProps {
  * @component
  */
 export const NavItem = React.forwardRef<HTMLDivElement, NavItemProps>(
-  ({className, onClick, disabled = false, title, icon, selectedIcon, disabledIcon, hoverIcon, isSelected, isExpanded, ...props }, ref) => {
+  (
+    {
+      className,
+      onClick,
+      disabled = false,
+      title,
+      icon,
+      selectedIcon,
+      disabledIcon,
+      hoverIcon,
+      isSelected,
+      isExpanded,
+      ...props
+    },
+    ref
+  ) => {
     const handleClick = React.useCallback(
       (event: React.MouseEvent<HTMLDivElement>) => {
         if (!disabled && onClick) {
@@ -42,20 +57,23 @@ export const NavItem = React.forwardRef<HTMLDivElement, NavItemProps>(
     );
     const theme = useChoreoTheme();
     return (
-      <StyledNavItem disabled={disabled} onClick={handleClick} {...props} isSelected={isSelected}>
-        <Box display="flex" flexDirection="row" alignItems="center" gap={theme.spacing(1)} width={isExpanded ? '100%' : 'auto'}>
+      <StyledNavItem
+        disabled={disabled}
+        onClick={handleClick}
+        {...props}
+        isSelected={isSelected}
+      >
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          gap={theme.spacing(1)}
+          width={isExpanded ? '100%' : 'auto'}
+        >
           <Typography variant="body1">
-            {
-              isSelected ? selectedIcon : icon
-            }
+            {isSelected ? selectedIcon : icon}
           </Typography>
-          {
-            isExpanded && (
-              <Typography variant="body1">
-                {title}
-              </Typography>
-            )
-          }
+          {isExpanded && <Typography variant="body1">{title}</Typography>}
         </Box>
       </StyledNavItem>
     );

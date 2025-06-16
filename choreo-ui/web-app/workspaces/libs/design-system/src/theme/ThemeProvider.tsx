@@ -1,8 +1,7 @@
-import { createTheme, PaletteOptions } from '@mui/material';
+import { createTheme, PaletteOptions, Shadows } from '@mui/material';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import defaultTheme from './theme.json';
 import React from 'react';
-import { Shadows } from 'node_modules/@mui/material';
 import '../fonts/fonts.css';
 import './initialLoader.css';
 

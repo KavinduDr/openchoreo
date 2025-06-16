@@ -1,23 +1,21 @@
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { NavItem } from './NavItem';
+import { Chip } from './Chip';
 
-describe('NavItem', () => {
-  it('should render title correctly', () => {
-    render(<NavItem title="Test Content" />);
+describe('Chip', () => {
+  it('should render children correctly', () => {
+    render(<Chip>Test Content</Chip>);
     expect(screen.getByText('Test Content')).toBeInTheDocument();
   });
 
   it('should apply custom className', () => {
-    const { container } = render(
-      <NavItem className="custom-class" title="Content" />
-    );
+    const { container } = render(<Chip className="custom-class">Content</Chip>);
     expect(container.firstChild).toHaveClass('custom-class');
   });
 
   it('should handle click events', () => {
     const handleClick = jest.fn();
-    render(<NavItem onClick={handleClick} title="Clickable" />);
+    render(<Chip onClick={handleClick}>Clickable</Chip>);
 
     fireEvent.click(screen.getByText('Clickable'));
     expect(handleClick).toHaveBeenCalledTimes(1);
@@ -25,7 +23,11 @@ describe('NavItem', () => {
 
   it('should respect disabled state', () => {
     const handleClick = jest.fn();
-    render(<NavItem disabled onClick={handleClick} title="Disabled" />);
+    render(
+      <Chip disabled onClick={handleClick}>
+        Disabled
+      </Chip>
+    );
 
     fireEvent.click(screen.getByText('Disabled'));
     expect(handleClick).not.toHaveBeenCalled();

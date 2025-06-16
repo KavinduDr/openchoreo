@@ -35,7 +35,13 @@ export interface BoxProps {
   minWidth?: string | number;
   maxWidth?: string | number;
   flexGrow?: string | number;
-  justifyContent?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
+  justifyContent?:
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'space-between'
+    | 'space-around'
+    | 'space-evenly';
   position?: 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';
   gap?: string | number;
 }
