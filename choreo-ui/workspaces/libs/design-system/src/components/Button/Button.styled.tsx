@@ -5,17 +5,25 @@ import { ComponentType } from 'react';
 export const StyledButton: ComponentType<ButtonProps> = styled(
   Button
 )<ButtonProps>(({ theme }) => ({
-  borderRadius: theme.spacing(0.625),
-  textTransform: 'none',
+  // Common styles
+  boxShadow: `0 1px 2px ${alpha(theme.palette.common.black, 0.15)}`,
+  borderRadius: 5,
+  color: theme.palette.common.white,
+  padding: theme.spacing(0.875, 2),
+  gap: theme.spacing(1),
   fontWeight: 400,
   fontSize: theme.spacing(1.625),
-  lineHeight: theme.spacing(3),
-  padding: `${theme.spacing(0.875)} ${theme.spacing(2)}`,
-  gap: theme.spacing(1),
+  lineHeight: `${theme.spacing(3)}px`,
+  textTransform: 'none',
 
-  // Pill variant
-  '&.pill': {
-    borderRadius: theme.spacing(3),
+  '&.Mui-disabled': {
+    opacity: 0.5,
+    cursor: 'default',
+    pointerEvents: 'none',
+    color: theme.palette.common.white,
+    '&:hover': {
+      textDecoration: 'none',
+    },
   },
 
   '& .MuiButton-startIcon': {
@@ -34,17 +42,16 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
 
   // Contained variant
   '&.MuiButton-contained': {
-    border: `${theme.spacing(0.125)} solid transparent`,
+    border: '1px solid transparent',
     '&:hover': {
-      boxShadow: theme.shadows[1],
+      boxShadow: `0 1px 3px ${alpha(theme.palette.common.black, 0.1)}`,
     },
     '&:focus': {
-      boxShadow: theme.shadows[2],
+      boxShadow: `0 1px 6px 2px ${alpha(theme.palette.common.black, 0.1)}`,
     },
     '&.MuiButton-containedPrimary': {
       backgroundColor: theme.palette.primary.main,
       borderColor: theme.palette.primary.main,
-      color: theme.palette.common.white,
       '&:hover': {
         backgroundColor: theme.palette.primary.dark,
         borderColor: theme.palette.primary.dark,
@@ -52,34 +59,20 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
     '&.MuiButton-containedSecondary': {
       backgroundColor: theme.palette.secondary.light,
-      color:
-        theme.palette.mode === 'dark'
-          ? theme.palette.common.white
-          : theme.palette.common.black,
-      border: `${theme.spacing(0.125)} solid ${theme.palette.grey[100]}`,
-      boxShadow: theme.shadows[1],
+      color: theme.palette.common.black,
+      border: `1px solid ${theme.palette.grey[100]}`,
+      boxShadow: `0 1px 2px ${alpha(theme.palette.common.black, 0.05)}`,
       '&:hover': {
         backgroundColor: theme.palette.secondary.light,
-        color:
-          theme.palette.mode === 'dark'
-            ? theme.palette.common.white
-            : theme.palette.common.black,
-        boxShadow: theme.shadows[1],
-      },
-      '&:focus': {
-        boxShadow: theme.shadows[2],
+        color: theme.palette.common.black,
       },
       '&.Mui-disabled': {
-        color:
-          theme.palette.mode === 'dark'
-            ? alpha(theme.palette.common.white, 0.6)
-            : theme.palette.common.black,
+        color: theme.palette.common.black,
       },
     },
     '&.MuiButton-containedError': {
       backgroundColor: theme.palette.error.main,
       borderColor: theme.palette.error.main,
-      color: theme.palette.common.white,
       '&:hover': {
         backgroundColor: theme.palette.error.dark,
         borderColor: theme.palette.error.dark,
@@ -88,7 +81,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     '&.MuiButton-containedWarning': {
       backgroundColor: theme.palette.warning.main,
       borderColor: theme.palette.warning.main,
-      color: theme.palette.common.white,
       '&:hover': {
         backgroundColor: theme.palette.warning.dark,
         borderColor: theme.palette.warning.dark,
@@ -97,7 +89,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     '&.MuiButton-containedSuccess': {
       backgroundColor: theme.palette.success.main,
       borderColor: theme.palette.success.main,
-      color: theme.palette.common.white,
       '&:hover': {
         backgroundColor: theme.palette.success.dark,
         borderColor: theme.palette.success.dark,
@@ -108,69 +99,56 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
   // Outlined variant
   '&.MuiButton-outlined': {
     backgroundColor: 'transparent',
-    '&:hover': {
-      boxShadow: theme.shadows[2],
-    },
-    '&:focus': {
-      boxShadow: theme.shadows[2],
+    boxShadow: `0 1px 2px ${alpha(theme.palette.common.black, 0.05)}`,
+    '&:hover, &:focus': {
+      backgroundColor: 'transparent',
+      boxShadow: `0 1px 6px 2px ${alpha(theme.palette.common.black, 0.1)}`,
     },
     '&.MuiButton-outlinedPrimary': {
       color: theme.palette.primary.main,
-      borderColor: theme.palette.primary.main,
-      '&:hover': {
-        borderColor: theme.palette.primary.dark,
+      border: `1px solid ${theme.palette.primary.main}`,
+      '&.Mui-disabled': {
+        color: theme.palette.primary.main,
       },
     },
     '&.MuiButton-outlinedSecondary': {
-      color:
-        theme.palette.mode === 'dark'
-          ? theme.palette.common.white
-          : theme.palette.secondary.main,
-      border: `${theme.spacing(0.125)} solid ${
-        theme.palette.mode === 'dark'
-          ? theme.palette.grey[100]
-          : theme.palette.secondary.main
-      }`,
+      color: theme.palette.secondary.main,
+      border: `1px solid ${theme.palette.secondary.main}`,
       '&:hover': {
-        borderColor:
-          theme.palette.mode === 'dark'
-            ? theme.palette.grey[200]
-            : theme.palette.secondary.dark,
-        backgroundColor:
-          theme.palette.mode === 'dark'
-            ? alpha(theme.palette.common.white, 0.05)
-            : alpha(theme.palette.action.hover, 0.05),
+        borderColor: theme.palette.secondary.dark,
       },
       '&.Mui-disabled': {
-        color:
-          theme.palette.mode === 'dark'
-            ? alpha(theme.palette.common.white, 0.6)
-            : theme.palette.secondary.main,
-        borderColor:
-          theme.palette.mode === 'dark'
-            ? alpha(theme.palette.grey[100], 0.6)
-            : theme.palette.secondary.main,
+        color: theme.palette.secondary.main,
       },
     },
     '&.MuiButton-outlinedError': {
       color: theme.palette.error.main,
-      borderColor: theme.palette.error.main,
+      border: `1px solid ${theme.palette.error.main}`,
       '&:hover': {
         borderColor: theme.palette.error.dark,
+      },
+      '&.Mui-disabled': {
+        color: theme.palette.error.main,
       },
     },
     '&.MuiButton-outlinedWarning': {
       color: theme.palette.warning.main,
-      borderColor: theme.palette.warning.main,
+      border: `1px solid ${theme.palette.warning.main}`,
       '&:hover': {
         borderColor: theme.palette.warning.dark,
+      },
+      '&.Mui-disabled': {
+        color: theme.palette.warning.main,
       },
     },
     '&.MuiButton-outlinedSuccess': {
       color: theme.palette.success.main,
-      borderColor: theme.palette.success.main,
+      border: `1px solid ${theme.palette.success.main}`,
       '&:hover': {
         borderColor: theme.palette.success.dark,
+      },
+      '&.Mui-disabled': {
+        color: theme.palette.success.main,
       },
     },
   },
@@ -180,70 +158,80 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     backgroundColor: 'transparent',
     border: 'none',
     boxShadow: 'none',
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.action.hover, 0.05),
-    },
     '&.MuiButton-textPrimary': {
       color: theme.palette.primary.main,
+      '&.Mui-disabled': {
+        color: theme.palette.primary.main,
+      },
     },
     '&.MuiButton-textSecondary': {
-      color:
-        theme.palette.mode === 'dark'
-          ? theme.palette.common.white
-          : theme.palette.common.black,
+      color: theme.palette.common.black,
       '&.Mui-disabled': {
-        color:
-          theme.palette.mode === 'dark'
-            ? alpha(theme.palette.common.white, 0.6)
-            : theme.palette.common.black,
+        color: theme.palette.common.black,
       },
     },
     '&.MuiButton-textError': {
       color: theme.palette.error.main,
+      '&.Mui-disabled': {
+        color: theme.palette.error.main,
+      },
     },
     '&.MuiButton-textWarning': {
       color: theme.palette.warning.main,
+      '&.Mui-disabled': {
+        color: theme.palette.warning.main,
+      },
     },
     '&.MuiButton-textSuccess': {
       color: theme.palette.success.main,
+      '&.Mui-disabled': {
+        color: theme.palette.success.main,
+      },
     },
   },
 
   // Subtle variant (custom)
   '&.subtle': {
-    border: `${theme.spacing(0.125)} solid ${theme.palette.grey[100]}`,
-    boxShadow: `0 ${theme.spacing(0.125)} ${theme.spacing(0.375)} ${alpha(theme.palette.common.black, 0.05)}`,
-    backgroundColor: alpha(theme.palette.action.hover, 0.05),
+    border: `1px solid ${theme.palette.grey[100]}`,
+    boxShadow: `0 1px 3px ${alpha(theme.palette.common.black, 0.05)}`,
+    backgroundColor: theme.palette.secondary.light,
     '&:hover': {
-      backgroundColor: alpha(theme.palette.action.hover, 0.1),
-      boxShadow: `0 ${theme.spacing(0.125)} ${theme.spacing(0.375)} ${alpha(theme.palette.common.black, 0.1)}`,
+      backgroundColor: theme.palette.secondary.light,
+      boxShadow: `0 1px 3px ${alpha(theme.palette.common.black, 0.1)}`,
     },
     '&:focus': {
+      backgroundColor: theme.palette.secondary.light,
       boxShadow: 'none',
     },
     '&.subtle-primary': {
       color: theme.palette.primary.main,
+      '&.Mui-disabled': {
+        color: theme.palette.primary.main,
+      },
     },
     '&.subtle-secondary': {
-      color:
-        theme.palette.mode === 'dark'
-          ? theme.palette.common.white
-          : theme.palette.common.black,
+      color: theme.palette.common.black,
       '&.Mui-disabled': {
-        color:
-          theme.palette.mode === 'dark'
-            ? alpha(theme.palette.common.white, 0.6)
-            : theme.palette.common.black,
+        color: theme.palette.common.black,
       },
     },
     '&.subtle-error': {
       color: theme.palette.error.main,
+      '&.Mui-disabled': {
+        color: theme.palette.error.main,
+      },
     },
     '&.subtle-warning': {
       color: theme.palette.warning.main,
+      '&.Mui-disabled': {
+        color: theme.palette.warning.main,
+      },
     },
     '&.subtle-success': {
       color: theme.palette.success.main,
+      '&.Mui-disabled': {
+        color: theme.palette.success.main,
+      },
     },
   },
 
@@ -262,89 +250,87 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
       marginRight: 0,
     },
     '&:hover': {
-      opacity: 0.8,
+      opacity: 0.6,
+      backgroundColor: 'transparent',
+      boxShadow: 'none',
+    },
+    '&:focus': {
       backgroundColor: 'transparent',
       boxShadow: 'none',
     },
     '&.link-primary': {
       color: theme.palette.primary.main,
+      '&.Mui-disabled': {
+        color: theme.palette.primary.main,
+        borderColor: 'transparent',
+        boxShadow: 'none',
+      },
     },
     '&.link-secondary': {
-      color:
-        theme.palette.mode === 'dark'
-          ? theme.palette.common.white
-          : theme.palette.common.black,
-      borderColor: 'transparent',
-      boxShadow: 'none',
+      color: theme.palette.common.black,
       '&.Mui-disabled': {
-        color:
-          theme.palette.mode === 'dark'
-            ? alpha(theme.palette.common.white, 0.6)
-            : theme.palette.common.black,
+        color: theme.palette.common.black,
         borderColor: 'transparent',
         boxShadow: 'none',
       },
     },
     '&.link-error': {
       color: theme.palette.error.main,
+      '&.Mui-disabled': {
+        color: theme.palette.error.main,
+        borderColor: 'transparent',
+        boxShadow: 'none',
+      },
     },
     '&.link-warning': {
       color: theme.palette.warning.main,
+      '&.Mui-disabled': {
+        color: theme.palette.warning.main,
+        borderColor: 'transparent',
+        boxShadow: 'none',
+      },
     },
     '&.link-success': {
       color: theme.palette.success.main,
-    },
-  },
-
-  // Size variants
-  '&.MuiButton-sizeLarge': {
-    padding: `${theme.spacing(1)} ${theme.spacing(2.75)}`,
-    fontSize: theme.spacing(2),
-    '& .MuiButton-startIcon, & .MuiButton-endIcon': {
-      '& > *:first-of-type': {
-        fontSize: theme.spacing(2.5),
+      '&.Mui-disabled': {
+        color: theme.palette.success.main,
+        borderColor: 'transparent',
+        boxShadow: 'none',
       },
     },
   },
 
+  // Size variants
   '&.MuiButton-sizeSmall': {
-    padding: `${theme.spacing(0.5)} ${theme.spacing(1.25)}`,
-    fontSize: theme.spacing(1.3),
+    padding: theme.spacing(0.375, 2),
+    gap: theme.spacing(0.75),
     '& .MuiButton-startIcon, & .MuiButton-endIcon': {
       '& > *:first-of-type': {
         fontSize: theme.spacing(1.75),
       },
     },
-    '&.pill': {
-      borderRadius: theme.spacing(2),
+    '&.link': {
+      padding: theme.spacing(0.375, 0),
     },
   },
 
-  // Tiny size (mapped to small in MUI)
+  // Tiny size (mapped to small in MUI but with custom styling)
   '&.tiny': {
-    padding: `${theme.spacing(0.25)} ${theme.spacing(1)}`,
-    fontSize: theme.spacing(1.2),
+    padding: theme.spacing(0, 1.5),
+    gap: theme.spacing(0.5),
     '& .MuiButton-startIcon, & .MuiButton-endIcon': {
       '& > *:first-of-type': {
         fontSize: theme.spacing(1.5),
       },
     },
-    '&.pill': {
-      borderRadius: theme.spacing(1.5),
+    '&.link': {
+      padding: 0,
     },
   },
 
-  // Disabled state
-  '&.Mui-disabled': {
-    opacity: 0.6,
-    '&.MuiButton-contained': {
-      backgroundColor: theme.palette.action.disabledBackground,
-      color: theme.palette.action.disabled,
-    },
-    '&.MuiButton-outlined, &.MuiButton-text, &.subtle, &.link': {
-      color: theme.palette.text.disabled,
-      borderColor: theme.palette.action.disabled,
-    },
+  // Pill variant
+  '&.pill': {
+    borderRadius: theme.spacing(3.125),
   },
 
   // Full width

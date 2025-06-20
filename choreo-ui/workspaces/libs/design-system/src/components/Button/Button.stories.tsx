@@ -16,7 +16,7 @@ const meta: Meta<typeof Button> = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['tiny', 'small', 'medium'], // Removed 'large'
     },
     disabled: {
       control: 'boolean',
@@ -59,6 +59,29 @@ export const Text: Story = {
   },
 };
 
+export const Subtle: Story = {
+  args: {
+    children: 'Subtle Button',
+    variant: 'subtle',
+    color: 'primary',
+  },
+};
+
+export const Link: Story = {
+  args: {
+    children: 'Link Button',
+    variant: 'link',
+    color: 'primary',
+  },
+};
+
+export const Tiny: Story = {
+  args: {
+    children: 'Tiny Button',
+    size: 'tiny',
+  },
+};
+
 export const Small: Story = {
   args: {
     children: 'Small Button',
@@ -66,10 +89,10 @@ export const Small: Story = {
   },
 };
 
-export const Large: Story = {
+export const Medium: Story = {
   args: {
-    children: 'Large Button',
-    size: 'large',
+    children: 'Medium Button',
+    size: 'medium',
   },
 };
 
@@ -77,5 +100,19 @@ export const Disabled: Story = {
   args: {
     children: 'Disabled Button',
     disabled: true,
+  },
+};
+
+export const Pill: Story = {
+  args: {
+    children: 'Pill Button',
+    pill: true,
+  },
+};
+
+export const FullWidth: Story = {
+  args: {
+    children: 'Full Width Button',
+    fullWidth: true,
   },
 };

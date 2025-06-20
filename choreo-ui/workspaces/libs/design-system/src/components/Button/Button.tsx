@@ -8,7 +8,7 @@ export type ButtonColor =
   | 'success'
   | 'warning'
   | 'info';
-export type ButtonSize = 'tiny' | 'small' | 'medium' | 'large';
+export type ButtonSize = 'tiny' | 'small' | 'medium'; // Removed 'large'
 export type ButtonVariant =
   | 'contained'
   | 'outlined'
@@ -27,10 +27,11 @@ export interface ButtonProps {
   disableRipple?: boolean;
   pill?: boolean;
   fullWidth?: boolean;
-  startIcon?: React.ReactNode;
-  endIcon?: React.ReactNode;
-  href?: string;
+  /**
+   * Test id for the button
+   */
   testId?: string;
+  [key: string]: any;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -46,8 +47,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disableRipple = true,
       pill = false,
       fullWidth = false,
-      startIcon,
-      endIcon,
       testId,
       ...props
     },
@@ -58,19 +57,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         variant={variant === 'subtle' || variant === 'link' ? 'text' : variant}
         disabled={disabled}
-        size={size === 'tiny' ? 'small' : size}
+        size={size === 'tiny' ? 'small' : size} // Map tiny to small for MUI
         onClick={onClick}
         color={color}
         className={`${className || ''} 
         ${variant === 'subtle' ? 'subtle' : ''} 
         ${variant === 'link' ? 'link' : ''} 
-        ${pill ? 'pill' : ''} ${variant === 'subtle' ? `subtle-${color}` : ''} 
+        ${pill ? 'pill' : ''} 
+        ${size === 'tiny' ? 'tiny' : ''} 
+        ${variant === 'subtle' ? `subtle-${color}` : ''} 
         ${variant === 'link' ? `link-${color}` : ''}`}
         disableRipple={disableRipple}
         fullWidth={fullWidth}
         data-testid={testId}
-        startIcon={startIcon}
-        endIcon={endIcon}
         {...props}
       >
         {children}

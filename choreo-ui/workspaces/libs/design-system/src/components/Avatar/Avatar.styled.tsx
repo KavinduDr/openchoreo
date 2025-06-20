@@ -124,13 +124,13 @@ export const StyledAvatar: ComponentType<AvatarProps> = styled(
     backgroundColor: getBackgroundColor(),
     opacity: disabled ? 0.5 : 1,
     color: getColor(),
-    cursor: 'pointer',
+    cursor: disabled ? 'not-allowed' : 'pointer',
     textAlign: 'center',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     width,
     height,
-    boxShadow: theme.shadows[1], // Default shadow
+    boxShadow: theme.shadows[1],
   };
 });
