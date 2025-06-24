@@ -13,7 +13,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
   padding: `${theme.spacing(0.875)} ${theme.spacing(2)}`,
   gap: theme.spacing(1),
 
-  // Pill variant
   '&.pill': {
     borderRadius: theme.spacing(3),
   },
@@ -32,7 +31,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Contained variant
   '&.MuiButton-contained': {
     border: `${theme.spacing(0.125)} solid transparent`,
     '&:hover': {
@@ -105,7 +103,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Outlined variant
   '&.MuiButton-outlined': {
     backgroundColor: 'transparent',
     '&:hover': {
@@ -175,7 +172,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Text variant
   '&.MuiButton-text': {
     backgroundColor: 'transparent',
     border: 'none',
@@ -209,7 +205,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Subtle variant (custom)
   '&.subtle': {
     border: `${theme.spacing(0.125)} solid ${theme.palette.grey[100]}`,
     boxShadow: `0 ${theme.spacing(0.125)} ${theme.spacing(0.375)} ${alpha(theme.palette.common.black, 0.05)}`,
@@ -247,7 +242,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Link variant (custom)
   '&.link': {
     borderColor: 'transparent',
     boxShadow: 'none',
@@ -296,7 +290,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Size variants
   '&.MuiButton-sizeLarge': {
     padding: `${theme.spacing(1)} ${theme.spacing(2.75)}`,
     fontSize: theme.spacing(2),
@@ -308,8 +301,8 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
   },
 
   '&.MuiButton-sizeSmall': {
-    padding: `${theme.spacing(0.5)} ${theme.spacing(1.25)}`,
-    fontSize: theme.spacing(1.3),
+    padding: theme.spacing(0.375, 2),
+    gap: theme.spacing(0.75),
     '& .MuiButton-startIcon, & .MuiButton-endIcon': {
       '& > *:first-of-type': {
         fontSize: theme.spacing(1.75),
@@ -318,12 +311,14 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     '&.pill': {
       borderRadius: theme.spacing(2),
     },
+    '&.link': {
+      padding: `${theme.spacing(0.375)} 0`,
+    },
   },
 
-  // Tiny size (mapped to small in MUI)
   '&.tiny': {
-    padding: `${theme.spacing(0.25)} ${theme.spacing(1)}`,
-    fontSize: theme.spacing(1.2),
+    padding: theme.spacing(0, 1.5),
+    gap: theme.spacing(0.5),
     '& .MuiButton-startIcon, & .MuiButton-endIcon': {
       '& > *:first-of-type': {
         fontSize: theme.spacing(1.5),
@@ -332,22 +327,21 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     '&.pill': {
       borderRadius: theme.spacing(1.5),
     },
+    '&.link': {
+      padding: theme.spacing(0),
+    },
   },
 
-  // Disabled state
   '&.Mui-disabled': {
-    opacity: 0.6,
-    '&.MuiButton-contained': {
-      backgroundColor: theme.palette.action.disabledBackground,
-      color: theme.palette.action.disabled,
-    },
-    '&.MuiButton-outlined, &.MuiButton-text, &.subtle, &.link': {
-      color: theme.palette.text.disabled,
-      borderColor: theme.palette.action.disabled,
+    opacity: 0.5,
+    cursor: 'default',
+    pointerEvents: 'none',
+    color: theme.palette.common.white,
+    '&:hover': {
+      textDecoration: 'none',
     },
   },
 
-  // Full width
   '&.MuiButton-fullWidth': {
     width: '100%',
   },

@@ -8,7 +8,7 @@ export type ButtonColor =
   | 'success'
   | 'warning'
   | 'info';
-export type ButtonSize = 'tiny' | 'small' | 'medium' | 'large';
+export type ButtonSize = 'tiny' | 'small' | 'medium';
 export type ButtonVariant =
   | 'contained'
   | 'outlined'
@@ -53,18 +53,26 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
+    // Map custom sizes to Material-UI sizes
+    const getMuiSize = (size: string) => {
+      if (size === 'tiny') return 'small';
+      return size as 'small' | 'medium' | 'large';
+    };
+
     return (
       <StyledButton
         ref={ref}
         variant={variant === 'subtle' || variant === 'link' ? 'text' : variant}
         disabled={disabled}
-        size={size === 'tiny' ? 'small' : size}
+        size={getMuiSize(size)}
         onClick={onClick}
         color={color}
         className={`${className || ''} 
         ${variant === 'subtle' ? 'subtle' : ''} 
         ${variant === 'link' ? 'link' : ''} 
-        ${pill ? 'pill' : ''} ${variant === 'subtle' ? `subtle-${color}` : ''} 
+        ${pill ? 'pill' : ''} 
+        ${size === 'tiny' ? 'tiny' : ''} 
+        ${variant === 'subtle' ? `subtle-${color}` : ''} 
         ${variant === 'link' ? `link-${color}` : ''}`}
         disableRipple={disableRipple}
         fullWidth={fullWidth}
