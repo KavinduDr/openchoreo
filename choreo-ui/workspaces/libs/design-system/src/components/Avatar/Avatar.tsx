@@ -2,9 +2,14 @@ import React from 'react';
 import { AvatarProps, StyledAvatar } from './Avatar.styled';
 
 export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
-  ({ children, ...props }, ref) => {
+  ({ children, testId, ...props }, ref) => {
     return (
-      <StyledAvatar ref={ref} {...props}>
+      <StyledAvatar
+        data-cyid={`${testId}-avatar`}
+        ref={ref}
+        testId={testId}
+        {...props}
+      >
         {children}
       </StyledAvatar>
     );

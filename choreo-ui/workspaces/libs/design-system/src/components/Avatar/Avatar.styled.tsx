@@ -8,7 +8,7 @@ export type colorVariant =
   | 'warning'
   | 'info'
   | 'success';
-export type avatarVariant = 'circular' | 'rounded' | 'square';
+export type avatarVariant = 'circular' | 'rounded';
 export type avatarBackgroundColorVariant =
   | 'default'
   | 'primary'
@@ -18,46 +18,20 @@ export type avatarBackgroundColorVariant =
   | 'info'
   | 'success';
 
+export type avatarSizeVariant = 'small' | 'medium' | 'large' | 'extraLarge';
+
 export interface AvatarProps {
-  /**
-   * The content of the component
-   */
   children?: React.ReactNode;
-  /**
-   * Additional className for the component
-   */
+  testId: string;
   className?: string;
-  /**
-   * color variant of the avatar
-   */
   color?: colorVariant;
-  /**
-   * Optional click handler
-   */
   onClick?: (event: React.MouseEvent) => void;
-  /**
-   * If true, the component will be disabled
-   */
   disabled?: boolean;
-  /**
-   * width of the avatar
-   */
   width?: string | number;
-  /**
-   * height of the avatar
-   * */
   height?: string | number;
-  /**
-   * The variant of the component
-   */
+  size?: avatarSizeVariant;
   variant?: avatarVariant;
-  /**
-   * The sx prop for custom styles
-   */
   sx?: React.CSSProperties;
-  /**
-   * Additional props for MUI Avatar
-   */
   [key: string]: any;
 }
 
@@ -70,6 +44,7 @@ export const StyledAvatar: ComponentType<AvatarProps> = styled(
   disabled = false,
   height,
   width,
+  size,
 }) => {
   const getBorderRadius = () => {
     switch (variant) {
@@ -77,8 +52,6 @@ export const StyledAvatar: ComponentType<AvatarProps> = styled(
         return '50%';
       case 'rounded':
         return '8px';
-      case 'square':
-        return '0px';
       default:
         return '50%';
     }
@@ -106,7 +79,7 @@ export const StyledAvatar: ComponentType<AvatarProps> = styled(
       case 'primary':
         return theme.palette.primary.contrastText;
       case 'secondary':
-        return theme.palette.primary.light;
+        return theme.palette.primary.dark;
       case 'error':
         return theme.palette.error.contrastText;
       case 'warning':
@@ -119,18 +92,79 @@ export const StyledAvatar: ComponentType<AvatarProps> = styled(
         return theme.palette.primary.contrastText;
     }
   };
+  const getSize = () => {
+    switch (size) {
+      case 'small':
+        return {
+          width: theme.spacing(2.5),
+          height: theme.spacing(2.5),
+          fontSize: theme.typography.h6.fontSize,
+          fontWeight: theme.typography.h6.fontWeight,
+          lineHeight: 1,
+          '& svg': {
+            fontSize: theme.spacing(1.25),
+          },
+        };
+      case 'medium':
+        return {
+          width: theme.spacing(4),
+          height: theme.spacing(4),
+          fontSize: theme.typography.h5.fontSize,
+          fontWeight: theme.typography.h5.fontWeight,
+          lineHeight: 1,
+          '& svg': {
+            fontSize: theme.spacing(1.75),
+          },
+        };
+      case 'large':
+        return {
+          width: theme.spacing(5),
+          height: theme.spacing(5),
+          fontSize: theme.typography.h4.fontSize,
+          fontWeight: theme.typography.h4.fontWeight,
+          lineHeight: 1,
+          '& svg': {
+            fontSize: theme.spacing(2.5),
+          },
+        };
+      case 'extraLarge':
+        return {
+          width: theme.spacing(10),
+          height: theme.spacing(10),
+          fontSize: theme.typography.h1.fontSize,
+          fontWeight: theme.typography.h1.fontWeight,
+          lineHeight: 1,
+          '& svg': {
+            fontSize: theme.spacing(4),
+          },
+        };
+      default:
+        return {
+          width: theme.spacing(4),
+          height: theme.spacing(4),
+          fontSize: theme.typography.h5.fontSize,
+          fontWeight: theme.typography.h5.fontWeight,
+          lineHeight: 1,
+          '& svg': {
+            fontSize: theme.spacing(1.75),
+          },
+        };
+    }
+  };
+  const sizeStyles = getSize();
+
   return {
     borderRadius: getBorderRadius(),
     backgroundColor: getBackgroundColor(),
     opacity: disabled ? 0.5 : 1,
     color: getColor(),
-    cursor: 'pointer',
+    cursor: disabled ? 'not-allowed' : 'pointer',
     textAlign: 'center',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width,
-    height,
-    boxShadow: theme.shadows[1], // Default shadow
+    ...sizeStyles,
+    ...(width && { width }),
+    ...(height && { height }),
   };
 });
