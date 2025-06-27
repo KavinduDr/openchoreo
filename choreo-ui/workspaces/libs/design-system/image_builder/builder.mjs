@@ -75,15 +75,15 @@ const svgoC = {
     { name: 'convertShapeToPath' },
     { name: 'sortAttrs' },
     { name: 'removeDimensions' },
-    { 
+    {
       name: 'removeAttrs',
       params: {
-        attrs: ['style']
-      }
+        attrs: ['style'],
+      },
     },
     { name: 'removeElementsByAttr' },
     { name: 'removeStyleElement' },
-    
+
     { name: 'removeScriptElement' },
   ],
 };

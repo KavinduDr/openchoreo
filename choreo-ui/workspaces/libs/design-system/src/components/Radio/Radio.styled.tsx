@@ -1,6 +1,11 @@
-import { Box, styled, Theme } from '@mui/material';
+import {
+  Box,
+  styled,
+  Theme,
+  Radio as MuiRadio,
+  RadioProps as MuiRadioProps,
+} from '@mui/material';
 import { ComponentType } from 'react';
-import { Radio as MuiRadio, RadioProps as MuiRadioProps } from '@mui/material';
 
 export type colorVariant =
   | 'primary'

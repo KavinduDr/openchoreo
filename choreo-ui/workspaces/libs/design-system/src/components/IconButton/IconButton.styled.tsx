@@ -48,12 +48,6 @@ export const StyledIconButton = styled(IconButton, {
         fontSize: theme.spacing(3),
       },
     },
-    tiny: {
-      padding: theme.spacing(0.25),
-      '& > *:first-of-type': {
-        fontSize: theme.spacing(1.2),
-      },
-    },
   };
 
   let colorStyles: { color?: string; '&:hover'?: { backgroundColor: string } } =
@@ -120,7 +114,7 @@ export const StyledIconButton = styled(IconButton, {
 
   return {
     borderRadius: theme.spacing(0.625),
-    ...sizeStyles[size],
+    ...sizeStyles[size as keyof typeof sizeStyles],
     ...colorStyles,
     opacity: disabled ? 0.5 : 1,
     cursor: disabled ? 'not-allowed' : 'pointer',

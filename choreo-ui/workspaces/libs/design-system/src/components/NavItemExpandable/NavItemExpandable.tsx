@@ -86,7 +86,6 @@ export const NavItemExpandable = React.forwardRef<
       disabled={disabled}
       ref={ref}
     >
-
       <StyledMainNavItemContainer
         onClick={handleMainNavItemClick}
         // to={href ?? './'}

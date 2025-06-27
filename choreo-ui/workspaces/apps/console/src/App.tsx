@@ -1,7 +1,6 @@
 import { ThemeProvider, Box } from "@open-choreo/design-system";
 import { MainLayout } from "./layouts/MainLayout";
 import { useEffect } from "react";
-import { pluginRegistry } from "./plugins";
 import { useRouteExtentions, ExtentionProviderMounter } from "@open-choreo/plugin-core";
 
 export default function App() {
