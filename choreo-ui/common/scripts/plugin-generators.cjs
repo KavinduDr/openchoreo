@@ -28,6 +28,7 @@ function generatePackageJson(pluginName) {
     "test": "echo \\"Error: no test specified\\" && exit 1",
     "dev": "tsc -project tsconfig.json  --watch",
     "clean": "rm -rf dist",
+    "lint": "eslint --config ./eslint.config.js",
     "build": "npm run clean && tsc -project tsconfig.json"
   },
   "author": "",
@@ -123,6 +124,7 @@ export default [
   },
   {
     ignores: [
+      "**/dist",
     ],
   }
 ]`;

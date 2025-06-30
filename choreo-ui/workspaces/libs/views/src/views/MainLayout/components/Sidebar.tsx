@@ -28,11 +28,11 @@ export const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
       setIsExpanded(state);
     }, 300);
     return (
-      <Box height="100%" display="flex" position='relative' ref={ref}>
+      <Box height="100%" display="flex" position="relative" ref={ref}>
         {(isMobile || !isExpandSaved) && <Box width={theme.spacing(8)} />}
         <Box
           backgroundColor={theme.pallet.primary.main}
-          position={(isMobile || !isExpandSaved) ? 'absolute' : 'relative'}
+          position={isMobile || !isExpandSaved ? 'absolute' : 'relative'}
           transition={theme.transitions.create(['display', 'width'], {
             duration: 300,
           })}
@@ -78,8 +78,8 @@ export const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
           </Box>
           <Box borderTop="small" borderColor={theme.pallet.primary.light}>
             <MenuItem
-              id='menu-item-collapse'
-              title='Collapse'
+              id="menu-item-collapse"
+              title="Collapse"
               selectedIcon={<MenuCollapseIcon fontSize="inherit" />}
               icon={
                 isExpandSaved ? (
@@ -92,11 +92,10 @@ export const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
               isExpanded={isFullWidth}
             />
           </Box>
-
         </Box>
       </Box>
     );
   }
 );
 
-Sidebar.displayName = 'Sidebar'; 
+Sidebar.displayName = 'Sidebar';

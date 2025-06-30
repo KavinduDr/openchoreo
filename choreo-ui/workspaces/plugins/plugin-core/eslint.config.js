@@ -1,21 +1,18 @@
-import eslintConfig from "../../../eslint.config.base.cjs"
+import eslintConfig from "../../../eslint.config.base.cjs";
 
 export default [
   ...eslintConfig,
   {
     files: [
-      '**/*.ts',
-      '**/*.tsx',
-      '**/*.js',
-      '**/*.jsx',
-      '**/*.mjs',
-      '**/*.cjs'
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.mjs",
+      "**/*.cjs",
     ],
   },
   {
-    ignores: [
-      "**/dist",
-      "**/node_modules",
-    ],
-  }
-]
+    ignores: ["**/dist", "**/node_modules"],
+  },
+];

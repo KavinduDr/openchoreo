@@ -14,7 +14,10 @@ importers:
       "@eslint/eslintrc":
         specifier: ~3.3.1
         version: 3.3.1
-      "@open-choreo/common-views":
+      '@open-choreo/api-client':
+        specifier: workspace:*
+        version: link:../../plugins/api-client
+      '@open-choreo/common-views':
         specifier: workspace:*
         version: link:../../libs/views
       "@open-choreo/design-system":
@@ -106,7 +109,7 @@ importers:
         specifier: ^6.3.5
         version: 6.3.5(@types/node@22.15.33)(less@4.3.0)
 
-  ../../workspaces/libs/api-client:
+  ../../workspaces/libs/api-client-lib:
     dependencies:
       "@eslint/eslintrc":
         specifier: ~3.3.1
@@ -115,6 +118,10 @@ importers:
         specifier: ~5.2.5
         version: 5.2.6
       "@types/lodash":
+      '@tanstack/react-query':
+        specifier: ~5.81.5
+        version: 5.81.5(react@19.1.0)
+      '@types/lodash':
         specifier: ~4.17.17
         version: 4.17.19
       "@typescript-eslint/eslint-plugin":
@@ -145,6 +152,9 @@ importers:
       "@eslint/js":
         specifier: ~9.28.0
         version: 9.28.0
+      '@tanstack/eslint-plugin-query':
+        specifier: ~5.81.2
+        version: 5.81.2(eslint@9.28.0)(typescript@5.8.3)
       eslint:
         specifier: ~9.28.0
         version: 9.28.0
@@ -513,6 +523,100 @@ importers:
       vitest:
         specifier: ^3.1.3
         version: 3.2.4(@types/node@22.15.33)(jsdom@26.1.0)(less@4.3.0)
+
+  ../../workspaces/plugins/api-client:
+    dependencies:
+      '@eslint/eslintrc':
+        specifier: ~3.3.1
+        version: 3.3.1
+      '@fontsource/roboto':
+        specifier: ~5.2.5
+        version: 5.2.6
+      '@open-choreo/api-client-lib':
+        specifier: workspace:*
+        version: link:../../libs/api-client-lib
+      '@open-choreo/common-views':
+        specifier: workspace:*
+        version: link:../../libs/views
+      '@open-choreo/design-system':
+        specifier: workspace:*
+        version: link:../../libs/design-system
+      '@open-choreo/plugin-core':
+        specifier: workspace:*
+        version: link:../plugin-core
+      '@tanstack/react-query':
+        specifier: ~5.81.5
+        version: 5.81.5(react@19.1.0)
+      '@types/lodash':
+        specifier: ~4.17.17
+        version: 4.17.19
+      '@typescript-eslint/eslint-plugin':
+        specifier: ~8.33.1
+        version: 8.33.1(@typescript-eslint/parser@8.33.1(eslint@9.28.0)(typescript@5.8.3))(eslint@9.28.0)(typescript@5.8.3)
+      '@typescript-eslint/parser':
+        specifier: ~8.33.1
+        version: 8.33.1(eslint@9.28.0)(typescript@5.8.3)
+      clsx:
+        specifier: ~2.1.1
+        version: 2.1.1
+      eslint-plugin-import:
+        specifier: ~2.31.0
+        version: 2.31.0(eslint@9.28.0)
+      eslint-plugin-jest-dom:
+        specifier: ~5.5.0
+        version: 5.5.0(@testing-library/dom@10.4.0)(eslint@9.28.0)
+      eslint-plugin-react:
+        specifier: ~7.37.5
+        version: 7.37.5(eslint@9.28.0)
+      eslint-plugin-testing-library:
+        specifier: ~7.4.0
+        version: 7.4.0(eslint@9.28.0)(typescript@5.8.3)
+      lodash:
+        specifier: ~4.17.21
+        version: 4.17.21
+      react:
+        specifier: ^19.1.0
+        version: 19.1.0
+      react-dom:
+        specifier: ^19.1.0
+        version: 19.1.0(react@19.1.0)
+      react-router:
+        specifier: ~7.6.2
+        version: 7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+    devDependencies:
+      '@eslint/js':
+        specifier: ~9.28.0
+        version: 9.28.0
+      '@tanstack/eslint-plugin-query':
+        specifier: ~5.81.2
+        version: 5.81.2(eslint@9.28.0)(typescript@5.8.3)
+      '@types/react':
+        specifier: ^19.1.2
+        version: 19.1.8
+      '@types/react-dom':
+        specifier: ^19.1.2
+        version: 19.1.6(@types/react@19.1.8)
+      eslint:
+        specifier: ~9.28.0
+        version: 9.28.0
+      eslint-plugin-prettier:
+        specifier: ~5.4.1
+        version: 5.4.1(eslint-config-prettier@10.1.5(eslint@9.28.0))(eslint@9.28.0)(prettier@3.6.2)
+      eslint-plugin-react-hooks:
+        specifier: ~5.2.0
+        version: 5.2.0(eslint@9.28.0)
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.19
+        version: 0.4.20(eslint@9.28.0)
+      globals:
+        specifier: ~16.2.0
+        version: 16.2.0
+      typescript:
+        specifier: ~5.8.3
+        version: 5.8.3
+      typescript-eslint:
+        specifier: ^8.30.1
+        version: 8.35.0(eslint@9.28.0)(typescript@5.8.3)
 
   ../../workspaces/plugins/overview:
     dependencies:
@@ -2432,6 +2536,34 @@ packages:
         integrity: sha512-kFSyxiEDwv1WLl2fgsq6pPBbw5aWKrsY2/noi1Id0TK0UParSF62oFQFGHXIyaG4pp2tEub/Zlel+fjjZILDsw==,
       }
     engines: { node: ">=18" }
+  '@tanstack/eslint-plugin-query@5.81.2':
+    resolution: {integrity: sha512-h4k6P6fm5VhKP5NkK+0TTVpGGyKQdx6tk7NYYG7J7PkSu7ClpLgBihw7yzK8N3n5zPaF3IMyErxfoNiXWH/3/A==}
+    peerDependencies:
+      eslint: ^8.57.0 || ^9.0.0
+
+  '@tanstack/query-core@5.81.5':
+    resolution: {integrity: sha512-ZJOgCy/z2qpZXWaj/oxvodDx07XcQa9BF92c0oINjHkoqUPsmm3uG08HpTaviviZ/N9eP1f9CM7mKSEkIo7O1Q==}
+
+  '@tanstack/react-query@5.81.5':
+    resolution: {integrity: sha512-lOf2KqRRiYWpQT86eeeftAGnjuTR35myTP8MXyvHa81VlomoAWNEd8x5vkcAfQefu0qtYCvyqLropFZqgI2EQw==}
+    peerDependencies:
+      react: ^18 || ^19
+
+  '@testing-library/dom@10.4.0':
+    resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
+    engines: {node: '>=18'}
+
+  '@testing-library/jest-dom@6.5.0':
+    resolution: {integrity: sha512-xGGHpBXYSHUUr6XsKBfs85TWlYKpTc37cSBBVrXcib2MkHLboWlkClhWF37JKlDb9KEq3dHs+f2xR7XJEWGBxA==}
+    engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
+
+  '@testing-library/jest-dom@6.6.3':
+    resolution: {integrity: sha512-IteBhl4XqYNkM54f4ejhLRJiZNqcSCoXUOG2CPK7qbD322KjQozM4kHQOfkG2oln9b9HTYqs+Sae8vBATubxxA==}
+    engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
+
+  '@testing-library/react@16.3.0':
+    resolution: {integrity: sha512-kFSyxiEDwv1WLl2fgsq6pPBbw5aWKrsY2/noi1Id0TK0UParSF62oFQFGHXIyaG4pp2tEub/Zlel+fjjZILDsw==}
+    engines: {node: '>=18'}
     peerDependencies:
       "@testing-library/dom": ^10.0.0
       "@types/react": ^18.0.0 || ^19.0.0
@@ -8739,7 +8871,22 @@ snapshots:
     dependencies:
       storybook: 8.6.14(prettier@3.6.2)
 
-  "@testing-library/dom@10.4.0":
+  '@tanstack/eslint-plugin-query@5.81.2(eslint@9.28.0)(typescript@5.8.3)':
+    dependencies:
+      '@typescript-eslint/utils': 8.35.0(eslint@9.28.0)(typescript@5.8.3)
+      eslint: 9.28.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  '@tanstack/query-core@5.81.5': {}
+
+  '@tanstack/react-query@5.81.5(react@19.1.0)':
+    dependencies:
+      '@tanstack/query-core': 5.81.5
+      react: 19.1.0
+
+  '@testing-library/dom@10.4.0':
     dependencies:
       "@babel/code-frame": 7.27.1
       "@babel/runtime": 7.27.6

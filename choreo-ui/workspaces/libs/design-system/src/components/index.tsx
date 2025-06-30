@@ -24,4 +24,3 @@ export * from './RadioGroup';
 export * from './AvatarUserName';
 export * from './ButtonContainer';
 export * from './CardButton';
-export * from './CardDropdown';

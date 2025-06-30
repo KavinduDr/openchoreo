@@ -14,13 +14,13 @@ export const Default: Story = {
   args: {
     children: 'PageLayout Content',
     title: 'Components',
-    backButtonText: 'Back to Projects'
+    backButtonText: 'Back to Projects',
   },
 };
 
 export const Disabled: Story = {
   args: {
     children: 'Environents',
-    title: 'Environments'
+    title: 'Environments',
   },
 };

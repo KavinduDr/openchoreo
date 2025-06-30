@@ -28,7 +28,8 @@
     "@open-choreo/plugin-core": "workspace:*",
     "@open-choreo/plugin-top-level-selector": "workspace:*",
     "@open-choreo/plugin-overview": "workspace:*",
-    "@open-choreo/top-right-menu": "workspace:*"
+    "@open-choreo/top-right-menu": "workspace:*",
+    "@open-choreo/api-client": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "~9.28.0",

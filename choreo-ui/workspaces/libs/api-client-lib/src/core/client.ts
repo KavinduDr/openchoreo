@@ -33,6 +33,7 @@ export class ChoreoClient implements ChoreoApiClient {
 
   // Components API methods
   listProjectComponents = componentsApi.listProjectComponents;
+  getComponent = componentsApi.getComponent;
 
   // Deployments API methods
   listComponentDeployments = deploymentsApi.listComponentDeployments;

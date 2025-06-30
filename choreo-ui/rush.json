@@ -462,8 +462,8 @@
       "projectFolder": "workspaces/plugins/top-level-selector"
     },
     {
-      "packageName": "@open-choreo/api-client",
-      "projectFolder": "workspaces/libs/api-client"
+      "packageName": "@open-choreo/api-client-lib",
+      "projectFolder": "workspaces/libs/api-client-lib"
     },
     {
       "packageName": "@open-choreo/common-views",
@@ -474,5 +474,9 @@
     {
       "packageName": "@open-choreo/top-right-menu",
       "projectFolder": "workspaces/plugins/top-right-menu"
+    },
+    {
+      "packageName": "@open-choreo/api-client",
+      "projectFolder": "workspaces/plugins/api-client"
     }  ]
 }
