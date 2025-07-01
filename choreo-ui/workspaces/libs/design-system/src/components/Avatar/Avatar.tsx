@@ -18,6 +18,8 @@ export type avatarBackgroundColorVariant =
   | 'info'
   | 'success';
 
+export type sizeVariant = 'small' | 'medium' | 'large' | 'extraLarge';
+
 export interface AvatarProps {
   /**
    * The content of the component
@@ -59,12 +61,13 @@ export interface AvatarProps {
    * Additional props for MUI Avatar
    */
   [key: string]: any;
+  size: sizeVariant;
 }
 
 export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
   ({ children, ...props }, ref) => {
     return (
-      <StyledAvatar ref={ref} {...props}>
+      <StyledAvatar ref={ref} {...props} data-size={props.size}>
         {children}
       </StyledAvatar>
     );

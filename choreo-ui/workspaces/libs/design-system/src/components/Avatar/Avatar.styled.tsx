@@ -133,5 +133,46 @@ export const StyledAvatar: ComponentType<AvatarProps> = styled(
     height,
     boxShadow: theme.shadows[1],
     pointerEvents: disabled ? 'none' : ('auto' as const),
+
+    '&[data-size="small"]': {
+      '& svg': {
+        fontSize: theme.spacing(1.25),
+      },
+      width: theme.spacing(2.5),
+      height: theme.spacing(2.5),
+      fontSize: theme.typography.h6.fontSize,
+      fontWeight: theme.typography.h6.fontWeight,
+      lineHeight: 1,
+    },
+    '&[data-size="medium"]': {
+      width: theme.spacing(4),
+      height: theme.spacing(4),
+      fontSize: theme.typography.h5.fontSize,
+      fontWeight: theme.typography.h5.fontWeight,
+      lineHeight: 1,
+      '& svg': {
+        fontSize: theme.spacing(1.75),
+      },
+    },
+    '&[data-size="large"]': {
+      '& svg': {
+        fontSize: theme.spacing(2.5),
+      },
+      width: theme.spacing(5),
+      height: theme.spacing(5),
+      fontSize: theme.typography.h4.fontSize,
+      fontWeight: theme.typography.h4.fontWeight,
+      lineHeight: 1,
+    },
+    '&[data-size="extraLarge"]': {
+      width: theme.spacing(10),
+      height: theme.spacing(10),
+      fontSize: theme.typography.h1.fontSize,
+      fontWeight: theme.typography.h1.fontWeight,
+      lineHeight: 1,
+      '& svg': {
+        fontSize: theme.spacing(4),
+      },
+    },
   };
 });
