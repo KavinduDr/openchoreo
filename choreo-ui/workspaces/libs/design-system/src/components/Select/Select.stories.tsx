@@ -59,486 +59,201 @@ const optionListWithIcon = [
   },
 ];
 
-// Define proper types for the option objects
-interface OptionType {
-  label: string;
-  value: string;
-}
-
-interface OptionWithIconType extends OptionType {
-  icon: string;
-}
-
 export default meta;
 type Story = StoryObj<typeof Select>;
 
-export const Default: Story = {
-  args: {
-    options: optionList,
-    label: 'Select a movie',
-    placeholder: 'Choose a movie',
-  },
-  render: function DefaultSelect(args) {
-    // Remove unused onChange destructuring
-    const [value, setValue] = React.useState<OptionType>(optionList[0]);
-    const handleChange = (val: unknown) => {
-      setValue(val as OptionType);
-    };
-
-    return (
-      <Box sx={{ maxWidth: 800 }}>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="h3">Select</Typography>
-            </Box>
-            <Box sx={{ mb: 3 }}>
-              <Select
-                label="Select List"
-                {...args}
-                name="selectFromList"
-                labelId="SelectFromList"
-                options={optionList}
-                getOptionLabel={(option: unknown) =>
-                  (option as OptionType).label
-                }
-                onChange={handleChange}
-                value={value}
-                testId="select-from-list"
-              />
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  },
-};
-
-export const WithPlaceholder: Story = {
-  args: {
-    options: optionList,
-    label: 'Select a movie',
-    placeholder: 'Choose a movie',
-  },
-  render: function WithPlaceholderSelect(args) {
-    const [value, setValue] = React.useState<OptionType>(optionList[0]);
-    const handleChange = (val: unknown) => {
-      setValue(val as OptionType);
-    };
-
-    return (
-      <Box sx={{ maxWidth: 800 }}>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="h3">Select</Typography>
-            </Box>
-            <Box sx={{ mb: 3 }}>
-              <Select
-                label="Select List"
-                {...args}
-                name="selectFromList"
-                labelId="SelectFromList"
-                options={optionList}
-                getOptionLabel={(option: unknown) =>
-                  (option as OptionType).label
-                }
-                onChange={handleChange}
-                value={value}
-                testId="select-from-list"
-              />
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  },
-};
-
-export const WithSelectError: Story = {
-  args: {
-    options: optionList,
-    label: 'Select a movie',
-    placeholder: 'Choose a movie',
-    error: true,
-  },
-  render: function WithSelectErrorSelect(args) {
-    const [value, setValue] = React.useState<OptionType>(optionList[0]);
-    const handleChange = (val: unknown) => {
-      setValue(val as OptionType);
-    };
-
-    return (
-      <Box sx={{ maxWidth: 800 }}>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="h3">Select</Typography>
-            </Box>
-            <Box sx={{ mb: 3 }}>
-              <Select
-                label="Select List"
-                {...args}
-                name="selectFromList"
-                labelId="SelectFromList"
-                options={optionList}
-                getOptionLabel={(option: unknown) =>
-                  (option as OptionType).label
-                }
-                onChange={handleChange}
-                helperText="This is an error message"
-                value={value}
-                testId="select-from-list"
-              />
-            </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  },
-};
-
-export const SelectDisabled: Story = {
-  args: {
-    options: optionList,
-    label: 'Select Disabled',
-    placeholder: 'Choose a movie',
-    disabled: true,
-  },
-  render: function SelectDisabled(args) {
+export const Primary: Story = {
+  render: function PrimarySelect(args) {
     const { onChange, ...restArgs } = args;
     const [value, setValue] = React.useState(optionList[0]);
     const handleChange = (val: any) => {
       setValue(val);
     };
 
+    const [menuValue, setMenuValue] = React.useState(optionListWithIcon[0]);
+    const handleMenuValueChange = (val: any) => {
+      setMenuValue(val);
+    };
+
     return (
-      <Box sx={{ maxWidth: 800 }}>
+      <Box maxWidth={800}>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
+            <Box mb={1}>
               <Typography variant="h3">Select</Typography>
             </Box>
-            <Box sx={{ mb: 3 }}>
+            <Box mb={3}>
               <Select
-                label="Select List"
                 {...restArgs}
+                name="selectList"
+                label="Select List"
+                labelId="SelectList"
+                options={optionList}
+                getOptionLabel={(option: any) => option.label}
+                onChange={handleChange}
+                value={value}
+                testId="select-from-list"
+              />
+            </Box>
+            <Box mb={3}>
+              <Select
+                {...restArgs}
+                onChange={handleChange}
+                name="selectPlaceholder"
+                label="Select Placeholder"
+                labelId="SelectPlaceholder"
+                options={optionList}
+                getOptionLabel={(option: any) => option.label}
+                placeholder="Select Option"
+                testId="select-placeholder"
+                value={value}
+              />
+            </Box>
+            <Box mb={3}>
+              <Select
+                {...restArgs}
+                onChange={handleChange}
+                name="selectError"
+                label="Select Error"
+                labelId="SelectError"
+                options={optionList}
+                getOptionLabel={(option: any) => option.label}
+                helperText="Validation error"
+                error
+                placeholder="Select Option"
+                testId="select-error"
+                value={value}
+              />
+            </Box>
+            <Box mb={3}>
+              <Select
+                {...restArgs}
+                onChange={handleChange}
                 name="selectDisabled"
+                label="Select Disabled"
                 labelId="SelectDisabled"
                 options={optionList}
                 getOptionLabel={(option: any) => option.label}
-                onChange={handleChange}
-                value={value}
-                disabled={true}
-                placeholder="Choose a movie"
+                placeholder="Select Option"
                 testId="select-disabled"
+                value={value}
+                disabled
               />
             </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  },
-};
-
-export const WithOptional: Story = {
-  args: {
-    options: optionList,
-    label: 'Select with optional',
-    placeholder: 'Choose a movie',
-    optional: true,
-  },
-  render: function SelectWithOptional(args) {
-    const { onChange, ...restArgs } = args;
-    const [value, setValue] = React.useState(optionList[0]);
-    const handleChange = (val: any) => {
-      setValue(val);
-    };
-
-    return (
-      <Box sx={{ maxWidth: 800 }}>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="h3">Select</Typography>
-            </Box>
-            <Box sx={{ mb: 3 }}>
+            <Box mb={3}>
               <Select
-                label="Select List"
                 {...restArgs}
-                name="selectWithOptional"
-                labelId="SelectWithOptional"
+                onChange={handleChange}
+                name="selectPlaceholder"
+                label="Select with optional"
+                labelId="SelectPlaceholder"
                 options={optionList}
                 getOptionLabel={(option: any) => option.label}
-                onChange={handleChange}
                 value={value}
-                optional={true}
-                placeholder="Choose a movie"
+                placeholder="Select Option"
                 testId="select-with-optional"
+                optional
               />
             </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  },
-};
-
-export const WithTooltip: Story = {
-  args: {
-    options: optionList,
-    label: 'Select with tooltip',
-    placeholder: 'Choose a movie',
-    tooltip: 'This is a tooltip for the select component',
-  },
-  render: function SelectWithTooltip(args) {
-    const { onChange, ...restArgs } = args;
-    const [value, setValue] = React.useState(optionList[0]);
-    const handleChange = (val: any) => {
-      setValue(val);
-    };
-
-    return (
-      <Box sx={{ maxWidth: 800 }}>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="h3">Select</Typography>
-            </Box>
-            <Box sx={{ mb: 3 }}>
+            <Box mb={3}>
               <Select
-                label="Select List"
                 {...restArgs}
-                name="selectWithOptional"
-                labelId="SelectWithOptional"
+                onChange={handleChange}
+                name="selectPlaceholder"
+                label="Select with tooltip"
+                labelId="SelectPlaceholder"
                 options={optionList}
                 getOptionLabel={(option: any) => option.label}
-                onChange={handleChange}
+                placeholder="Select Option"
                 value={value}
-                optional={true}
-                tooltip="This is a tooltip for the select component"
-                placeholder="Choose a movie"
-                testId="select-with-optional"
+                tooltip="Tooltip goes here"
+                testId="select-with-tooltip"
               />
             </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  },
-};
-
-export const WithCreateButton: Story = {
-  args: {
-    options: optionList,
-    label: 'Select with create button',
-    placeholder: 'Choose a movie',
-    addBtnText: 'Add Movie',
-  },
-  render: function SelectWithCreateButton(args) {
-    const { onChange, ...restArgs } = args;
-    const [value, setValue] = React.useState(optionList[0]);
-    const handleChange = (val: any) => {
-      setValue(val);
-    };
-
-    return (
-      <Box sx={{ maxWidth: 800 }}>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="h3">Select</Typography>
-            </Box>
-            <Box sx={{ mb: 3 }}>
+            <Box mb={3}>
               <Select
-                label="Select List"
                 {...restArgs}
-                name="selectWithOptional"
-                labelId="SelectWithOptional"
+                onChange={handleChange}
+                name="selectPlaceholder"
+                label="Select with Create Button"
+                labelId="SelectPlaceholder"
                 options={optionList}
                 getOptionLabel={(option: any) => option.label}
-                onChange={handleChange}
+                placeholder="Select Option"
                 value={value}
-                optional={true}
-                tooltip="This is a tooltip for the select component"
-                placeholder="Choose a movie"
-                testId="select-with-optional"
+                optional
+                tooltip="Tooltip goes here"
+                addBtnText="Create New"
+                testId="select-with-create-button"
                 onAddClick={() => {}}
               />
             </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  },
-};
-
-export const WithStartIcon: Story = {
-  args: {
-    options: optionListWithIcon,
-    label: 'Select with start icon',
-    placeholder: 'Choose a service',
-  },
-  render: function SelectWithStartIcon(args) {
-    const { onChange, ...restArgs } = args;
-    const [value, setValue] = React.useState(optionList[0]);
-    const handleChange = (val: any) => {
-      setValue(val);
-    };
-
-    return (
-      <Box sx={{ maxWidth: 800 }}>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="h3">Select</Typography>
-            </Box>
-            <Box sx={{ mb: 3 }}>
+            <Box mb={3}>
               <Select
-                label="Select List"
-                {...restArgs}
-                name="selectWithStartIcon"
-                labelId="SelectWithStartIcon"
+                onChange={handleChange}
+                name="selectPlaceholder"
+                label="Select with start icon"
+                labelId="SelectPlaceholder"
                 options={optionList}
                 getOptionLabel={(option: any) => option.label}
-                onChange={handleChange}
+                placeholder="Select Option"
                 value={value}
-                optional={true}
-                tooltip="This is a tooltip for the select component"
-                placeholder="Choose a movie"
+                optional
+                tooltip="Tooltip goes here"
                 testId="select-with-start-icon"
                 startIcon={<Branch />}
               />
             </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  },
-};
-
-export const SelectListWithIcon: Story = {
-  args: {
-    options: optionListWithIcon,
-    label: 'Select with icon',
-    placeholder: 'Choose a service',
-  },
-  render: function SelectListWithIconSelect(args) {
-    const [menuValue, setMenuValue] = React.useState<OptionWithIconType>(
-      optionListWithIcon[0]
-    );
-    const handleMenuValueChange = (val: unknown) => {
-      setMenuValue(val as OptionWithIconType);
-    };
-
-    return (
-      <Box sx={{ maxWidth: 800 }}>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="h3">Select</Typography>
+            <Box mb={2}>
+              <Typography variant="h4">Select with menu item icon</Typography>
             </Box>
-            <Box sx={{ mb: 3 }}>
+            <Box mb={3}>
               <Select
-                {...args}
+                {...restArgs}
                 name="selectListMenuIcon"
                 label="Select List Menu Icon"
                 labelId="SelectListMenuIcon"
                 options={optionListWithIcon}
-                getOptionLabel={(option: unknown) =>
-                  (option as OptionWithIconType).label
-                }
-                getOptionIcon={(option: unknown) =>
-                  (option as OptionWithIconType).icon
-                }
+                getOptionLabel={(option: any) => option.label}
+                getOptionIcon={(option: any) => option.icon}
                 onChange={handleMenuValueChange}
                 value={menuValue}
                 testId="select-list-menu-icon"
               />
             </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  },
-};
-
-export const WithClear: Story = {
-  args: {
-    options: optionList,
-    label: 'Select with clear',
-    placeholder: 'Choose a movie',
-    isClearable: true,
-  },
-  render: function SelectWithClear(args) {
-    const [value, setValue] = React.useState(optionList[0]);
-    const handleChange = (val: any) => {
-      setValue(val);
-    };
-
-    return (
-      <Box sx={{ maxWidth: 800 }}>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="h3">Select</Typography>
+            <Box mb={2}>
+              <Typography variant="h4">Select with clear</Typography>
             </Box>
-            <Box sx={{ mb: 3 }}>
+            <Box mb={3}>
               <Select
-                {...args}
-                name="selectListClearable"
-                label="Select List Clearable"
-                labelId="SelectListClearable"
+                onChange={handleChange}
+                name="selectWithClear"
+                label="Select with clear button"
+                labelId="SelectWithClear"
+                isClearable
                 options={optionList}
                 getOptionLabel={(option: any) => option.label}
-                onChange={handleChange}
+                placeholder="Select Option"
                 value={value}
-                testId="select-list-clearable"
+                testId="select-with-clear-button"
               />
             </Box>
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  },
-};
-
-export const WithLoader: Story = {
-  args: {
-    options: optionList,
-    label: 'Select with loader',
-    placeholder: 'Choose a movie',
-    isLoading: true,
-  },
-  render: function SelectWithLoader(args) {
-    const { onChange, ...restArgs } = args;
-    const [value, setValue] = React.useState(optionList[0]);
-    const handleChange = (val: any) => {
-      setValue(val);
-    };
-
-    return (
-      <Box sx={{ maxWidth: 800 }}>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
-              <Typography variant="h3">Select</Typography>
+            <Box mb={2}>
+              <Typography variant="h4">Select with loader</Typography>
             </Box>
-            <Box sx={{ mb: 3 }}>
+            <Box mb={3}>
               <Select
-                label="Select List"
-                {...restArgs}
+                onChange={handleChange}
                 name="selectWithLoader"
+                label="Select with loader"
                 labelId="SelectWithLoader"
+                isClearable
                 options={optionList}
-                getOptionLabel={(option: any) => option.label}
-                onChange={handleChange}
-                value={value}
-                optional={true}
-                tooltip="This is a tooltip for the select component"
-                placeholder="Choose a movie"
-                testId="select-with-loader"
-                isLoading={true}
+                getOptionLabel={(option: any) => option?.label || ''}
+                placeholder="Select Option"
+                value={null}
+                testId="select-with-loader-icon"
+                isLoading
               />
             </Box>
           </Grid>
@@ -548,13 +263,8 @@ export const WithLoader: Story = {
   },
 };
 
-export const WithSelectEndAction: Story = {
-  args: {
-    options: optionList,
-    label: 'Select with end action',
-    placeholder: 'Choose a movie',
-  },
-  render: function SelectWithEndAction(args) {
+export const SelectEndActions: Story = {
+  render: function SelectEndActions(args) {
     const { onChange, ...restArgs } = args;
     const [value, setValue] = React.useState(optionList[0]);
     const handleChange = (val: any) => {
@@ -562,13 +272,13 @@ export const WithSelectEndAction: Story = {
     };
 
     return (
-      <Box sx={{ maxWidth: 800 }}>
+      <Box maxWidth={800}>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ mb: 1 }}>
+            <Box mb={1}>
               <Typography variant="h3">Select End Actions</Typography>
             </Box>
-            <Box sx={{ mb: 3 }}>
+            <Box mb={3}>
               <Select
                 {...restArgs}
                 name="selectList"
@@ -580,7 +290,6 @@ export const WithSelectEndAction: Story = {
                 testId="select-end-action"
                 value={value}
                 optional
-                tooltip="This is tool tip"
                 info={
                   <Chip
                     label="action"
@@ -590,9 +299,10 @@ export const WithSelectEndAction: Story = {
                     testId="select"
                   />
                 }
+                tooltip="This is tool tip"
                 actions={
                   <Button
-                    testId="select-action"
+                    testId="configure"
                     size="small"
                     variant="link"
                     startIcon={<Tools />}

@@ -104,7 +104,7 @@ export const StyledChip: ComponentType<MUIChipProps> = styled(MUIChip)(
       '&.MuiChip-colorPrimary': {
         border: `1px solid ${theme.palette.primary.main}`,
         color: theme.palette.primary.main,
-        backgroundColor: theme.palette.primary.light,
+        backgroundColor: alpha(theme.palette.primary.main, 0.05),
       },
       '&.MuiChip-colorSecondary': {
         backgroundColor: theme.palette.common.white,
