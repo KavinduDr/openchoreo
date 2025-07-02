@@ -39,7 +39,7 @@ export const Default: Story = {
         <Card testId="cardbutton">
           <CardContent>
             <Grid container spacing={3}>
-              <Grid size={{ xs: 12, md: 6, lg: 4, xl: 3 }}>
+              <Grid size={{ xs: 12, md: 6, lg: 6, xl: 6 }}>
                 <CardButton
                   {...args}
                   icon={<Github width={50} height={50} />}
@@ -49,7 +49,7 @@ export const Default: Story = {
                   testId="github"
                 />
               </Grid>
-              <Grid size={{ xs: 12, md: 6, lg: 4, xl: 3 }}>
+              <Grid size={{ xs: 12, md: 6, lg: 6, xl: 6 }}>
                 <CardButton
                   {...args}
                   icon={<Bitbucket />}
@@ -66,7 +66,7 @@ export const Default: Story = {
                   <Typography variant="h5">With Error</Typography>
                 </Box>
               </Grid>
-              <Grid size={{ xs: 12, md: 6, lg: 4, xl: 3 }}>
+              <Grid size={{ xs: 12, md: 6, lg: 6, xl: 6 }}>
                 <CardButton
                   {...args}
                   icon={<Github />}
@@ -84,7 +84,7 @@ export const Default: Story = {
                   <Typography variant="h5">With end icon</Typography>
                 </Box>
               </Grid>
-              <Grid size={{ xs: 12, md: 12, lg: 12, xl: 12 }}>
+              <Grid size={{ xs: 12, md: 6, lg: 6, xl: 6 }}>
                 <CardButton
                   {...args}
                   icon={<Github />}

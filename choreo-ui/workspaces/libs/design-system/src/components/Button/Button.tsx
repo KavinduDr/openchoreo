@@ -30,7 +30,7 @@ export interface ButtonProps {
   /**
    * Test id for the button
    */
-  testId?: string;
+  testId: string;
   [key: string]: any;
 }
 
