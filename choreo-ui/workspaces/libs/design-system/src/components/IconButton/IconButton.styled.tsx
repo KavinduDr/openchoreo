@@ -14,7 +14,6 @@ export const StyledIconButton = styled(IconButton, {
 })(({
   theme,
   size = 'medium',
-  color = 'primary',
   disabled,
 }: {
   theme: Theme;
@@ -157,6 +156,9 @@ export const StyledIconButton = styled(IconButton, {
 
     '&[data-icon-button-primaryContained="true"]': {
       backgroundColor: theme.palette.primary.main,
+      '& svg': {
+        color: theme.palette.common.white,
+      },
       '&:hover': {
         backgroundColor: theme.palette.primary.dark,
       },
@@ -214,9 +216,13 @@ export const StyledIconButton = styled(IconButton, {
         boxShadow: 'none',
       },
     },
+
     '&[data-icon-button-errorContained="true"]': {
       backgroundColor: theme.palette.error.main,
       border: `1px solid ${theme.palette.error.main}`,
+      '& svg': {
+        color: theme.palette.common.white,
+      },
       '&:hover': {
         backgroundColor: theme.palette.error.dark,
         border: `1px solid ${theme.palette.error.dark}`,
@@ -245,9 +251,13 @@ export const StyledIconButton = styled(IconButton, {
         boxShadow: 'none',
       },
     },
+
     '&[data-icon-button-successContained="true"]': {
       backgroundColor: theme.palette.success.main,
       border: `1px solid ${theme.palette.success.main}`,
+      '& svg': {
+        color: theme.palette.common.white,
+      },
       '&:hover': {
         backgroundColor: theme.palette.success.dark,
         border: `1px solid ${theme.palette.success.dark}`,
@@ -276,9 +286,13 @@ export const StyledIconButton = styled(IconButton, {
         boxShadow: 'none',
       },
     },
+
     '&[data-icon-button-warningContained="true"]': {
       backgroundColor: theme.palette.warning.main,
       border: `1px solid ${theme.palette.warning.main}`,
+      '& svg': {
+        color: theme.palette.common.white,
+      },
       '&:hover': {
         backgroundColor: theme.palette.warning.dark,
         border: `1px solid ${theme.palette.warning.dark}`,
