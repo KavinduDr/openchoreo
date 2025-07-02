@@ -1,7 +1,7 @@
 import { styled, LinearProgress, LinearProgressProps } from '@mui/material';
 import { ComponentType } from 'react';
 
-export type ProgressBarSize = 'small' | 'medium' | 'large';
+export type ProgressBarHeight = 'small' | 'medium' | 'large';
 
 export type ProgressBarVariant =
   | 'determinate'
@@ -13,13 +13,13 @@ export type ProgressBarColor = 'primary' | 'secondary' | 'inherit';
 
 export interface StyledProgressBarProps extends LinearProgressProps {
   disabled?: boolean;
-  size?: ProgressBarSize;
+  height?: ProgressBarHeight;
   variant?: ProgressBarVariant;
   color?: ProgressBarColor;
 }
 
-const getProgressBarHeight = (size: ProgressBarSize, theme: any) => {
-  switch (size) {
+const getProgressBarHeight = (height: ProgressBarHeight, theme: any) => {
+  switch (height) {
     case 'small':
       return theme.spacing(1);
     case 'medium':
@@ -33,38 +33,36 @@ const getProgressBarHeight = (size: ProgressBarSize, theme: any) => {
 
 export const StyledProgressBar: ComponentType<StyledProgressBarProps> = styled(
   LinearProgress
-)<StyledProgressBarProps>(
-  ({ disabled, theme, size = 'medium', color = 'primary' }) => ({
-    opacity: disabled ? 0.5 : 1,
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    pointerEvents: disabled ? 'none' : 'auto',
-    backgroundColor:
-      color === 'primary'
-        ? theme.palette.primary.light
-        : theme.palette.grey[200],
-    width: '100%',
-    marginBottom: theme.spacing(2),
-    borderRadius: theme.spacing(1),
-    height: getProgressBarHeight(size, theme),
-    determinatePrimary: {
-      '&.MuiLinearProgress-determinate': {
-        backgroundColor: theme.palette.primary.light,
-      },
+)<StyledProgressBarProps>(({ disabled, theme, height = 'small', variant }) => ({
+  opacity: disabled ? 0.5 : 1,
+  cursor: disabled ? 'not-allowed' : 'pointer',
+  pointerEvents: disabled ? 'none' : 'auto',
+  backgroundColor:
+    variant === 'indeterminate'
+      ? theme.palette.primary.light
+      : theme.palette.grey[200],
+  width: '100%',
+  marginBottom: theme.spacing(2),
+  borderRadius: theme.spacing(1),
+  height: getProgressBarHeight(height, theme),
+  determinatePrimary: {
+    '&.MuiLinearProgress-determinate': {
+      backgroundColor: theme.palette.primary.light,
     },
-    determinateSecondary: {
-      '&.MuiLinearProgress-determinate': {
-        backgroundColor: theme.palette.grey[200],
-      },
+  },
+  determinateSecondary: {
+    '&.MuiLinearProgress-determinate': {
+      backgroundColor: theme.palette.grey[200],
     },
-    progressPrimary: {
-      '& .MuiLinearProgress-bar': {
-        backgroundColor: theme.palette.primary.main,
-      },
+  },
+  progressPrimary: {
+    '& .MuiLinearProgress-bar': {
+      backgroundColor: theme.palette.primary.main,
     },
-    progressSecondary: {
-      '& .MuiLinearProgress-bar': {
-        backgroundColor: theme.palette.secondary.main,
-      },
+  },
+  progressSecondary: {
+    '& .MuiLinearProgress-bar': {
+      backgroundColor: theme.palette.secondary.main,
     },
-  })
-);
+  },
+}));

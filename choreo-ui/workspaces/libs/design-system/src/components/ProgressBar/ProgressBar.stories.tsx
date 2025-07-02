@@ -24,29 +24,57 @@ const meta: Meta<typeof ProgressBar> = {
 export default meta;
 type Story = StoryObj<typeof ProgressBar>;
 
-export const Default: Story = {
-  args: {
-    children: 'ProgressBar Content',
+export const LinearDeterminate: Story = {
+  render: () => {
+    return (
+      <ProgressBar
+        value={90}
+        progressColor="primary"
+        determinateColor="secondary"
+        variant="determinate"
+      />
+    );
   },
 };
 
-export const Disabled: Story = {
-  args: {
-    children: 'Disabled ProgressBar',
-    disabled: true,
+export const LinearIndeterminate: Story = {
+  render: () => {
+    return (
+      <ProgressBar
+        value={90}
+        progressColor="primary"
+        determinateColor="secondary"
+        variant="indeterminate"
+      />
+    );
   },
 };
 
-export const Determinate: Story = {
-  args: {
-    variant: 'determinate',
-    children: 'Determinate ProgressBar',
-  },
-};
-
-export const Indeterminate: Story = {
-  args: {
-    variant: 'indeterminate',
-    children: 'Indeterminate ProgressBar',
+export const LinearDeterminateSizes: Story = {
+  render: () => {
+    return (
+      <>
+        <ProgressBar
+          value={90}
+          progressColor="primary"
+          determinateColor="secondary"
+          variant="determinate"
+        />
+        <ProgressBar
+          value={90}
+          progressColor="primary"
+          determinateColor="secondary"
+          variant="determinate"
+          height="medium"
+        />
+        <ProgressBar
+          value={90}
+          progressColor="primary"
+          determinateColor="secondary"
+          variant="determinate"
+          height="large"
+        />
+      </>
+    );
   },
 };

@@ -9,7 +9,7 @@ export type ProgressBarVariant =
 
 export type ProgressBarColor = 'primary' | 'secondary' | 'inherit';
 
-export type ProgressBarSize = 'small' | 'medium' | 'large';
+export type ProgressBarHeight = 'small' | 'medium' | 'large';
 
 export interface ProgressBarProps {
   children?: React.ReactNode;
@@ -20,7 +20,7 @@ export interface ProgressBarProps {
   color?: ProgressBarColor;
   value?: number;
   valueBuffer?: number;
-  size?: ProgressBarSize;
+  height?: ProgressBarHeight;
   sx?: React.CSSProperties;
   [key: string]: any;
 }
@@ -35,7 +35,9 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
       children,
       className,
       onClick,
-      size = 'small',
+      height = 'small',
+      color = 'primary',
+      variant = 'indeterminate',
       disabled = false,
       ...props
     },
@@ -54,11 +56,11 @@ export const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
       <StyledProgressBar
         ref={ref}
         className={className}
-        color={props.color || 'primary'}
-        variant={props.variant || 'indeterminate'}
+        color={color}
+        variant={variant}
         onClick={handleClick}
         disabled={disabled}
-        size={size}
+        height={height}
         {...props}
       />
     );
