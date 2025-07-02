@@ -585,84 +585,75 @@ export const Primary: Story = {
   },
 };
 
-export const Secondary: Story = {
-  args: {
-    children: 'Secondary Button',
-    variant: 'contained',
-    color: 'secondary',
-  },
-};
-
-export const Outlined: Story = {
-  args: {
-    children: 'Outlined Button',
-    variant: 'outlined',
-    color: 'primary',
-  },
-};
-
-export const Text: Story = {
-  args: {
-    children: 'Text Button',
-    variant: 'text',
-    color: 'primary',
-  },
-};
-
-export const Subtle: Story = {
-  args: {
-    children: 'Subtle Button',
-    variant: 'subtle',
-    color: 'primary',
-  },
-};
-
-export const Link: Story = {
-  args: {
-    children: 'Link Button',
-    variant: 'link',
-    color: 'primary',
-  },
-};
-
-export const Tiny: Story = {
-  args: {
-    children: 'Tiny Button',
-    size: 'tiny',
-  },
-};
-
-export const Small: Story = {
-  args: {
-    children: 'Small Button',
-    size: 'small',
-  },
-};
-
-export const Medium: Story = {
-  args: {
-    children: 'Medium Button',
-    size: 'medium',
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    children: 'Disabled Button',
-    disabled: true,
-  },
-};
-
-export const Pill: Story = {
-  args: {
-    children: 'Pill Button',
-    pill: true,
-  },
-};
-
-export const FullWidth: Story = {
-  args: {
-    children: 'Full Width Button',
-    fullWidth: true,
+export const TemplateSizes: Story = {
+  render: (_args) => {
+    return (
+      <Card testId="button-sizes">
+        <CardContent>
+          <Box>
+            <Box mb={2}>
+              <Button
+                variant="contained"
+                size="tiny"
+                testId="btn-link"
+                startIcon={<Add />}
+              >
+                Button
+              </Button>
+            </Box>
+            <Box mb={2}>
+              <Button
+                variant="contained"
+                size="tiny"
+                testId="btn-link"
+                endIcon={<Add />}
+              >
+                Button
+              </Button>
+            </Box>
+            <Box mb={2}>
+              <Button
+                variant="contained"
+                size="small"
+                testId="btn-link"
+                startIcon={<Add />}
+              >
+                Button
+              </Button>
+            </Box>
+            <Box mb={2}>
+              <Button
+                variant="contained"
+                size="small"
+                testId="btn-link"
+                endIcon={<Add />}
+              >
+                Button
+              </Button>
+            </Box>
+            <Box mb={2}>
+              <Button
+                variant="contained"
+                size="medium"
+                testId="btn-link"
+                startIcon={<Add />}
+              >
+                Button
+              </Button>
+            </Box>
+            <Box mb={2}>
+              <Button
+                variant="contained"
+                size="medium"
+                testId="btn-link"
+                endIcon={<Add />}
+              >
+                Button
+              </Button>
+            </Box>
+          </Box>
+        </CardContent>
+      </Card>
+    );
   },
 };
