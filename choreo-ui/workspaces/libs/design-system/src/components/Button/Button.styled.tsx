@@ -159,6 +159,9 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     backgroundColor: 'transparent',
     border: 'none',
     boxShadow: 'none',
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.light,
+    },
     '&.MuiButton-textPrimary': {
       color: theme.palette.primary.main,
       '&.Mui-disabled': {
