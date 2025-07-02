@@ -37,6 +37,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     <StyledIconButton
       ref={ref}
       theme={useTheme()}
+      disableRipple={true}
       data-cyid={`${props.testId}-icon-button`}
       data-icon-button-variant={variant}
       data-icon-button-rounded={props.rounded}
