@@ -2,73 +2,104 @@ import React from 'react';
 import { StyledIconButton } from './IconButton.styled';
 import { useTheme } from '@mui/material/styles';
 
-export type iconButtonVariant = 'circular' | 'rounded' | 'square'; // not anymore in mui v7
 export type iconButtonColorVariant =
   | 'primary'
   | 'secondary'
   | 'error'
   | 'warning'
-  | 'info'
   | 'success';
 export type iconButtonSizeVariant = 'tiny' | 'small' | 'medium';
 export type edgeVariant = 'start' | 'end' | false;
+export type variant = 'contained' | 'subtle' | 'outlined' | 'text' | 'link';
 
 export interface IconButtonProps {
-  /**
-   * The content of the component
-   */
+  testId: string;
   children?: React.ReactNode;
-  /**
-   * Additional className for the component
-   */
   className?: string;
-  /**
-   * Optional click handler
-   */
   onClick?: (event: React.MouseEvent) => void;
-  /**
-   * If true, the component will be disabled
-   */
   disabled?: boolean;
-  /**
-   * edge variant of the icon button
-   */
   edge?: edgeVariant;
-  /**
-   * The color variant of the component
-   */
+  variant?: variant;
+  rounded?: boolean;
   color?: iconButtonColorVariant;
-  /**
-   * The size variant of the component
-   */
   size?: iconButtonSizeVariant;
-  /**
-   * disable ripple effect
-   */
+  isActive?: boolean;
+  isInactive?: boolean;
   disableRipple?: boolean;
-  /**
-   * disable focus ripple effect
-   */
   disableFocusRipple?: boolean;
-  /**
-   * disable touch ripple effect
-   */
   disableTouchRipple?: boolean;
-  /**
-   * The sx prop for custom styles
-   */
   sx?: React.CSSProperties;
-  /**
-   * Additional props for MUI IconButton
-   */
   [key: string]: any;
 }
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ children, ...props }, ref) => (
+  ({ children, variant = 'contained', color = 'primary', ...props }, ref) => (
     <StyledIconButton
       ref={ref}
       theme={useTheme()}
+      data-cyid={`${props.testId}-icon-button`}
+      data-icon-button-variant={variant}
+      data-icon-button-rounded={props.rounded}
+      data-icon-button-active={props.isActive}
+      data-icon-button-inactive={props.isInactive}
+      data-icon-button-color={color}
+      data-icon-button-primaryContained={
+        variant === 'contained' && color === 'primary'
+      }
+      data-icon-button-primaryText={variant === 'text' && color === 'primary'}
+      data-icon-button-primaryOutlined={
+        variant === 'outlined' && color === 'primary'
+      }
+      data-icon-button-primarySubtle={
+        variant === 'subtle' && color === 'primary'
+      }
+      data-icon-button-primaryLink={variant === 'link' && color === 'primary'}
+      data-icon-button-secondaryContained={
+        variant === 'contained' && color === 'secondary'
+      }
+      data-icon-button-secondaryText={
+        variant === 'text' && color === 'secondary'
+      }
+      data-icon-button-secondaryOutlined={
+        variant === 'outlined' && color === 'secondary'
+      }
+      data-icon-button-secondarySubtle={
+        variant === 'subtle' && color === 'secondary'
+      }
+      data-icon-button-secondaryLink={
+        variant === 'link' && color === 'secondary'
+      }
+      data-icon-button-errorContained={
+        variant === 'contained' && color === 'error'
+      }
+      data-icon-button-errorText={variant === 'text' && color === 'error'}
+      data-icon-button-errorOutlined={
+        variant === 'outlined' && color === 'error'
+      }
+      data-icon-button-errorSubtle={variant === 'subtle' && color === 'error'}
+      data-icon-button-errorLink={variant === 'link' && color === 'error'}
+      data-icon-button-successContained={
+        variant === 'contained' && color === 'success'
+      }
+      data-icon-button-successText={variant === 'text' && color === 'success'}
+      data-icon-button-successOutlined={
+        variant === 'outlined' && color === 'success'
+      }
+      data-icon-button-successSubtle={
+        variant === 'subtle' && color === 'success'
+      }
+      data-icon-button-successLink={variant === 'link' && color === 'success'}
+      data-icon-button-warningContained={
+        variant === 'contained' && color === 'warning'
+      }
+      data-icon-button-warningText={variant === 'text' && color === 'warning'}
+      data-icon-button-warningOutlined={
+        variant === 'outlined' && color === 'warning'
+      }
+      data-icon-button-warningSubtle={
+        variant === 'subtle' && color === 'warning'
+      }
+      data-icon-button-warningLink={variant === 'link' && color === 'warning'}
       onClick={props.disabled ? undefined : props.onClick}
       disabled={props.disabled}
       {...props}
