@@ -100,30 +100,3 @@ export const WithManyItems: Story = {
     return <PaginationManyItems />;
   },
 };
-
-export const Disabled: Story = {
-  render: () => {
-    const DisabledPagination = () => {
-      const [page] = React.useState(2);
-      const [rowsPerPage] = React.useState(10);
-
-      return (
-        <Box display="flex">
-          <Pagination
-            rowsPerPageOptions={[5, 10, 15, 20]}
-            count={50}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={() => {}}
-            onRowsPerPageChange={() => {}}
-            rowsPerPageLabel="Items per page"
-            testId="disabled-pagination"
-            disabled
-          />
-        </Box>
-      );
-    };
-
-    return <DisabledPagination />;
-  },
-};

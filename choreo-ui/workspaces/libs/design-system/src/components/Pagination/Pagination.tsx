@@ -11,11 +11,8 @@ import { Typography, Box } from '@mui/material';
 import { Select } from '../Select';
 
 export interface PaginationProps {
-  /** Additional CSS class names */
   className?: string;
-  /** Click event handler */
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
-  /** Whether the component is disabled */
   disabled?: boolean;
   count?: number;
   rowsPerPageOptions: number[];
