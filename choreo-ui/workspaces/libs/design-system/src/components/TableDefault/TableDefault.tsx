@@ -8,7 +8,7 @@ export interface TableDefaultProps {
   className?: string;
   /** The variant style for the table */
   variant: 'dark' | 'default';
-  testId?: string;
+  testId: string;
 }
 
 export const TableDefault = React.forwardRef<
@@ -20,7 +20,7 @@ export const TableDefault = React.forwardRef<
       ref={ref}
       className={className}
       variant={variant}
-      data-testid={testId}
+      data-cyid={testId}
     >
       {children}
     </StyledTable>

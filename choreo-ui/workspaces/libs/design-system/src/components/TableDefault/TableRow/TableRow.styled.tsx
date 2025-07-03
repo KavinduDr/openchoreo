@@ -25,4 +25,9 @@ export const StyledTableRow: React.ComponentType<TableRowProps> = styled(
   '&:hover': {
     backgroundColor: disabled ? 'transparent' : theme.palette.action.hover,
   },
+  '&.MuiTableRow-head': {
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+  },
 }));

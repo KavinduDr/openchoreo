@@ -5,4 +5,16 @@ import {
 } from '@mui/material';
 
 export const StyledTableSortLabel: React.ComponentType<TableSortLabelProps> =
-  styled(MUITableSortLabel)({});
+  styled(MUITableSortLabel)({
+    '& .MuiTableSortLabel-icon': {
+      opacity: 1,
+    },
+    '&:not(.Mui-active) .MuiTableSortLabel-icon': {
+      opacity: 0,
+    },
+    '&:hover': {
+      '& .MuiTableSortLabel-icon': {
+        opacity: 1,
+      },
+    },
+  });
