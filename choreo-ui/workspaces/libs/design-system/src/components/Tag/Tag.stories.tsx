@@ -29,10 +29,3 @@ export const Default: Story = {
     children: 'Tag Content',
   },
 };
-
-export const Disabled: Story = {
-  args: {
-    children: 'Disabled Tag',
-    disabled: true,
-  },
-};

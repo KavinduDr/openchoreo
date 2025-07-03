@@ -1,4 +1,4 @@
-import { styled, Theme } from '@mui/material/styles';
+import { alpha, styled, Theme } from '@mui/material/styles';
 import { Chip, ChipProps } from '@mui/material';
 import { ComponentType } from 'react';
 
@@ -50,6 +50,7 @@ export const StyledTag: ComponentType<ChipProps> = styled(Chip, {
   };
 
   let variantStyles = {};
+  let deleteIconColor = 'inherit';
 
   if (variant === 'filled') {
     switch (color) {
@@ -58,6 +59,7 @@ export const StyledTag: ComponentType<ChipProps> = styled(Chip, {
           backgroundColor: theme.palette.primary.main,
           color: theme.palette.common.white,
         };
+        deleteIconColor = theme.palette.common.white;
         break;
       case 'secondary':
         variantStyles = {
@@ -70,24 +72,28 @@ export const StyledTag: ComponentType<ChipProps> = styled(Chip, {
           backgroundColor: theme.palette.error.main,
           color: theme.palette.common.white,
         };
+        deleteIconColor = theme.palette.common.white;
         break;
       case 'warning':
         variantStyles = {
           backgroundColor: theme.palette.warning.main,
           color: theme.palette.common.white,
         };
+        deleteIconColor = theme.palette.common.white;
         break;
       case 'info':
         variantStyles = {
           backgroundColor: theme.palette.info.main,
           color: theme.palette.common.white,
         };
+        deleteIconColor = theme.palette.common.white;
         break;
       case 'success':
         variantStyles = {
           backgroundColor: theme.palette.success.main,
           color: theme.palette.common.white,
         };
+        deleteIconColor = theme.palette.common.white;
         break;
       case 'default':
       default:
@@ -106,13 +112,13 @@ export const StyledTag: ComponentType<ChipProps> = styled(Chip, {
         variantStyles = {
           border: `1px solid ${theme.palette.primary.main}`,
           color: theme.palette.primary.main,
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: alpha(theme.palette.primary.main, 0.1),
         };
         break;
       case 'secondary':
         variantStyles = {
           border: `1px solid ${theme.palette.secondary.main}`,
-          color: theme.palette.secondary.main,
+          color: theme.palette.text.primary,
           backgroundColor: theme.palette.background.paper,
         };
         break;
@@ -120,36 +126,36 @@ export const StyledTag: ComponentType<ChipProps> = styled(Chip, {
         variantStyles = {
           border: `1px solid ${theme.palette.error.main}`,
           color: theme.palette.error.main,
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: alpha(theme.palette.error.main, 0.1),
         };
         break;
       case 'warning':
         variantStyles = {
           border: `1px solid ${theme.palette.warning.main}`,
           color: theme.palette.warning.main,
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: alpha(theme.palette.warning.main, 0.1),
         };
         break;
       case 'info':
         variantStyles = {
           border: `1px solid ${theme.palette.info.main}`,
           color: theme.palette.info.main,
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: alpha(theme.palette.info.main, 0.1),
         };
         break;
       case 'success':
         variantStyles = {
           border: `1px solid ${theme.palette.success.main}`,
           color: theme.palette.success.main,
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: alpha(theme.palette.success.main, 0.1),
         };
         break;
       case 'default':
       default:
         variantStyles = {
-          border: `1px solid ${theme.palette.grey[100]}`,
+          border: `1px solid ${theme.palette.grey[200]}`,
           color: theme.palette.text.primary,
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: alpha(theme.palette.text.primary, 0.1),
         };
         break;
     }
@@ -180,6 +186,10 @@ export const StyledTag: ComponentType<ChipProps> = styled(Chip, {
       width: '0.8em',
       height: '0.8em',
       marginLeft: theme.spacing(1),
+      color: deleteIconColor,
+      '&:hover': {
+        color: deleteIconColor,
+      },
     },
   };
 });
