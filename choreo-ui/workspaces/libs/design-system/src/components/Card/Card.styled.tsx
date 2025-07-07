@@ -54,6 +54,7 @@ export const StyledCard: StyledComponent<CardProps> = styled(
   '&[data-disabled="true"]': {
     pointerEvents: 'none',
     boxShadow: 'none',
+    backgroundColor: theme.palette.background.paper,
   },
 
   '&[data-bg-color="secondary"]': {

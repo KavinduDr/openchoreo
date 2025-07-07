@@ -14,56 +14,18 @@ export type CheckboxColor =
   | 'success';
 
 export interface CheckboxProps {
-  /**
-   * The content of the component
-   */
   children?: React.ReactNode;
-  /**
-   * Additional className for the component
-   */
   className?: string;
-  /**
-   * Optional click handler
-   */
   onClick?: (event: React.MouseEvent) => void;
-  /**
-   * If true, the component will be disabled
-   */
   disabled?: boolean;
-  /**
-   * If true, the checkbox is checked
-   */
   checked?: boolean;
-  /**
-   * If true, the checkbox shows indeterminate state
-   */
   indeterminate?: boolean;
-  /**
-   * The name of the checkbox
-   */
   name?: string;
-  /**
-   * The value of the checkbox
-   */
   value?: string;
-  /**
-   * The size of the checkbox
-   */
   size?: CheckboxSize;
-  /**
-   * The color of the checkbox
-   */
   color?: CheckboxColor;
-  /**
-   * disable ripple effect
-   */
   disableRipple?: boolean;
-  /**
-   * The sx prop for custom styles
-   */
   sx?: React.CSSProperties;
-  /** * Additional props for MUI Checkbox
-   */
   [key: string]: any;
 }
 
@@ -72,7 +34,17 @@ export interface CheckboxProps {
  * @component
  */
 export const Checkbox = React.forwardRef<HTMLDivElement, CheckboxProps>(
-  ({ children, className, onClick, disabled = false, ...props }, ref) => {
+  (
+    {
+      children,
+      className,
+      onClick,
+      disabled = false,
+      disableRipple = true,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <StyledCheckbox
         ref={ref}
@@ -85,11 +57,13 @@ export const Checkbox = React.forwardRef<HTMLDivElement, CheckboxProps>(
           className={className}
           checked={props.checked}
           indeterminate={props.indeterminate}
+          disableRipple={disableRipple}
           name={props.name}
           value={props.value}
           size={props.size}
           disabled={disabled}
           onClick={onClick}
+          data-cyid={`${props.testId}-check-box`}
           color={props.color}
           sx={props.sx}
         />

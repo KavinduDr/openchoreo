@@ -2,29 +2,11 @@ import React from 'react';
 import { StyledButtonContainer } from './ButtonContainer.styled';
 
 export interface ButtonContainerProps {
-  /**
-   * The content of the component
-   */
   children?: React.ReactNode;
-  /**
-   * Additional className for the component
-   */
   className?: string;
-  /**
-   * Optional click handler
-   */
   onClick?: (event: React.MouseEvent) => void;
-  /**
-   * If true, the component will be disabled
-   */
   disabled?: boolean;
-  /**
-   * Alignment of the content
-   */
   align?: 'left' | 'center' | 'right' | 'space-between';
-  /**
-   * top of the margin
-   */
   marginTop?: 'sm' | 'md' | 'lg';
   testId: string;
 }
