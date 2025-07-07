@@ -11,6 +11,7 @@ import {
   TableSortLabel,
 } from '../TableDefault';
 import { Pagination } from '../Pagination';
+import { NoDataMessage } from '../NoDataMessage';
 
 export type DataTableColumn<T> = {
   title: string;
@@ -212,7 +213,7 @@ export const DataTable = <T,>(
                   colSpan={columns.length}
                   className="noRecordsTextRow"
                 >
-                  No records to display
+                  <NoDataMessage />
                 </TableCell>
               </TableRow>
             )}

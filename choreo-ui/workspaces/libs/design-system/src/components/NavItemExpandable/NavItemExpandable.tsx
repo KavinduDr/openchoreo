@@ -102,7 +102,7 @@ export const NavItemExpandable = React.forwardRef<
           )}
         </StyledMainNavItemContainerWithLink>
       </StyledNavItemContainer>
-    )
+    );
   }
 
   return (
