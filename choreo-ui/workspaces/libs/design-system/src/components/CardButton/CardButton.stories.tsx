@@ -8,7 +8,7 @@ import Github from '@design-system/Images/generated/Github';
 import Bitbucket from '@design-system/Images/generated/Bitbucket';
 
 const meta: Meta<typeof CardButton> = {
-  title: 'Components/CardButton',
+  title: 'Components/Card/CardButton',
   component: CardButton,
   tags: ['autodocs'],
   argTypes: {

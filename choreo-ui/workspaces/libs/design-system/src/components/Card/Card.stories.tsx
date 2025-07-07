@@ -9,19 +9,12 @@ import { CardActionArea } from './SubComponents/CardActionArea';
 import { Button, ButtonContainer } from '@design-system/components';
 
 const meta: Meta<CardProps> = {
-  title: 'Components/Card',
+  title: 'Components/Card/Card',
   component: Card,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <Box sx={{ width: '300px', p: 2.5 }}>
-        <Story />
-      </Box>
-    ),
-  ],
 };
 
 export default meta;

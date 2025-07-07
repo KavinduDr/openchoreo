@@ -4,10 +4,10 @@ import { Box } from '@mui/material';
 import { Button, Card, CardContent, TextInput } from '../index copy';
 import { ButtonContainer } from '../ButtonContainer';
 import { CardHeading } from '../Card/SubComponents/CardHeading';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const meta: Meta<typeof CardForm> = {
-  title: 'Choreo DS/CardForm',
+  title: 'Components/Card/CardForm',
   component: CardForm,
   tags: ['autodocs'],
   argTypes: {
@@ -30,7 +30,7 @@ export default meta;
 type Story = StoryObj<typeof CardForm>;
 
 // Create a wrapper component to use hooks
-const CardFormStory = (args: any) => {
+const CardFormStory = (_args: any) => {
   const [apiName, setApiName] = useState('');
   const [apiDescription, setApiDescription] = useState('');
 

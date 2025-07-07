@@ -5,12 +5,11 @@ import { Card, CardContent } from '../index copy';
 import Bitbucket from '@design-system/Images/generated/Bitbucket';
 import { CardDropdownMenuItemCreate } from './CardDropdownMenuItemCreate/CardDropdownMenuItemCreate';
 import CardDropdownMenuItem from './CardDropdownMenuItem';
-import NoData from '@design-system/Images/generated/NoData';
 import { useState } from 'react';
 import { NoDataMessage } from '../NoDataMessage';
 
 const meta: Meta<typeof CardDropdown> = {
-  title: 'Choreo DS/CardDropdown',
+  title: 'Components/Card/CardDropdown',
   component: CardDropdown,
   tags: ['autodocs'],
   argTypes: {
