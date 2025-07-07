@@ -11,6 +11,7 @@ import {
 } from '@open-choreo/design-system';
 import { DataTableColumn } from '@open-choreo/design-system/dist/components/DataTable/DataTable';
 import { useState } from 'react';
+import { IntlProvider } from 'react-intl';
 import { useNavigate } from 'react-router';
 
 export interface Resource {
@@ -129,27 +130,29 @@ export function ResourceTable(props: ResourceTableProps) {
   ];
 
   return (
-    <Box>
-      <Card testId="resource-table">
-        <CardContent>
-          <Box display="flex" justifyContent="flex-end">
-            <Box width={300}>
-              <SearchBar onChange={onSearch} testId="data-table" />
+    <IntlProvider locale="en">
+      <Box>
+        <Card testId="resource-table">
+          <CardContent>
+            <Box display="flex" justifyContent="flex-end">
+              <Box width={300}>
+                <SearchBar onChange={onSearch} testId="data-table" />
+              </Box>
             </Box>
-          </Box>
-          <DataTable<Resource>
-            enableFrontendSearch
-            getRowId={(rowData) => rowData.id}
-            columns={resourceListColumns}
-            testId="table"
-            isLoading={false}
-            searchQuery={searchQuery}
-            data={resources}
-            totalRows={resources.length}
-            onRowClick={handleResourceClick}
-          />
-        </CardContent>
-      </Card>
-    </Box>
+            <DataTable<Resource>
+              enableFrontendSearch
+              getRowId={(rowData) => rowData.id}
+              columns={resourceListColumns}
+              testId="table"
+              isLoading={false}
+              searchQuery={searchQuery}
+              data={resources}
+              totalRows={resources.length}
+              onRowClick={handleResourceClick}
+            />
+          </CardContent>
+        </Card>
+      </Box>
+    </IntlProvider>
   );
 }
