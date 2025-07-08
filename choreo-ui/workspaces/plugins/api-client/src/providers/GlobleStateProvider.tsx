@@ -56,8 +56,15 @@ export function GlobalStateProvider({
   const organizationListQueryResult = useOrganizationList();
 
   useEffect(() => {
-    if(!orgHandle &&  organizationListQueryResult.data?.data?.items.length > 0) {
-      navigate(genaratePath({orgHandle: organizationListQueryResult.data.data.items[0].name}));
+    if (
+      !orgHandle &&
+      organizationListQueryResult.data?.data?.items.length > 0
+    ) {
+      navigate(
+        genaratePath({
+          orgHandle: organizationListQueryResult.data.data.items[0].name,
+        }),
+      );
     }
   }, [orgHandle, organizationListQueryResult.data]);
 
