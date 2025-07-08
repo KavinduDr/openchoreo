@@ -4,7 +4,7 @@ export interface ApiConfig {
 }
 
 export const defaultConfig: ApiConfig = {
-  baseUrl: 'http://localhost:3001',
+  baseUrl: 'http://localhost:8082',
   headers: {
     'Content-Type': 'application/json',
   },
