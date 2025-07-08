@@ -65,7 +65,7 @@ const Panel: React.FC = () => {
 
   const navigateToComponent = (component: LevelItem) => {
     navigate(
-      genaratePath({ orgHandle, projectHandle, componentHandle: component.id }),
+      genaratePath({ orgHandle, projectHandle, componentHandle: component.id })
     );
   };
 
@@ -85,8 +85,8 @@ const Panel: React.FC = () => {
         }))}
         recentItems={[]}
         selectedItem={{
-          label: orgDisplayName,
-          id: orgName,
+          label: selectedOrganization?.displayName,
+          id: selectedOrganization?.name,
         }}
         level={Level.ORGANIZATION}
         isHighlighted={!projectDisplayName}
