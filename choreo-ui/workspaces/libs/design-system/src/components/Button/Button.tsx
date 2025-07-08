@@ -8,7 +8,7 @@ export type ButtonColor =
   | 'success'
   | 'warning'
   | 'info';
-export type ButtonSize = 'tiny' | 'small' | 'medium'; // Removed 'large'
+export type ButtonSize = 'tiny' | 'small' | 'medium';
 export type ButtonVariant =
   | 'contained'
   | 'outlined'
@@ -27,9 +27,6 @@ export interface ButtonProps {
   disableRipple?: boolean;
   pill?: boolean;
   fullWidth?: boolean;
-  /**
-   * Test id for the button
-   */
   testId?: string;
   [key: string]: any;
 }
@@ -57,7 +54,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         variant={variant === 'subtle' || variant === 'link' ? 'text' : variant}
         disabled={disabled}
-        size={size === 'tiny' ? 'small' : size} // Map tiny to small for MUI
+        size={size === 'tiny' ? 'small' : size}
         onClick={onClick}
         color={color}
         className={`${className || ''} 
