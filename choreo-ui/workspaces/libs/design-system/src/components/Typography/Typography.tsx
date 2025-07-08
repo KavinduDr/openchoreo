@@ -6,19 +6,19 @@ export interface TypographyProps {
   children?: React.ReactNode;
   className?: string;
   variant?:
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'body1'
-  | 'body2'
-  | 'caption'
-  | 'button'
-  | 'overline'
-  | 'subtitle1'
-  | 'subtitle2';
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'body1'
+    | 'body2'
+    | 'caption'
+    | 'button'
+    | 'overline'
+    | 'subtitle1'
+    | 'subtitle2';
   monospace?: boolean;
   color?: string;
 }

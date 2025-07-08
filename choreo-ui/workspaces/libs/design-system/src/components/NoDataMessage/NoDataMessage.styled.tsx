@@ -2,7 +2,7 @@ import { Box, BoxProps, styled } from '@mui/material';
 import { ComponentType } from 'react';
 
 export interface StyledNoDataMessageProps extends BoxProps {
-  // disabled?: boolean;
+  disabled?: boolean;
 }
 
 export const StyledNoDataMessage: ComponentType<StyledNoDataMessageProps> =

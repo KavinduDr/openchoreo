@@ -2,6 +2,7 @@ import {
   styled,
   ButtonGroup as MuiButtonGroup,
   ButtonGroupProps as MuiButtonGroupProps,
+  alpha,
 } from '@mui/material';
 import { ComponentType } from 'react';
 
@@ -15,20 +16,17 @@ export const StyledButtonGroup: ComponentType<StyledButtonGroupProps> = styled(
   borderRadius: 5,
   boxShadow: 'none',
 
-  // Base styles for all buttons
-  '& .MuiButtonGroup': {
+  '& .MuiButton-root': {
     minWidth: 'initial',
   },
 
-  // Add shared styles for both Button and IconButton
   '& .MuiButtonBase-root': {
     minWidth: 'initial',
   },
 
-  // Specific styles for IconButton
   '& .btn-group-icon-button': {
-    padding: '6px 16px', // Match padding with regular buttons
-    borderRadius: 0, // Remove default border radius
+    padding: '6px 16px',
+    borderRadius: 0,
 
     '&:first-of-type': {
       borderTopLeftRadius: 5,
@@ -41,20 +39,19 @@ export const StyledButtonGroup: ComponentType<StyledButtonGroupProps> = styled(
     },
   },
 
-  // Contained + Primary
   '&[data-variant="contained"][data-color="primary"]': {
-    '& .MuiButtonGroup': {
+    '& .MuiButton-root': {
+      backgroundColor: theme.palette.primary.main,
       borderColor: theme.palette.primary.main,
       color: theme.palette.common.white,
       '&.Mui-disabled': {
         color: theme.palette.common.white,
       },
-      '&:not(:last-child)': {
-        borderRightColor: theme.palette.primary.light,
+      '&:hover': {
+        backgroundColor: theme.palette.primary.dark,
       },
     },
 
-    // Apply same styles to IconButton
     '& .btn-group-icon-button': {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.common.white,
@@ -75,19 +72,20 @@ export const StyledButtonGroup: ComponentType<StyledButtonGroupProps> = styled(
     },
   },
 
-  // Contained + Secondary
   '&[data-variant="contained"][data-color="secondary"]': {
-    '& .MuiButtonGroup': {
-      borderColor: theme.palette.grey[100],
-      '&:not(:last-child)': {
-        borderColor: theme.palette.grey[100],
-        '&.Mui-disabled': {
-          borderColor: theme.palette.grey[100],
-        },
+    '& .MuiButton-root': {
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.secondary.contrastText,
+      borderColor: theme.palette.secondary.main,
+      '&:hover': {
+        backgroundColor: theme.palette.secondary.dark,
+        borderColor: theme.palette.secondary.dark,
+      },
+      '&.Mui-disabled': {
+        backgroundColor: theme.palette.action.disabledBackground,
       },
     },
 
-    // Apply same styles to IconButton
     '& .btn-group-icon-button': {
       backgroundColor: theme.palette.secondary.main,
       color: theme.palette.secondary.contrastText,
@@ -95,6 +93,7 @@ export const StyledButtonGroup: ComponentType<StyledButtonGroupProps> = styled(
 
       '&:hover': {
         backgroundColor: theme.palette.secondary.dark,
+        borderColor: theme.palette.secondary.dark,
       },
 
       '&.Mui-disabled': {
@@ -107,14 +106,17 @@ export const StyledButtonGroup: ComponentType<StyledButtonGroupProps> = styled(
     },
   },
 
-  // Outlined variant styles
   '&[data-variant="outlined"]': {
+    '& .MuiButton-root': {
+      backgroundColor: 'transparent',
+    },
+
     '& .btn-group-icon-button': {
       border: `1px solid ${theme.palette.primary.main}`,
       backgroundColor: 'transparent',
 
       '&:hover': {
-        backgroundColor: theme.palette.action.hover,
+        boxShadow: `1px 1px 3px ${alpha(theme.palette.common.black, 0.1)}`,
       },
 
       '&:not(:last-child)': {
@@ -123,8 +125,16 @@ export const StyledButtonGroup: ComponentType<StyledButtonGroupProps> = styled(
     },
   },
 
-  // Outlined + Primary
   '&[data-variant="outlined"][data-color="primary"]': {
+    '& .MuiButton-root': {
+      color: theme.palette.primary.main,
+      borderColor: theme.palette.primary.main,
+      '&.Mui-disabled': {
+        color: theme.palette.action.disabled,
+        borderColor: theme.palette.action.disabledBackground,
+      },
+    },
+
     '& .btn-group-icon-button': {
       color: theme.palette.primary.main,
       borderColor: theme.palette.primary.main,
@@ -133,11 +143,23 @@ export const StyledButtonGroup: ComponentType<StyledButtonGroupProps> = styled(
         color: theme.palette.action.disabled,
         borderColor: theme.palette.action.disabledBackground,
       },
+
+      '&:hover': {
+        boxShadow: `0 1px 6px 2px ${alpha(theme.palette.common.black, 0.1)}`,
+      },
     },
   },
 
-  // Outlined + Secondary
   '&[data-variant="outlined"][data-color="secondary"]': {
+    '& .MuiButton-root': {
+      color: theme.palette.secondary.main,
+      borderColor: theme.palette.secondary.main,
+      '&.Mui-disabled': {
+        color: theme.palette.action.disabled,
+        borderColor: theme.palette.action.disabledBackground,
+      },
+    },
+
     '& .btn-group-icon-button': {
       color: theme.palette.secondary.main,
       borderColor: theme.palette.secondary.main,
@@ -146,16 +168,57 @@ export const StyledButtonGroup: ComponentType<StyledButtonGroupProps> = styled(
         color: theme.palette.action.disabled,
         borderColor: theme.palette.action.disabledBackground,
       },
+      '&:hover': {
+        boxShadow: `0 1px 6px 2px ${alpha(theme.palette.common.black, 0.1)}`,
+      },
     },
   },
 
-  // Size variants
-  '&[data-size="small"] .btn-group-icon-button, &[data-size="tiny"] .btn-group-icon-button':
+  '&[data-size="small"] .MuiButton-root, &[data-size="small"] .MuiButton-sizeSmall':
     {
-      padding: '4px 10px', // Smaller padding for small/tiny size
+      padding: theme.spacing(0.375, 2),
+      gap: theme.spacing(0.75),
+      '& .MuiButton-startIcon, & .MuiButton-endIcon': {
+        '& > *:first-of-type': {
+          fontSize: theme.spacing(1.75),
+        },
+      },
+      '&.link': {
+        padding: theme.spacing(0.375, 0),
+      },
     },
 
+  '&[data-size="tiny"] .MuiButton-root, &[data-size="tiny"] .MuiButton-sizeSmall, &[data-size="tiny"] .MuiButton-root.tiny':
+    {
+      padding: theme.spacing(0, 1.5),
+      gap: theme.spacing(0.5),
+      '& .MuiButton-startIcon, & .MuiButton-endIcon': {
+        '& > *:first-of-type': {
+          fontSize: theme.spacing(1.5),
+        },
+      },
+      '&.link': {
+        padding: 0,
+      },
+    },
+
+  '&[data-size="small"] .btn-group-icon-button': {
+    padding: `${theme.spacing(0.375)} ${theme.spacing(2)}`,
+  },
+
+  '&[data-size="tiny"] .btn-group-icon-button': {
+    padding: `${theme.spacing(0)} ${theme.spacing(1.5)}`,
+  },
+
   '&[data-size="medium"] .btn-group-icon-button': {
-    padding: '6px 16px',
+    padding: `${theme.spacing(0.75)} ${theme.spacing(2)}`,
+  },
+
+  '&[data-size="tiny"]': {
+    '& .MuiButton-startIcon, & .MuiButton-endIcon': {
+      '& > *:first-of-type': {
+        fontSize: theme.spacing(1.5),
+      },
+    },
   },
 }));
