@@ -5,7 +5,6 @@ import { ComponentType } from 'react';
 export const StyledButton: ComponentType<ButtonProps> = styled(
   Button
 )<ButtonProps>(({ theme, disabled }) => ({
-  // Common styles
   boxShadow: `0 1px 2px ${alpha(theme.palette.common.black, 0.15)}`,
   borderRadius: 5,
   color: theme.palette.common.white,
@@ -41,7 +40,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Contained variant
   '&.MuiButton-contained': {
     border: '1px solid transparent',
     '&:hover': {
@@ -97,7 +95,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Outlined variant
   '&.MuiButton-outlined': {
     backgroundColor: 'transparent',
     boxShadow: `0 1px 2px ${alpha(theme.palette.common.black, 0.05)}`,
@@ -154,7 +151,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Text variant
   '&.MuiButton-text': {
     backgroundColor: 'transparent',
     border: 'none',
@@ -191,7 +187,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Subtle variant (custom)
   '&.subtle': {
     border: `1px solid ${theme.palette.grey[100]}`,
     boxShadow: `0 1px 3px ${alpha(theme.palette.common.black, 0.05)}`,
@@ -236,7 +231,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Link variant (custom)
   '&.link': {
     borderColor: 'transparent',
     boxShadow: 'none',
@@ -301,7 +295,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Size variants
   '&.MuiButton-sizeSmall': {
     padding: theme.spacing(0.375, 2),
     gap: theme.spacing(0.75),
@@ -315,7 +308,6 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Tiny size (mapped to small in MUI but with custom styling)
   '&.tiny': {
     padding: theme.spacing(0, 1.5),
     gap: theme.spacing(0.5),
@@ -329,12 +321,10 @@ export const StyledButton: ComponentType<ButtonProps> = styled(
     },
   },
 
-  // Pill variant
   '&.pill': {
     borderRadius: theme.spacing(3.125),
   },
 
-  // Full width
   '&.MuiButton-fullWidth': {
     width: '100%',
   },

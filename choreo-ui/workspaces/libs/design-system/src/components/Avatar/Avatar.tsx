@@ -66,11 +66,7 @@ export interface AvatarProps {
 }
 
 export function Avatar({ children, ...props }: AvatarProps) {
-  return (
-    <StyledAvatar {...props}>
-      {children}
-    </StyledAvatar>
-  );
+  return <StyledAvatar {...props}>{children}</StyledAvatar>;
 }
 
 Avatar.displayName = 'Avatar';

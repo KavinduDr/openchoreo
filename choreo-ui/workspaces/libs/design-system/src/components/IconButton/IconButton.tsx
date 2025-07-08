@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyledIconButton } from './IconButton.styled';
-import { useTheme } from '@mui/material/styles';
 
 export type iconButtonVariant = 'circular' | 'rounded' | 'square'; // not anymore in mui v7
 export type iconButtonColorVariant =
@@ -65,12 +64,12 @@ export interface IconButtonProps {
 }
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ children, ...props }, ref) => (
+  ({ children, disableRipple = true, ...props }, ref) => (
     <StyledIconButton
       ref={ref}
-      theme={useTheme()}
       onClick={props.disabled ? undefined : props.onClick}
       disabled={props.disabled}
+      disableRipple={disableRipple}
       {...props}
     >
       {children}

@@ -55,18 +55,24 @@ export const TopLevelSelector = React.forwardRef<
       }
     }, [disabled, onClick, level]);
 
-    const handleSelect = useCallback((item: LevelItem) => {
-      if (!disabled) {
-        onSelect(item);
-        setAnchorEl(null);
-      }
-    }, [disabled, onSelect]);
+    const handleSelect = useCallback(
+      (item: LevelItem) => {
+        if (!disabled) {
+          onSelect(item);
+          setAnchorEl(null);
+        }
+      },
+      [disabled, onSelect]
+    );
 
-    const handleOpen = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation();
-      event.preventDefault();
-      setAnchorEl(event.currentTarget);
-    }, []);
+    const handleOpen = useCallback(
+      (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+        event.preventDefault();
+        setAnchorEl(event.currentTarget);
+      },
+      []
+    );
 
     const handleClose = useCallback(() => {
       setAnchorEl(null);
@@ -99,7 +105,11 @@ export const TopLevelSelector = React.forwardRef<
       >
         <Box display="flex" flexDirection="column">
           <SelectorHeader level={level} onClose={onClose} />
-          <SelectorContent selectedItem={selectedItem} onOpen={handleOpen} disableMenu={items.length === 0} />
+          <SelectorContent
+            selectedItem={selectedItem}
+            onOpen={handleOpen}
+            disableMenu={items.length === 0}
+          />
         </Box>
 
         <StyledPopover

@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
-import { IconButton } from '@mui/material';
-import { alpha, Theme } from '@mui/material/styles';
+import { IconButton, IconButtonProps } from '@mui/material';
+import { alpha, styled, Theme } from '@mui/material/styles';
+import { ComponentType } from 'react';
 
 const getFocusShadow = (theme: Theme) =>
   `0 ${theme.spacing(0.125)} ${theme.spacing(0.75)} ${theme.spacing(0.25)} ${alpha(
@@ -8,26 +8,17 @@ const getFocusShadow = (theme: Theme) =>
     0.1
   )}`;
 
-export const StyledIconButton = styled(IconButton, {
-  shouldForwardProp: (prop) =>
-    !['size', 'color', 'disabled', 'edge'].includes(prop as string),
-})(({
+export const StyledIconButton: ComponentType<IconButtonProps> = styled(
+  IconButton,
+  {
+    shouldForwardProp: (prop) =>
+      !['size', 'color', 'disabled', 'edge'].includes(prop as string),
+  }
+)<IconButtonProps>(({
   theme,
   size = 'medium',
   color = 'default',
   disabled,
-}: {
-  theme: Theme;
-  size?: 'small' | 'medium' | 'tiny';
-  color?:
-    | 'default'
-    | 'primary'
-    | 'secondary'
-    | 'error'
-    | 'warning'
-    | 'info'
-    | 'success';
-  disabled?: boolean;
 }) => {
   const sizeStyles = {
     small: {
