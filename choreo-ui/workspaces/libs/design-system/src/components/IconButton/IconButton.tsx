@@ -65,11 +65,23 @@ export interface IconButtonProps {
 }
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ children, ...props }, ref) => (
+  (
+    {
+      children,
+      disableRipple = true,
+      disableFocusRipple = true,
+      disableTouchRipple = true,
+      ...props
+    },
+    ref
+  ) => (
     <StyledIconButton
       ref={ref}
       theme={useTheme()}
       onClick={props.disabled ? undefined : props.onClick}
+      disableRipple={disableRipple}
+      disableFocusRipple={disableFocusRipple}
+      disableTouchRipple={disableTouchRipple}
       disabled={props.disabled}
       {...props}
     >
