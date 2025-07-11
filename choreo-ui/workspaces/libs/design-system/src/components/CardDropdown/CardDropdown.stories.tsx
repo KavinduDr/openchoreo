@@ -48,9 +48,9 @@ export const Default: Story = {
                   icon={<Bitbucket />}
                   text="Authorized Via bitbucket"
                   testId="bitbucket"
-                  size={_args.size}
-                  active={_args.active}
-                  disabled={_args.disabled}
+                  size={args.size}
+                  active={args.active}
+                  disabled={args.disabled}
                   fullHeight
                 >
                   <CardDropdownMenuItemCreate
@@ -87,8 +87,8 @@ export const Default: Story = {
                   text="Authorized Via bitbucket"
                   active
                   testId="bitbucket"
-                  size={_args.size}
-                  disabled={_args.disabled}
+                  size={args.size}
+                  disabled={args.disabled}
                   fullHeight
                 >
                   <CardDropdownMenuItem
@@ -126,8 +126,8 @@ export const Default: Story = {
                   icon={<Bitbucket />}
                   text="Authorized Via bitbucket"
                   active
-                  size={_args.size}
-                  disabled={_args.disabled}
+                  size={args.size}
+                  disabled={args.disabled}
                   testId="bitbucket"
                   fullHeight
                 >

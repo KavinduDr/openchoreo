@@ -26,7 +26,7 @@ export interface CheckboxProps {
   color?: CheckboxColor;
   disableRipple?: boolean;
   sx?: React.CSSProperties;
-  [key: string]: any;
+  testId?: string;
 }
 
 /**

@@ -30,7 +30,9 @@ export const Default: Story = {
     children: 'John Doe',
   },
   render: (args) => (
-    <AvatarUserName {...args}>{args.username[0].toUpperCase()}</AvatarUserName>
+    <AvatarUserName {...args}>
+      {args.username?.[0]?.toUpperCase() || 'J'}
+    </AvatarUserName>
   ),
 };
 
@@ -41,7 +43,9 @@ export const Disabled: Story = {
     disabled: true,
   },
   render: (args) => (
-    <AvatarUserName {...args}>{args.username[0]}</AvatarUserName>
+    <AvatarUserName {...args}>
+      {args.username?.[0]?.toUpperCase() || 'J'}
+    </AvatarUserName>
   ),
 };
 

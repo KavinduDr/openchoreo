@@ -41,9 +41,9 @@ export interface ChipProps {
    */
   sx?: SxProps<Theme>;
   /**
-   * Additional props for MUI Chip
+   * The icon to be displayed in the chip
    */
-  [key: string]: any;
+  icon?: React.ReactElement;
 }
 
 /**
@@ -59,6 +59,7 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       size = 'medium',
       variant = 'filled',
       color = 'default',
+      icon,
       ...props
     },
     ref
@@ -67,16 +68,15 @@ export const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       <StyledChip
         ref={ref}
         {...props}
-        size={size}
+        data-size={size}
         variant={variant === 'filled' ? 'filled' : 'outlined'}
         color={color}
         label={props.label}
         className={className}
         disabled={disabled}
         data-cyid={`${props.testId}-chip`}
-      >
-        {children}
-      </StyledChip>
+        {...(icon && { icon })}
+      ></StyledChip>
     );
   }
 );

@@ -15,7 +15,7 @@ export const StyledChip: ComponentType<MUIChipProps> = styled(MUIChip)(
     '& .MuiTouchRipple-root': {
       display: 'none',
     },
-    '&.MuiChip-sizeSmall': {
+    '&[data-size="small"]': {
       fontSize: theme.spacing(1.25),
       borderRadius: theme.spacing(0.375),
       lineHeight: 1.2,
@@ -32,7 +32,7 @@ export const StyledChip: ComponentType<MUIChipProps> = styled(MUIChip)(
         },
       },
     },
-    '&.MuiChip-sizeMedium': {
+    '&[data-size="medium"]': {
       fontSize: theme.spacing(1.625),
       borderRadius: theme.spacing(0.625),
       lineHeight: 1.23,
@@ -49,7 +49,7 @@ export const StyledChip: ComponentType<MUIChipProps> = styled(MUIChip)(
         },
       },
     },
-    '&.MuiChip-sizeLarge': {
+    '&[data-size="large"]': {
       fontSize: theme.spacing(1.625),
       borderRadius: theme.spacing(0.625),
       lineHeight: 1.23,

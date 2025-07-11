@@ -53,10 +53,6 @@ const meta: Meta<typeof Chip> = {
         defaultValue: { summary: 'default' },
       },
     },
-    onClick: {
-      action: 'clicked',
-      description: 'Click event handler',
-    },
   },
 };
 

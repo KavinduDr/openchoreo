@@ -16,7 +16,7 @@ const meta: Meta<typeof Button> = {
     },
     size: {
       control: 'select',
-      options: ['tiny', 'small', 'medium'], // Removed 'large'
+      options: ['tiny', 'small', 'medium'],
     },
     disabled: {
       control: 'boolean',
