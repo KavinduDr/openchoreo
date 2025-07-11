@@ -5,20 +5,7 @@ const meta: Meta<typeof Typography> = {
   title: 'Choreo DS/Typography',
   component: Typography,
   tags: ['autodocs'],
-  argTypes: {
-    disabled: {
-      control: 'boolean',
-      description: 'Disables the element',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'false' },
-      },
-    },
-    onClick: {
-      action: 'clicked',
-      description: 'Click event handler',
-    },
-  },
+  argTypes: {},
 };
 
 export default meta;
@@ -33,6 +20,5 @@ export const Default: Story = {
 export const Disabled: Story = {
   args: {
     children: 'Disabled Typography',
-    disabled: true,
   },
 };

@@ -42,7 +42,6 @@ export interface LinkProps {
   testId: string;
   underline?: underlineVariant;
   sx?: React.CSSProperties;
-  [key: string]: any;
 }
 
 export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(

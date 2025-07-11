@@ -28,27 +28,30 @@ type Story = StoryObj<typeof NavItemExpandable>;
 export const Default: Story = {
   args: {
     title: 'NavItemExpandable Content',
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
     id: 'nav-item-1',
     subMenuItems: [
       {
         title: 'Sub Item 1',
         id: 'sub-item-1',
-        icon: <MenuHomeIcon fontSize='inherit' />,
-        selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+        icon: <MenuHomeIcon fontSize="inherit" />,
+        selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
+        pathPattern: '/sub-item-1',
       },
       {
         title: 'Sub Item 2',
         id: 'sub-item-2',
-        icon: <MenuHomeIcon fontSize='inherit' />,
-        selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+        icon: <MenuHomeIcon fontSize="inherit" />,
+        selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
+        pathPattern: '/sub-item-2',
       },
       {
         title: 'Sub Item 3',
         id: 'sub-item-3',
-        icon: <MenuHomeIcon fontSize='inherit' />,
-        selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+        icon: <MenuHomeIcon fontSize="inherit" />,
+        selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
+        pathPattern: '/sub-item-3',
       },
     ],
   },
@@ -58,28 +61,31 @@ export const Expanded: Story = {
   args: {
     isExpanded: true,
     title: 'NavItemExpandable Content',
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
     id: 'nav-item-1',
     selectedId: 'sub-item-1',
     subMenuItems: [
       {
         title: 'Sub Item 1',
         id: 'sub-item-1',
-        icon: <MenuHomeIcon fontSize='inherit' />,
-        selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+        icon: <MenuHomeIcon fontSize="inherit" />,
+        selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
+        pathPattern: '/sub-item-1',
       },
       {
         title: 'Sub Item 2',
         id: 'sub-item-2',
-        icon: <MenuHomeIcon fontSize='inherit' />,
-        selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+        icon: <MenuHomeIcon fontSize="inherit" />,
+        selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
+        pathPattern: '/sub-item-2',
       },
       {
         title: 'Sub Item 3',
         id: 'sub-item-3',
-        icon: <MenuHomeIcon fontSize='inherit' />,
-        selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+        icon: <MenuHomeIcon fontSize="inherit" />,
+        selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
+        pathPattern: '/sub-item-3',
       },
     ],
   },
@@ -89,8 +95,8 @@ export const NoSubMenuItems: Story = {
   args: {
     isExpanded: true,
     title: 'NavItemExpandable Content',
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
     id: 'nav-item-1',
   },
 };
@@ -99,16 +105,16 @@ export const Disabled: Story = {
   args: {
     title: 'Disabled NavItemExpandable',
     disabled: true,
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
   },
 };
 
 export const SimpleNavItem: Story = {
   args: {
     title: 'Simple Navigation Item',
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
     id: 'simple-nav-item',
   },
 };
@@ -116,8 +122,8 @@ export const SimpleNavItem: Story = {
 export const SimpleNavItemSelected: Story = {
   args: {
     title: 'Selected Simple Navigation Item',
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
     id: 'simple-nav-item',
     selectedId: 'simple-nav-item',
   },
@@ -126,8 +132,8 @@ export const SimpleNavItemSelected: Story = {
 export const SimpleNavItemExpanded: Story = {
   args: {
     title: 'Simple Navigation Item (Expanded)',
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
     id: 'simple-nav-item',
     isExpanded: true,
   },
@@ -136,8 +142,8 @@ export const SimpleNavItemExpanded: Story = {
 export const SimpleNavItemExpandedSelected: Story = {
   args: {
     title: 'Selected Simple Navigation Item (Expanded)',
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
     id: 'simple-nav-item',
     selectedId: 'simple-nav-item',
     isExpanded: true,
@@ -147,8 +153,8 @@ export const SimpleNavItemExpandedSelected: Story = {
 export const SimpleNavItemDisabled: Story = {
   args: {
     title: 'Disabled Simple Navigation Item',
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
     id: 'simple-nav-item',
     disabled: true,
   },
@@ -157,8 +163,8 @@ export const SimpleNavItemDisabled: Story = {
 export const SimpleNavItemDisabledExpanded: Story = {
   args: {
     title: 'Disabled Simple Navigation Item (Expanded)',
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
     id: 'simple-nav-item',
     disabled: true,
     isExpanded: true,
@@ -168,8 +174,8 @@ export const SimpleNavItemDisabledExpanded: Story = {
 export const EmptySubMenuItems: Story = {
   args: {
     title: 'NavItem with Empty Sub Menu',
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
     id: 'nav-item-empty',
     subMenuItems: [],
   },
@@ -178,8 +184,8 @@ export const EmptySubMenuItems: Story = {
 export const EmptySubMenuItemsExpanded: Story = {
   args: {
     title: 'NavItem with Empty Sub Menu (Expanded)',
-    icon: <MenuHomeIcon fontSize='inherit' />,
-    selectedIcon: <MenuHomeFilledIcon fontSize='inherit' />,
+    icon: <MenuHomeIcon fontSize="inherit" />,
+    selectedIcon: <MenuHomeFilledIcon fontSize="inherit" />,
     id: 'nav-item-empty',
     subMenuItems: [],
     isExpanded: true,

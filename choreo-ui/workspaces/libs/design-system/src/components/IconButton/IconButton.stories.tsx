@@ -22,6 +22,7 @@ export const Default: Story = {
   args: {
     children: <Add />,
     color: 'primary',
+    size: 'medium',
   },
 };
 
@@ -30,5 +31,6 @@ export const Disabled: Story = {
     children: <Add />,
     color: 'primary',
     disabled: true,
+    size: 'medium',
   },
 };

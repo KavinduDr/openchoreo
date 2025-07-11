@@ -274,7 +274,7 @@ const DefaultTableStory = () => {
                         <TableCell padding="checkbox">
                           <Checkbox
                             checked={isItemSelected}
-                            inputProps={{ 'aria-labelledby': labelId }}
+                            aria-labelledby={labelId}
                             disableRipple={true}
                             testId="table-row-checkbox"
                           />
@@ -423,7 +423,7 @@ const DarkTableStory = () => {
                         <TableCell padding="checkbox">
                           <Checkbox
                             checked={isItemSelected}
-                            inputProps={{ 'aria-labelledby': labelId }}
+                            aria-labelledby={labelId}
                             disableRipple={true}
                             testId="table-row-checkbox"
                           />

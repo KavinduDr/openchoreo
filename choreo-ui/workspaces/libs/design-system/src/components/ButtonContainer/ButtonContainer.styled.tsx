@@ -36,7 +36,7 @@ export const StyledButtonContainer: React.ComponentType<
     justifyContent,
     opacity: disabled ? 0.5 : 1,
     cursor: disabled ? 'not-allowed' : 'default',
-    marginTop: marginTopValue || 0, // Fallback to 0 if empty string
+    marginTop: marginTopValue || 0,
     gap: theme?.spacing(1),
     '&:hover': {
       backgroundColor: 'inherit',
