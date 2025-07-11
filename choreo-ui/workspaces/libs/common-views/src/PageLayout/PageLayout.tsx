@@ -61,7 +61,7 @@ export function PageLayout({
             <Typography variant="h2">{title}</Typography> {actions && actions}
           </Box>
           {description && (
-            <Typography color={theme.pallet.text.secondary} variant="body1">{description}</Typography>
+            <Typography variant="body1">{description}</Typography>
           )}
         </Box>
         {children}

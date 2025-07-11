@@ -1,8 +1,4 @@
-import {
-  FullPageLoader,
-  PresetErrorPage,
-  ResourceList,
-} from "@open-choreo/common-views";
+import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import { useGlobalState } from "@open-choreo/choreo-context";
 import {
   genaratePath,
@@ -22,6 +18,7 @@ import {
   getResourceName,
   getResourceStatus,
 } from "@open-choreo/definitions";
+import { ResourceList } from "@open-choreo/resource-views";
 
 export const organizationOverviewActionsExtensionPoint: PluginExtensionPoint = {
   id: "org-overview-page-actions",

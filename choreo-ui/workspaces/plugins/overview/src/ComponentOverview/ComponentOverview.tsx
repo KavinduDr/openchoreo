@@ -14,7 +14,7 @@ import {
   getResourceDescription,
   getResourceDisplayName,
 } from "@open-choreo/definitions";
-import { RefreshIcon, Rotate, IconButton } from "@open-choreo/design-system";
+import { RefreshIcon, Rotate, IconButton, useChoreoTheme } from "@open-choreo/design-system";
 
 export const componentOverviewMainExtensionPoint: PluginExtensionPoint = {
   id: "component-overview-page-body",
@@ -22,6 +22,7 @@ export const componentOverviewMainExtensionPoint: PluginExtensionPoint = {
 };
 const ComponentOverview: React.FC = () => {
   const { componentQueryResult, selectedComponent } = useGlobalState();
+  const theme = useChoreoTheme();
 
   if (componentQueryResult?.isLoading) {
     return <FullPageLoader />;
@@ -47,7 +48,7 @@ const ComponentOverview: React.FC = () => {
             componentQueryResult.refetch();
           }}
         >
-          <Rotate disabled={!componentQueryResult.isFetching}>
+          <Rotate disabled={!componentQueryResult.isFetching} color={theme.pallet.primary.main}>
             <RefreshIcon fontSize="inherit" />
           </Rotate>
         </IconButton>

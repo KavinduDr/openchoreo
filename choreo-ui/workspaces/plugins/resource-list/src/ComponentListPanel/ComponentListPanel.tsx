@@ -1,11 +1,8 @@
-import {
-  FullPageLoader,
-  PresetErrorPage,
-  ResourceTable,
-} from "@open-choreo/common-views";
+import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import { useGlobalState } from "@open-choreo/choreo-context";
 import { useHomePath } from "@open-choreo/plugin-core";
 import React from "react";
+import { ResourceTable } from "@open-choreo/resource-views";
 
 const ComponentListPanel: React.FC = () => {
   const { componentListQueryResult } = useGlobalState();

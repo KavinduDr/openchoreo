@@ -1,0 +1,1 @@
+export { ResourcePageLayout } from './ResourcePageLayout';

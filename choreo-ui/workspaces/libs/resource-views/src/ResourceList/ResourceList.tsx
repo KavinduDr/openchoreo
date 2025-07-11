@@ -5,9 +5,9 @@ import {
   NoDataMessage,
   useChoreoTheme,
   alpha,
-  ImageProjectHome,
   TimeIcon,
   CardActionArea,
+  Avatar,
 } from '@open-choreo/design-system';
 import { useNavigate } from 'react-router';
 import dayjs from 'dayjs';
@@ -57,14 +57,16 @@ export function ResourceList(props: ResourceListProps) {
                 <Box
                   display="flex"
                   justifyContent='flex-start'
-                  gap={theme.spacing(1)}
+                  gap={theme.spacing(2)}
                   alignItems='center'
                   padding={theme.spacing(3, 3, 0, 3)}
                   width='100%'
                   height={theme.spacing(10)}
                 >
                   <Box display="flex" alignItems="center">
-                    <ImageProjectHome width={40} height={40} />
+                    <Avatar width={40} height={40} variant='circular' color='primary'>
+                      {resource.name.charAt(0)}
+                    </Avatar>
                   </Box>
                   <Box width="80%" padding={theme.spacing(0, 0, 1, 0)}>
                     <Typography variant="h4" noWrap color={alpha(theme.pallet.text.primary, 0.87)}>
@@ -82,8 +84,10 @@ export function ResourceList(props: ResourceListProps) {
                   padding={theme.spacing(3)}
                 >
                   <Box display="flex" alignItems="center" gap={theme.spacing(1)}>
-                    <TimeIcon fontSize="inherit" />
-                    <Typography variant="body2" color={theme.pallet.text.secondary}>
+                    <Box display="flex" alignItems="center" gap={theme.spacing(0.5)} color={alpha(theme.pallet.text.primary, 0.6)}>
+                      <TimeIcon fontSize="inherit" />
+                    </Box>
+                    <Typography variant="body1" color={theme.pallet.text.secondary}>
                       {dayjs(resource.lastUpdated).fromNow()}
                     </Typography>
                   </Box>

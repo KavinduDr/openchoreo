@@ -72,8 +72,8 @@ function getProjectPath(type) {
         const projectPath = path.resolve(__dirname, '../../workspaces/libs/design-system/src', type + 's');
         return projectPath;    
     }
-    if(type === 'view') {
-        const projectPath = path.resolve(__dirname, '../../workspaces/libs/common-views/src');
+    if(type === 'common-view' || type === 'resource-view') {
+        const projectPath = path.resolve(__dirname, `../../workspaces/libs/${type}s/src`);
         return projectPath;
     }
     if (!fs.existsSync(projectPath)) {
@@ -111,7 +111,7 @@ function createElement({ type, name }) {
           fs.writeFileSync(files.test, generateTestContent(name));
           fs.writeFileSync(files.index, `export { ${name} } from './${name}';\n`);
         }
-        if(type === 'view') {
+        if(type === 'common-view' || type === 'resource-view') {
             fs.writeFileSync(files.component, generateViewContent(name));
             fs.writeFileSync(files.stories, generateViewStoriesContent(name));
             fs.writeFileSync(files.index, `export { ${name} } from './${name}';\n`);

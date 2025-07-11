@@ -212,8 +212,12 @@
           "description": "Create a new layout on DS"
         },
         {
-          "name": "view",
-          "description": "Create a new view module"
+          "name": "common-view",
+          "description": "Create a new common view module"
+        },
+        {
+          "name": "resource-view",
+          "description": "Create a new resource view module"
         }
       ]
     },
