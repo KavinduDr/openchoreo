@@ -20,6 +20,8 @@ export interface IconButtonProps {
   disabled?: boolean;
   edge?: edgeVariant;
   color?: iconButtonColorVariant;
+  testId: string;
+  variant?: iconButtonVariant;
   size?: iconButtonSizeVariant;
   disableRipple?: boolean;
   disableFocusRipple?: boolean;

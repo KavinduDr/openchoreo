@@ -49,27 +49,22 @@ export interface TagProps {
    * If true, the tag is read-only and cannot be deleted
    */
   readOnly?: boolean;
-  /**
-   * Additional props for MUI Chip
-   */
-  [key: string]: any;
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export const Tag = React.forwardRef<HTMLDivElement, TagProps>(
-  ({ children, readOnly, ...props }, ref) => {
+  ({ children, readOnly, size = 'medium', ...props }, ref) => {
     return (
       <StyledTag
         ref={ref}
-        {...props}
         data-cyid={props.testId}
         disabled={props.disabled}
+        data-size={size}
         className={props.className}
         label={children ? String(children) : undefined}
         deleteIcon={!readOnly ? <Close /> : undefined}
         onDelete={!readOnly ? props.onClick : undefined}
-      >
-        {children}
-      </StyledTag>
+      />
     );
   }
 );

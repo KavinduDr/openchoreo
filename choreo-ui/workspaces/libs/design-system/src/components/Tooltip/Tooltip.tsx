@@ -36,7 +36,8 @@ export interface TooltipProps {
   /**
    * title of the tooltip
    */
-  title?: string;
+  title?: React.ReactNode;
+  heading?: string;
   /**
    * Optional click handler
    */
@@ -54,10 +55,6 @@ export interface TooltipProps {
    * sx prop for styling
    */
   sx?: React.CSSProperties;
-  /**
-   * Additional props for the tooltip
-   */
-  [key: string]: any;
 }
 
 /**
@@ -66,6 +63,8 @@ export interface TooltipProps {
  */
 export const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
   ({ children, className, onClick, ...props }, ref) => {
+    const { content, example, action, ...styledTooltipProps } = props;
+
     const infoTooltipFragment = (
       <Box p={0.5}>
         {props.title && (
@@ -96,10 +95,10 @@ export const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
       <StyledTooltip
         ref={ref}
         className={className}
-        arrow={props.arrow}
-        placement={props.placement || 'bottom'}
+        arrow={styledTooltipProps.arrow}
+        placement={styledTooltipProps.placement || 'bottom'}
         title={infoTooltipFragment}
-        {...props}
+        {...styledTooltipProps}
       >
         {React.isValidElement(children) ? (
           React.cloneElement(children, {

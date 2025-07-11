@@ -7,7 +7,7 @@ export interface RadioGroupProps {
   /** Additional CSS class names */
   className?: string;
   /** Click event handler */
-  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  onClick?: (event: React.MouseEvent) => void;
   /** Whether the component is disabled */
   disabled?: boolean;
   /**
@@ -18,10 +18,6 @@ export interface RadioGroupProps {
    * The sx prop for custom styles
    */
   sx?: React.CSSProperties;
-  /**
-   * Additional props for MUI RadioGroup
-   */
-  [key: string]: any;
 }
 
 /**

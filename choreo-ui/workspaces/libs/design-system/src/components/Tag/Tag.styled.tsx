@@ -161,6 +161,27 @@ export const StyledTag: ComponentType<ChipProps> = styled(Chip, {
     opacity: disabled ? 0.5 : 1,
     cursor: disabled ? 'not-allowed' : 'default',
     pointerEvents: disabled ? 'none' : 'auto',
+    '&[data-size="small"]': {
+      padding: theme.spacing(0.4, 0.5, 0.5, 0.8),
+      fontSize: theme.spacing(1.625),
+      borderRadius: theme.spacing(0.375),
+      lineHeight: 1.6,
+      height: theme.spacing(3),
+    },
+    '&[data-size="medium"]': {
+      padding: theme.spacing(1, 1.2, 1, 1.5),
+      fontSize: theme.spacing(1.625),
+      borderRadius: theme.spacing(0.625),
+      lineHeight: 1.23,
+      height: theme.spacing(4),
+    },
+    '&[data-size="large"]': {
+      padding: theme.spacing(1.2, 1.5, 1.2, 1.8),
+      fontSize: theme.spacing(1.625),
+      borderRadius: theme.spacing(0.625),
+      lineHeight: 1.23,
+      height: theme.spacing(4.5),
+    },
     '&:hover': {
       backgroundColor: (variantStyles as any).backgroundColor,
       color: (variantStyles as any).color,
