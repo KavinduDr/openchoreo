@@ -36,7 +36,7 @@ export function PageLayout({
       flexDirection="column"
       gap={2}
       backgroundColor={theme.pallet.background.default}
-      padding={theme.spacing(2)}
+      padding={theme.spacing(4, 6)}
       color={theme.pallet.text.primary}
     >
       {backUrl && (
@@ -61,7 +61,7 @@ export function PageLayout({
             <Typography variant="h2">{title}</Typography> {actions && actions}
           </Box>
           {description && (
-            <Typography variant="body1">{description}</Typography>
+            <Typography color={theme.pallet.text.secondary} variant="body1">{description}</Typography>
           )}
         </Box>
         {children}

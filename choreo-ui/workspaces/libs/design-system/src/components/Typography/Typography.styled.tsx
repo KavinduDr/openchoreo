@@ -9,6 +9,6 @@ export const StyledTypography: ComponentType<
   StyledTypographyProps & TypographyProps
 > = styled(Typography)<TypographyProps & StyledTypographyProps>(
   ({ monospace }) => ({
-    fontFamily: monospace ? 'monospace' : 'inherit',
+    fontFamily: monospace ? 'monospace' : "'Gilmer'",
   })
 );

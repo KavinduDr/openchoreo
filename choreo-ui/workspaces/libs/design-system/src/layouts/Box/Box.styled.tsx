@@ -10,6 +10,7 @@ export interface BoxProps {
   onMouseEnter?: (event: MouseEvent<HTMLDivElement>) => void;
   onMouseLeave?: (event: MouseEvent<HTMLDivElement>) => void;
   disabled?: boolean;
+  flexWrap?: 'wrap' | 'nowrap' | 'wrap-reverse';
 
   // Style props
   backgroundColor?: string;
@@ -90,6 +91,7 @@ export const StyledBox: ComponentType<BoxProps> = styled(Box)<BoxProps>(
     justifyContent,
     alignItems,
     zIndex,
+    flexWrap,
   }) => ({
     transition: transition,
     backgroundColor: backgroundColor,
@@ -120,5 +122,6 @@ export const StyledBox: ComponentType<BoxProps> = styled(Box)<BoxProps>(
     justifyContent: justifyContent,
     alignItems: alignItems,
     zIndex: zIndex,
+    flexWrap: flexWrap,
   })
 );

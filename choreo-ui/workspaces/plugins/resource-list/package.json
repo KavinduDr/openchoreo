@@ -38,7 +38,9 @@
     "clsx": "~2.1.1",
     "@fontsource/roboto": "~5.2.5",
     "react-router": "~7.6.2",
-    "@open-choreo/plugin-overview": "workspace:*"
+    "@open-choreo/plugin-overview": "workspace:*",
+    "@open-choreo/definitions": "workspace:*",
+    "dayjs": "~1.11.13"
   },
   "devDependencies": {
     "@eslint/js": "~9.28.0",

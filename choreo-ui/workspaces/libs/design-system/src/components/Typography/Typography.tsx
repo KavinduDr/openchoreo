@@ -21,6 +21,8 @@ export interface TypographyProps {
   | 'subtitle2';
   monospace?: boolean;
   color?: string;
+  noWrap?: boolean;
+  ellipsis?: boolean;
 }
 
 /**
