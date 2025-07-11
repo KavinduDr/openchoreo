@@ -1,5 +1,5 @@
 import { apiRequest, ApiConfig } from '../core/config';
-import { OrganizationList } from '../types/types';
+import { type OrganizationList } from '../types/types';
 
 export interface OrganizationApi {
   listOrganizations(config?: ApiConfig): Promise<OrganizationList>;

@@ -1,4 +1,4 @@
-import { OrganizationItem, ProjectItem, ComponentItem } from "@open-choreo/definitions";
+import { type OrganizationItem, type ProjectItem, type ComponentItem } from "@open-choreo/definitions";
 
 export interface OrganizationListData {
   items: OrganizationItem[];

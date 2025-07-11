@@ -1,4 +1,4 @@
-import { ProjectItem, Resource } from "../types/resource";
+import { type ProjectItem, type Resource } from "../types/resource";
 
 export function getResourceDisplayName(resource: Resource) {
   return resource?.displayName || resource?.name;

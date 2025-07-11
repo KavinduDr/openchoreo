@@ -1,5 +1,5 @@
 import { apiRequest, ApiConfig } from '../core/config';
-import { Project, ProjectList } from '../types/types';
+import { type Project, type ProjectList } from '../types/types';
 
 export interface ProjectsApi {
   listProjects(orgName: string, config?: ApiConfig): Promise<ProjectList>;
