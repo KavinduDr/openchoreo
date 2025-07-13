@@ -5,4 +5,6 @@ import {
 } from '@mui/material';
 
 export const StyledTableContainer: React.ComponentType<TableContainerProps> =
-  styled(MUITableContainer)({});
+  styled(MUITableContainer)({
+    overflow: 'visible',
+  });

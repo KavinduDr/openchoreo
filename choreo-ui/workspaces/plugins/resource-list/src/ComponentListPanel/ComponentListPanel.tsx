@@ -25,11 +25,21 @@ const ComponentListPanel: React.FC = () => {
       name: item.name,
       description: item.type,
       type: item.type,
-      lastUpdated: item.createdAt,
+      lastUpdated: new Date(item.createdAt),
       href: `${homePath}/component/${item.name}`,
     }),
   );
-  return <ResourceTable resources={components || []} />;
+  return (
+    <ResourceTable
+      resources={components || []}
+      resourceKind="component"
+      onRefresh={() => {
+        componentListQueryResult.refetch();
+      }}
+      isLoading={componentListQueryResult.isLoading}
+      enableAvatar={true}
+    />
+  );
 };
 
 export default ComponentListPanel;

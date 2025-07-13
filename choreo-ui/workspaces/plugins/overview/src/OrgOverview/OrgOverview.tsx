@@ -11,7 +11,12 @@ import {
   useHomePath,
 } from "@open-choreo/plugin-core";
 import React from "react";
-import { IconButton, RefreshIcon, Rotate, useChoreoTheme } from "@open-choreo/design-system";
+import {
+  IconButton,
+  RefreshIcon,
+  Rotate,
+  useChoreoTheme,
+} from "@open-choreo/design-system";
 import {
   getResourceDescription,
   getResourceDisplayName,
@@ -49,12 +54,14 @@ const OrgOverview: React.FC = () => {
       actions={
         <IconButton
           size="small"
-       
           onClick={() => {
             projectListQueryResult.refetch();
           }}
         >
-          <Rotate disabled={!projectListQueryResult.isFetching} color={theme.pallet.primary.main}>
+          <Rotate
+            disabled={!projectListQueryResult.isFetching}
+            color={theme.pallet.primary.main}
+          >
             <RefreshIcon fontSize="inherit" />
           </Rotate>
         </IconButton>

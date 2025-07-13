@@ -1,7 +1,7 @@
-export { TableDefault } from './TableDefault';
-export { TableBody } from './TableBody/TableBody';
-export { TableHead } from './TableHead/TableHead';
-export { TableRow } from './TableRow/TableRow';
-export { TableCell } from './TableCell/TableCell';
-export { TableSortLabel } from './TableSortLabel/TableSortLabel';
-export { TableContainer } from './TableContainer/TableContainer'
+export * from './TableDefault';
+export * from './TableBody/TableBody';
+export * from './TableHead/TableHead';
+export * from './TableRow/TableRow';
+export * from './TableCell/TableCell';
+export * from './TableSortLabel/TableSortLabel';
+export * from './TableContainer/TableContainer'

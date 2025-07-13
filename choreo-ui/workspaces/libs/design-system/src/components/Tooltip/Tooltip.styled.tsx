@@ -1,16 +1,13 @@
 import { styled, Tooltip, TooltipProps } from '@mui/material';
-import { ComponentType } from 'react';
+import React from 'react';
 
 export interface StyledTooltipProps extends TooltipProps {
   disabled?: boolean;
 }
 
-export const StyledTooltip: ComponentType<StyledTooltipProps> = styled(
-  Tooltip,
-  {
-    shouldForwardProp: (prop) => !['disabled'].includes(prop as string),
-  }
-)<StyledTooltipProps>(({ theme }) => ({
+const StyledTooltipBase = styled(Tooltip, {
+  shouldForwardProp: (prop) => !['disabled'].includes(prop as string),
+})<StyledTooltipProps>(({ theme }) => ({
   '& .MuiTooltip-tooltip': {
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
@@ -43,3 +40,9 @@ export const StyledTooltip: ComponentType<StyledTooltipProps> = styled(
     color: theme.palette.secondary.dark,
   },
 }));
+
+export const StyledTooltip = React.forwardRef<HTMLDivElement, StyledTooltipProps>(
+  (props, ref) => <StyledTooltipBase {...props} ref={ref} />
+);
+
+StyledTooltip.displayName = 'StyledTooltip';
