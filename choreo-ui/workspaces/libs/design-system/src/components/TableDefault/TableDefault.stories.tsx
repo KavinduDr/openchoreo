@@ -139,7 +139,7 @@ export const Enhanced: Story = {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleRequestSort = (
-      event: React.MouseEvent<unknown>,
+      _event: React.MouseEvent<unknown>,
       property: keyof Data
     ) => {
       const isAsc = orderBy === property && order === 'asc';
@@ -158,7 +158,7 @@ export const Enhanced: Story = {
       setSelected([]);
     };
 
-    const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+    const handleClick = (_event: React.MouseEvent<unknown>, name: string) => {
       const selectedIndex = selected.indexOf(name);
       let newSelected: string[] = [];
 
@@ -178,7 +178,7 @@ export const Enhanced: Story = {
       setSelected(newSelected);
     };
 
-    const handleChangePage = (event: unknown, newPage: number) => {
+    const handleChangePage = (_event: unknown, newPage: number) => {
       setPage(newPage);
     };
 
