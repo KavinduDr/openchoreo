@@ -39,14 +39,14 @@ export default meta;
 type Story = StoryObj<typeof RadioCard>;
 
 export const VerticalTemplate: Story = {
-  render: function Template(args) {
+  render: function Template(_args) {
     const [value, setValue] = React.useState('restAPI');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setValue((event.target as HTMLInputElement).value);
     };
     return (
-      <Box maxWidth={500}>
+      <Box maxWidth={800}>
         <Card testId={`${testId}-vertical`}>
           <CardContent>
             <RadioGroup
@@ -98,7 +98,7 @@ export const VerticalTemplate: Story = {
 };
 
 export const HorizontalTemplate: Story = {
-  render: function HorizontalTemplate(args) {
+  render: function HorizontalTemplate(_args) {
     const [value, setValue] = React.useState('restAPI');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -165,7 +165,7 @@ export const HorizontalTemplate: Story = {
 };
 
 export const IndicatorTemplate: Story = {
-  render: function IndicatorTemplate(args) {
+  render: function IndicatorTemplate(_args) {
     const [value, setValue] = React.useState('restAPI');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -189,7 +189,7 @@ export const IndicatorTemplate: Story = {
                   description="This report contains data related to response mediation latency in all the API versions."
                   value="restAPI"
                   active={value === 'restAPI'}
-                  indicator
+                  indicator={true}
                   testId={`${testId}-indicator-rest`}
                 />
                 <RadioCard
@@ -197,7 +197,7 @@ export const IndicatorTemplate: Story = {
                   description="API Proxy Desc"
                   value="apiProxy"
                   active={value === 'apiProxy'}
-                  indicator
+                  indicator={true}
                   testId={`${testId}-indicator-proxy`}
                 />
                 <RadioCard
@@ -205,7 +205,7 @@ export const IndicatorTemplate: Story = {
                   description="Other Desc"
                   value="other"
                   active={value === 'other'}
-                  indicator
+                  indicator={true}
                   testId={`${testId}-indicator-other`}
                 />
                 <RadioCard
@@ -213,7 +213,7 @@ export const IndicatorTemplate: Story = {
                   description="Disabled Desc"
                   value="disabled"
                   active={value === 'disabled'}
-                  indicator
+                  indicator={true}
                   disabled
                   testId={`${testId}-indicator-disabled`}
                 />
@@ -279,7 +279,7 @@ export const IndicatorTemplate: Story = {
 };
 
 export const IndicatorTemplateContent: Story = {
-  render: function IndicatorTemplateContent(args) {
+  render: function IndicatorTemplateContent(_args) {
     const [value, setValue] = React.useState('restAPI');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -536,7 +536,7 @@ export const IndicatorTemplateContent: Story = {
 };
 
 export const CheckboxContentIndicatorTemplate: Story = {
-  render: function CheckboxContentIndicatorTemplate(args) {
+  render: function CheckboxContentIndicatorTemplate(_args) {
     const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
     const handleSelect = (value: string) => {
       setSelectedItems((prevSelectedItems) =>

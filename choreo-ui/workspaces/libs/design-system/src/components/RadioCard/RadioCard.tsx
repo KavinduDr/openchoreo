@@ -78,25 +78,22 @@ export const RadioCard = React.forwardRef<HTMLDivElement, RadioCardProps>(
       </Box>
     );
 
-    const actionItem = enableCheckboxMode ? (
-      <Checkbox
-        checked={active}
-        testId={testId}
-        onChange={onToggleSelect}
-        data-checkboxIndicator={true}
-        data-checkboxIndicatorVisible={indicator && !actions}
-        data-checkboxIndicatorCenter={iconPlacement === 'center'}
-        data-checkboxIndicatorTop={iconPlacement === 'top'}
-      />
-    ) : (
-      <RadioIndicator
-        color="primary"
-        data-radioIndicator={true}
-        data-radioIndicatorVisible={indicator && !actions}
-        data-radioIndicatorCenter={iconPlacement === 'center'}
-        data-radioIndicatorTop={iconPlacement === 'top'}
-      />
-    );
+    // Only render radio/checkbox as control when NOT showing indicator
+    const actionItem =
+      indicator && !actions ? (
+        enableCheckboxMode ? (
+          <Checkbox
+            checked={active}
+            testId={testId}
+            onChange={onToggleSelect}
+          />
+        ) : (
+          <RadioIndicator color="primary" />
+        )
+      ) : (
+        // Render invisible radio for form functionality
+        <RadioIndicator color="primary" style={{ display: 'none' }} />
+      );
 
     return (
       <StyledRadioCard className="radioCard" maxWidth={maxWidth}>
@@ -110,6 +107,29 @@ export const RadioCard = React.forwardRef<HTMLDivElement, RadioCardProps>(
           control={actionItem}
           label={cardLabel}
         />
+
+        {/* Render indicator in top right corner when indicator=true and no actions */}
+        {indicator &&
+          !actions &&
+          (enableCheckboxMode ? (
+            <Checkbox
+              checked={active}
+              testId={testId}
+              onChange={onToggleSelect}
+              data-checkboxIndicator={true}
+              data-checkboxIndicatorVisible={true}
+              data-checkboxIndicatorCenter={iconPlacement === 'center'}
+              data-checkboxIndicatorTop={iconPlacement === 'top'}
+            />
+          ) : (
+            <RadioIndicator
+              color="primary"
+              data-radioIndicator={true}
+              data-radioIndicatorVisible={true}
+              data-radioIndicatorCenter={iconPlacement === 'center'}
+              data-radioIndicatorTop={iconPlacement === 'top'}
+            />
+          ))}
       </StyledRadioCard>
     );
   }
