@@ -1,6 +1,6 @@
-import React, { JSX, useEffect, useMemo, useState } from 'react';
+import React, { JSX, useCallback, useEffect, useMemo, useState } from 'react';
 import { StyledDataTable } from './DataTable.styled';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import {
   TableBody,
   TableCell,
@@ -11,6 +11,9 @@ import {
   TableSortLabel,
 } from '../TableDefault';
 import { Pagination } from '../Pagination';
+import { useChoreoTheme } from '@design-system/theme';
+import { SearchBar } from '../SearchBar';
+import { debounce } from 'lodash';
 
 export type DataTableColumn<T> = {
   title: string;
@@ -24,7 +27,6 @@ export type DataTableColumn<T> = {
 
 export interface DataTableProps<T> {
   enableFrontendSearch?: boolean;
-  searchQuery: string;
   isLoading: boolean;
   testId: string;
   columns: DataTableColumn<T>[];
@@ -32,6 +34,11 @@ export interface DataTableProps<T> {
   totalRows?: number;
   getRowId(rowData: T): string;
   onRowClick?: (row: any) => void;
+  ref?: React.Ref<HTMLDivElement>;
+  actions?: React.ReactNode;
+  tableTitle?: string;
+  titleActions?: React.ReactNode;
+  variant?: 'default' | 'dark' | 'white';
 }
 
 type OrderState = {
@@ -120,11 +127,10 @@ function useSortData<T>(
  * @component
  */
 export const DataTable = <T,>(
-  props: DataTableProps<T> & { ref?: React.Ref<HTMLDivElement> }
+  props: DataTableProps<T>
 ) => {
   const {
     enableFrontendSearch = true,
-    searchQuery,
     isLoading,
     testId,
     columns,
@@ -132,28 +138,47 @@ export const DataTable = <T,>(
     totalRows,
     onRowClick,
     getRowId,
-    ...restProps
+    ref,
+    actions,
+    variant = 'default',
+    tableTitle,
+    titleActions,
   } = props;
 
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = React.useState('');
   const { sortParams, handlerSort, sortedData } = useSortData(
     columns,
     data,
-    searchQuery,
+    debouncedSearchQuery,
     enableFrontendSearch
   );
-
+  const theme = useChoreoTheme();
   const [page, setPage] = React.useState(0);
   const [originPage, setOriginPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [search, setSearch] = React.useState('');
+
+
+  const onSearch = (value: string) => {
+    setSearch(value);
+  };
+
+  const filterData = useCallback(debounce((value: string) => {
+    setDebouncedSearchQuery(value);
+  }, 500), [sortedData]);
 
   useEffect(() => {
-    if (searchQuery && page !== 0) {
+    filterData(search);
+  }, [search]);
+
+  useEffect(() => {
+    if (debouncedSearchQuery && page !== 0) {
       setOriginPage(page);
       setPage(0);
-    } else if (!searchQuery && page !== originPage) {
+    } else if (!debouncedSearchQuery && page !== originPage) {
       setPage(originPage);
     }
-  }, [searchQuery]);
+  }, [debouncedSearchQuery, page, originPage]);
 
   const pageData = useMemo(
     () =>
@@ -161,7 +186,7 @@ export const DataTable = <T,>(
     [sortedData, page, rowsPerPage]
   );
 
-  if (isLoading)
+  if (isLoading && !data.length)
     return (
       <Box className={'loaderWrapper'}>
         <CircularProgress />
@@ -169,79 +194,100 @@ export const DataTable = <T,>(
     );
 
   return (
-    <StyledDataTable ref={props.ref} {...restProps}>
-      <TableContainer>
-        <TableDefault variant="default" testId={testId}>
-          <TableHead data-cyid={`${testId}-table-columns`}>
-            <TableRow>
-              {columns.map((col) => {
-                const sortDirection =
-                  sortParams?.orderBy === col.field
-                    ? sortParams?.order
-                    : undefined;
-                return (
-                  <TableCell
-                    key={col.field}
-                    sortDirection={sortDirection}
-                    width={col.width}
-                  >
-                    <TableSortLabel
-                      active={sortParams?.orderBy === col.field}
-                      direction={sortDirection}
-                      onClick={() => handlerSort(col.field)}
-                      data-alignment={col.align}
-                    >
-                      {col.title}
-                      {sortParams?.orderBy === col.field ? (
-                        <span className="visually-hidden">
-                          {sortParams.order === 'desc'
-                            ? 'sorted descending'
-                            : 'sorted ascending'}
-                        </span>
-                      ) : null}
-                    </TableSortLabel>
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          </TableHead>
-          <TableBody data-cyid={`${testId}-table-rows`}>
-            {pageData.length === 0 && (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="noRecordsTextRow"
-                >
-                  No records to display
-                </TableCell>
-              </TableRow>
+    <Box>
+      <Box display="flex" justifyContent="space-between" mb={theme.spacing(2)} gap={theme.spacing(1)}>
+        <Box display="flex" alignItems="center" gap={theme.spacing(1)}>
+          {tableTitle && (
+            <Typography variant="h4" color="text.primary">{tableTitle}</Typography>
+          )}
+          {titleActions}
+        </Box>
+        <Box display="flex" alignItems="center" gap={theme.spacing(1)}>
+          {
+            enableFrontendSearch && (
+              <Box width={theme.spacing(40)}>
+                <SearchBar size='medium' onChange={onSearch} testId="data-table" bordered color='secondary' />
+              </Box>
             )}
-            {pageData.map((item) => (
-              <RenderRow
-                key={getRowId(item)}
-                rowData={item}
-                columns={columns}
-                onRowClick={() => onRowClick?.(item)}
-              />
-            ))}
-          </TableBody>
-        </TableDefault>
-      </TableContainer>
-      <Box display="flex" mb={2} py={1} alignItems="center">
-        <Box className="tablePagination">
-          <Pagination
-            rowsPerPageOptions={[5, 10, 15, 20, 25, 50]}
-            count={totalRows ?? sortedData.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
-            onRowsPerPageChange={(v) => setRowsPerPage(Number(v))}
-            rowsPerPageLabel="Items per page"
-            testId="items-per-page"
-          />
+          {
+            actions
+          }
         </Box>
       </Box>
-    </StyledDataTable>
+      <StyledDataTable ref={ref}>
+        <TableContainer>
+          <TableDefault variant={variant} testId={testId}>
+            <TableHead data-cyid={`${testId}-table-columns`}>
+              <TableRow>
+                {columns.map((col) => {
+                  const sortDirection =
+                    sortParams?.orderBy === col.field
+                      ? sortParams?.order
+                      : undefined;
+                  return (
+                    <TableCell
+                      key={col.field}
+                      sortDirection={sortDirection}
+                      width={col.width}
+                    >
+                      <TableSortLabel
+                        active={sortParams?.orderBy === col.field}
+                        direction={sortDirection}
+                        onClick={() => handlerSort(col.field)}
+                        data-alignment={col.align}
+                      >
+                        {col.title}
+                        {sortParams?.orderBy === col.field ? (
+                          <span className="visually-hidden">
+                            {sortParams.order === 'desc'
+                              ? 'sorted descending'
+                              : 'sorted ascending'}
+                          </span>
+                        ) : null}
+                      </TableSortLabel>
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            </TableHead>
+            <TableBody data-cyid={`${testId}-table-rows`}>
+              {pageData.length === 0 && (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="noRecordsTextRow"
+                  >
+                    No records to display
+                  </TableCell>
+                </TableRow>
+              )}
+              {pageData.map((item) => (
+                <RenderRow
+                  key={getRowId(item)}
+                  rowData={item}
+                  columns={columns}
+                  onRowClick={() => onRowClick?.(item)}
+                />
+              ))}
+            </TableBody>
+          </TableDefault>
+        </TableContainer>
+        <Box display="flex" mb={2} py={theme.spacing(2)} alignItems="center">
+          <Box className="tablePagination">
+            <Pagination
+              rowsPerPageOptions={[5, 10, 15, 20, 25, 50]}
+              count={totalRows ?? sortedData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={(_, newPage) => setPage(newPage)}
+              onRowsPerPageChange={(v) => setRowsPerPage(Number(v))}
+              rowsPerPageLabel="Items per page"
+              testId="items-per-page"
+            />
+          </Box>
+        </Box>
+      </StyledDataTable>
+    </Box>
   );
 };
 

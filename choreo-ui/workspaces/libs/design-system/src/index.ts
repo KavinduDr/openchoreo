@@ -9,3 +9,6 @@ export * from './layouts';
 
 // Export images
 export * from './Images';
+
+// Export utils
+export * from './utils';

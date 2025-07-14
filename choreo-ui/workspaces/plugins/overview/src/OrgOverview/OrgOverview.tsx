@@ -2,7 +2,6 @@ import {
   FullPageLoader,
   PageLayout,
   PresetErrorPage,
-  ResourceList,
 } from "@open-choreo/common-views";
 import { useGlobalState } from "@open-choreo/choreo-context";
 import {
@@ -11,18 +10,13 @@ import {
   PluginExtensionType,
   useHomePath,
 } from "@open-choreo/plugin-core";
-import React, { useMemo, useState } from "react";
+import React from "react";
 import {
-  Box,
   IconButton,
   RefreshIcon,
   Rotate,
-  SearchBar,
-  TimeIcon,
-  Tooltip,
-  Typography,
+  useChoreoTheme,
 } from "@open-choreo/design-system";
-import { useIntl } from "react-intl";
 import {
   getResourceDescription,
   getResourceDisplayName,
@@ -39,7 +33,7 @@ const OrgOverview: React.FC = () => {
     selectedOrganization,
     organizationListQueryResult,
   } = useGlobalState();
-
+  const theme = useChoreoTheme();
   if (organizationListQueryResult?.isLoading) {
     return <FullPageLoader />;
   }
@@ -64,7 +58,10 @@ const OrgOverview: React.FC = () => {
             projectListQueryResult.refetch();
           }}
         >
-          <Rotate disabled={!projectListQueryResult.isFetching}>
+          <Rotate
+            disabled={!projectListQueryResult.isFetching}
+            color={theme.pallet.primary.main}
+          >
             <RefreshIcon fontSize="inherit" />
           </Rotate>
         </IconButton>

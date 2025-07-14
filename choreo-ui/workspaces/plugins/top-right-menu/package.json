@@ -31,7 +31,8 @@
     "@fontsource/roboto": "~5.2.5",
     "react-router": "~7.6.2",
     "react-intl": "~7.1.11",
-    "@open-choreo/choreo-context": "workspace:*"
+    "@open-choreo/choreo-context": "workspace:*",
+    "dayjs": "~1.11.13"
   },
   "devDependencies": {
     "@eslint/eslintrc": "~3.3.1",

@@ -21,10 +21,7 @@ export const SelectorContent: React.FC<SelectorContentProps> = ({
 }) => (
     <Box display="flex" alignItems="center" gap={1} marginRight={5}>
         <Typography
-            variant="body1"
-            fontSize={14}
-            fontWeight={450}
-            color="text.primary"
+            variant="h6"
         >
             {selectedItem.label}
         </Typography>

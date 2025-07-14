@@ -24,7 +24,8 @@
     "@open-choreo/top-right-menu": "workspace:*",
     "@open-choreo/choreo-context": "workspace:*",
     "@open-choreo/resource-list": "workspace:*",
-    "react-intl": "~7.1.11"
+    "react-intl": "~7.1.11",
+    "dayjs": "~1.11.13"
   },
   "devDependencies": {
     "@eslint/eslintrc": "~3.3.1",

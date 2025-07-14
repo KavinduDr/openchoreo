@@ -33,7 +33,8 @@
     "@open-choreo/api-client": "workspace:*",
     "@tanstack/react-query": "~5.81.5",
     "react-intl": "~7.1.11",
-    "@open-choreo/definitions": "workspace:*"
+    "@open-choreo/definitions": "workspace:*",
+    "dayjs": "~1.11.13"
   },
   "devDependencies": {
     "@eslint/eslintrc": "~3.3.1",

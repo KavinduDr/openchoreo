@@ -30,7 +30,8 @@
     "eslint-plugin-testing-library": "~7.4.0",
     "@types/lodash": "~4.17.17",
     "lodash": "~4.17.21",
-    "react-intl": "~7.1.11"
+    "react-intl": "~7.1.11",
+    "dayjs": "~1.11.13"
   },
   "devDependencies": {
     "@eslint/js": "~9.28.0",

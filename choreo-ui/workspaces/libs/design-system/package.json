@@ -53,7 +53,8 @@
     "react-dom": "^19.1.0",
     "react-router": "~7.6.2",
     "react-intl": "~7.1.11",
-    "@open-choreo/definitions": "workspace:*"
+    "@open-choreo/definitions": "workspace:*",
+    "dayjs": "~1.11.13"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.6.13",

@@ -1,18 +1,24 @@
-import {
-  FullPageLoader,
-  PresetErrorPage,
-  ResourceList,
-} from "@open-choreo/common-views";
+import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import { useGlobalState } from "@open-choreo/choreo-context";
 import {
+  genaratePath,
   PanelExtensionMounter,
   PluginExtensionPoint,
   PluginExtensionType,
   useHomePath,
+  useOrgHandle,
 } from "@open-choreo/plugin-core";
 import React, { useMemo, useState } from "react";
 import { Box, SearchBar } from "@open-choreo/design-system";
 import { useIntl } from "react-intl";
+import {
+  getResourceCreatedAt,
+  getResourceDescription,
+  getResourceDisplayName,
+  getResourceName,
+  getResourceStatus,
+} from "@open-choreo/definitions";
+import { ResourceList } from "@open-choreo/resource-views";
 
 export const organizationOverviewActionsExtensionPoint: PluginExtensionPoint = {
   id: "org-overview-page-actions",
@@ -21,7 +27,7 @@ export const organizationOverviewActionsExtensionPoint: PluginExtensionPoint = {
 
 export const ProjectListPanel: React.FC = () => {
   const { projectListQueryResult } = useGlobalState();
-  const homePath = useHomePath();
+  const orgHandle = useOrgHandle();
   const [search, setSearch] = useState("");
   const { formatMessage } = useIntl();
 
@@ -33,13 +39,16 @@ export const ProjectListPanel: React.FC = () => {
         )
         .map((item) => ({
           id: item.name,
-          name: item.name,
-          description: item?.description || "",
-          type: item.status,
-          lastUpdated: item.createdAt,
-          href: `${homePath}/project/${item.name}`,
+          name: getResourceDisplayName(item),
+          description: getResourceDescription(item) || "",
+          type: getResourceStatus(item),
+          lastUpdated: getResourceCreatedAt(item),
+          href: genaratePath({
+            orgHandle,
+            projectHandle: getResourceName(item),
+          }),
         })),
-    [projectListQueryResult?.data?.data.items, search, homePath],
+    [projectListQueryResult?.data?.data.items, search, orgHandle],
   );
 
   if (projectListQueryResult?.isLoading) {

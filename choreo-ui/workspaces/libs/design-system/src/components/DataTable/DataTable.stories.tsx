@@ -60,11 +60,7 @@ type Story = StoryObj<typeof DataTable>;
 
 export const Default: Story = {
   args: {},
-  render: function RenderDefault(_args) {
-    const [searchQuery, setSearchQuery] = useState('');
-    const onSearch = (data: any) => {
-      setSearchQuery(data);
-    };
+  render: function RenderDefault(args) {
     const memberData: IUser[] = [
       {
         id: 509,
@@ -202,21 +198,19 @@ export const Default: Story = {
     return (
       <Card testId="data-table">
         <CardContent>
-          <Box display="flex" justifyContent="flex-end">
-            <Box width={300}>
-              <SearchBar onChange={onSearch} testId="data-table" />
-            </Box>
-          </Box>
           <DataTable<IUser>
-            enableFrontendSearch
+            enableFrontendSearch={args.enableFrontendSearch}
             getRowId={(rowData) => rowData.idpId}
             columns={memberListColumns}
             testId="table"
-            isLoading={false}
-            searchQuery={searchQuery}
+            isLoading={args.isLoading}
             data={memberData}
             totalRows={memberData.length}
             onRowClick={onRowClick}
+            variant={args.variant}
+            tableTitle={args.tableTitle}
+            titleActions={args.titleActions}
+            actions={<Button color="primary" size="small" testId="add-button">Create Element</Button>}
           />
         </CardContent>
       </Card>

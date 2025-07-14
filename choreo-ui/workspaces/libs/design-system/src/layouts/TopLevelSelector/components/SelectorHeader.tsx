@@ -19,7 +19,7 @@ export const SelectorHeader: React.FC<SelectorHeaderProps> = ({ level, onClose }
         justifyContent="space-between"
         flexGrow={1}
     >
-        <Typography variant="body2" fontSize={11} color="text.secondary">
+        <Typography variant="h6" fontSize={11} color="text.secondary">
             {getLevelLabel(level)}
         </Typography>
         {onClose && (

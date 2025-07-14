@@ -459,6 +459,10 @@
       "projectFolder": "workspaces/plugins/overview"
     },
     {
+      "packageName": "@open-choreo/resource-views",
+      "projectFolder": "workspaces/libs/resource-views"
+    },
+    {
       "packageName": "@open-choreo/plugin-top-level-selector",
       "projectFolder": "workspaces/plugins/top-level-selector"
     },

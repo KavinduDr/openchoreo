@@ -36,7 +36,7 @@ export function PageLayout({
       flexDirection="column"
       gap={2}
       backgroundColor={theme.pallet.background.default}
-      padding={theme.spacing(2)}
+      padding={theme.spacing(4, 6)}
       color={theme.pallet.text.primary}
     >
       {backUrl && (
