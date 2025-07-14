@@ -328,9 +328,9 @@ export const Enhanced: Story = {
                           <TableCell padding="checkbox">
                             <Checkbox
                               checked={isItemSelected}
-                              inputProps={{ 'aria-labelledby': labelId }}
                               disableRipple={true}
                               testId="table-row-checkbox"
+                              aria-labelledby={labelId}
                             />
                           </TableCell>
                           <TableCell id={labelId} scope="row" padding="none">
