@@ -106,30 +106,8 @@ export const RadioCard = React.forwardRef<HTMLDivElement, RadioCardProps>(
           value={value}
           control={actionItem}
           label={cardLabel}
+          labelPlacement="start"
         />
-
-        {/* Render indicator in top right corner when indicator=true and no actions */}
-        {indicator &&
-          !actions &&
-          (enableCheckboxMode ? (
-            <Checkbox
-              checked={active}
-              testId={testId}
-              onChange={onToggleSelect}
-              data-checkboxIndicator={true}
-              data-checkboxIndicatorVisible={true}
-              data-checkboxIndicatorCenter={iconPlacement === 'center'}
-              data-checkboxIndicatorTop={iconPlacement === 'top'}
-            />
-          ) : (
-            <RadioIndicator
-              color="primary"
-              data-radioIndicator={true}
-              data-radioIndicatorVisible={true}
-              data-radioIndicatorCenter={iconPlacement === 'center'}
-              data-radioIndicatorTop={iconPlacement === 'top'}
-            />
-          ))}
       </StyledRadioCard>
     );
   }

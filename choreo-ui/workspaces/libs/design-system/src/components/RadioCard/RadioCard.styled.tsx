@@ -78,14 +78,14 @@ export const StyledRadioCard: ComponentType<StyledRadioCardProps> = styled(
   '& [data-radioIndicator="true"]': {
     position: 'absolute',
     right: theme.spacing(1),
-    display: 'flex', // Change from 'none' to 'flex'
+    display: 'flex',
     alignItems: 'center',
   },
   '& [data-radioIndicatorVisible="true"]': {
     display: 'flex',
   },
   '& [data-radioIndicatorHidden="true"]': {
-    display: 'none', // Add this to explicitly hide when needed
+    display: 'none',
   },
   '& [data-radioIndicatorCenter="true"]': {
     top: '50%',

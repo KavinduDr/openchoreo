@@ -538,12 +538,17 @@ export const IndicatorTemplateContent: Story = {
 export const CheckboxContentIndicatorTemplate: Story = {
   render: function CheckboxContentIndicatorTemplate(_args) {
     const [selectedItems, setSelectedItems] = React.useState<string[]>([]);
-    const handleSelect = (value: string) => {
-      setSelectedItems((prevSelectedItems) =>
-        prevSelectedItems.includes(value)
-          ? prevSelectedItems.filter((item) => item !== value)
-          : [...prevSelectedItems, value]
-      );
+    const handleSelect = (
+      event: React.ChangeEvent<HTMLInputElement>,
+      value: string
+    ) => {
+      if (event.target.checked) {
+        setSelectedItems((prevSelectedItems) => [...prevSelectedItems, value]);
+      } else {
+        setSelectedItems((prevSelectedItems) =>
+          prevSelectedItems.filter((item) => item !== value)
+        );
+      }
     };
 
     const values = ['Rest API', 'API Proxy', 'Cron Job'];
@@ -563,7 +568,7 @@ export const CheckboxContentIndicatorTemplate: Story = {
                   icon={<ChoreoNotificationImg />}
                   indicator
                   enableCheckboxMode
-                  onToggleSelect={() => handleSelect(value)}
+                  onToggleSelect={(event) => handleSelect(event, value)}
                   testId={`${testId}-indicator-icon-${value}-desc`}
                 />
               </Box>
