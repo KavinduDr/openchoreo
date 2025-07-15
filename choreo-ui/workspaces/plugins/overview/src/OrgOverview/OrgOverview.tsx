@@ -1,32 +1,28 @@
-import {
-  FullPageLoader,
-  PageLayout,
-  PresetErrorPage,
-} from "@open-choreo/common-views";
+import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import { useSelectedOrganization } from "@open-choreo/choreo-context";
 import {
   PanelExtensionMounter,
   PluginExtensionPoint,
   PluginExtensionType,
-  useHomePath,
 } from "@open-choreo/plugin-core";
 import React from "react";
 import {
-  IconButton,
-  RefreshIcon,
-  Rotate,
+  Box,
+  GridContainer,
+  GridItem,
   useChoreoTheme,
 } from "@open-choreo/design-system";
-import {
-  getResourceDescription,
-  getResourceDisplayName,
-} from "@open-choreo/definitions";
 import { ResourcePageLayout } from "@open-choreo/resource-views";
 
 export const organizationOverviewMainExtensionPoint: PluginExtensionPoint = {
   id: "org-overview-page-body",
   type: PluginExtensionType.PANEL,
 };
+export const organizationOverviewSecondaryExtensionPoint: PluginExtensionPoint =
+  {
+    id: "org-overview-side-panels",
+    type: PluginExtensionType.PANEL,
+  };
 
 const OrgOverview: React.FC = () => {
   const {
@@ -60,9 +56,20 @@ const OrgOverview: React.FC = () => {
         refetch();
       }}
     >
-      <PanelExtensionMounter
-        extentionPoint={organizationOverviewMainExtensionPoint}
-      />
+      <GridContainer>
+        <GridItem size={{ xs: 12, sm: 12, md: 8, lg: 9, xl: 10 }}>
+          <PanelExtensionMounter
+            extentionPoint={organizationOverviewMainExtensionPoint}
+          />
+        </GridItem>
+        <GridItem size={{ xs: 12, sm: 12, md: 4, lg: 3, xl: 1 }}>
+          <Box display="flex" flexDirection="row" gap={theme.spacing(2)}>
+            <PanelExtensionMounter
+              extentionPoint={organizationOverviewSecondaryExtensionPoint}
+            />
+          </Box>
+        </GridItem>
+      </GridContainer>
     </ResourcePageLayout>
   );
 };

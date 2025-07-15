@@ -1,8 +1,4 @@
-import {
-  FullPageLoader,
-  PageLayout,
-  PresetErrorPage,
-} from "@open-choreo/common-views";
+import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import { useSelectedComponent } from "@open-choreo/choreo-context";
 import React from "react";
 import {
@@ -10,16 +6,6 @@ import {
   PluginExtensionPoint,
   PluginExtensionType,
 } from "@open-choreo/plugin-core";
-import {
-  getResourceDescription,
-  getResourceDisplayName,
-} from "@open-choreo/definitions";
-import {
-  RefreshIcon,
-  Rotate,
-  IconButton,
-  useChoreoTheme,
-} from "@open-choreo/design-system";
 import { ResourcePageLayout } from "@open-choreo/resource-views";
 
 export const componentOverviewMainExtensionPoint: PluginExtensionPoint = {
@@ -32,9 +18,7 @@ const ComponentOverview: React.FC = () => {
     isLoading,
     isError,
     isFetching,
-    refetch,
   } = useSelectedComponent();
-  const theme = useChoreoTheme();
 
   if (isLoading) {
     return <FullPageLoader />;

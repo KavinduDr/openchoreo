@@ -12,8 +12,36 @@ const meta: Meta<typeof SearchBar> = {
   argTypes: {},
 };
 
+// Meta for ExpandableSearch component
+const expandableMeta: Meta<typeof ExpandableSearch> = {
+  title: 'Choreo DS/SearchBar/ExpandableSearch',
+  component: ExpandableSearch,
+  tags: ['autodocs'],
+  argTypes: {
+    size: {
+      control: 'select',
+      options: ['small', 'medium'],
+      description: 'Size of the expandable search',
+    },
+    direction: {
+      control: 'select',
+      options: ['left', 'right'],
+      description: 'Direction of expansion',
+    },
+    placeholder: {
+      control: 'text',
+      description: 'Placeholder text for the search input',
+    },
+    searchString: {
+      control: 'text',
+      description: 'Current search value',
+    },
+  },
+};
+
 export default meta;
 type Story = StoryObj<typeof SearchBar>;
+type ExpandableStory = StoryObj<typeof ExpandableSearch>;
 
 export const Default: Story = {
   render: () => {
@@ -83,32 +111,27 @@ export const DefaultRight: Story = {
   },
 };
 
-export const Expandable: Story = {
-  render: function Expandable() {
-    const [searchVal, setSearchVal] = useState('');
+export const Expandable: ExpandableStory = {
+  args: {
+    size: 'medium',
+    direction: 'left',
+    placeholder: 'Search...',
+    searchString: '',
+    testId: 'search-expandable',
+  },
+  render: function Expandable(args) {
+    const [searchVal, setSearchVal] = useState(args.searchString || '');
     return (
-      <Card testId="card-default-right-search-bar-wrapper">
+      <Card testId="card-expandable-search-wrapper">
         <CardContent>
           <Grid container spacing={3}>
             <Grid size={10}>
               <Box mb={2}>
-                <Typography>Size - Small</Typography>
+                <Typography>Expandable Search - {args.size} size, {args.direction} direction</Typography>
               </Box>
               <ExpandableSearch
-                size="small"
-                testId="search-expandable"
-                setSearchString={setSearchVal}
-                searchString={searchVal}
-              />
-            </Grid>
-            <Grid size={10}>
-              <Box mb={2}>
-                <Typography>Size - Medium(default)</Typography>
-              </Box>
-              <ExpandableSearch
-                size="medium"
-                testId="search-expandable"
-                setSearchString={setSearchVal}
+                {...args}
+                onChange={setSearchVal}
                 searchString={searchVal}
               />
             </Grid>
@@ -119,35 +142,94 @@ export const Expandable: Story = {
   },
 };
 
-export const ExpandableRight: Story = {
-  render: function ExpandableRight() {
+export const ExpandableVariants: Story = {
+  render: function ExpandableVariants() {
     const [searchVal, setSearchVal] = useState('');
-
     return (
-      <Card testId="card-expandable-search-bar-wrapper">
+      <Card testId="card-expandable-variants-wrapper">
         <CardContent>
           <Grid container spacing={3}>
             <Grid size={10}>
               <Box mb={2}>
-                <Typography>Size - Small</Typography>
+                <Typography>Size - Small, Direction - Left</Typography>
               </Box>
               <ExpandableSearch
                 size="small"
-                testId="search-expandable-right"
-                direction="right"
-                setSearchString={setSearchVal}
+                testId="search-expandable-small-left"
+                onChange={setSearchVal}
                 searchString={searchVal}
+                direction="left"
+                placeholder="Search small left..."
               />
             </Grid>
             <Grid size={10}>
               <Box mb={2}>
-                <Typography>Size - Medium(default)</Typography>
+                <Typography>Size - Medium, Direction - Left</Typography>
               </Box>
               <ExpandableSearch
                 size="medium"
-                testId="search-expandable-right"
+                testId="search-expandable-medium-left"
+                onChange={setSearchVal}
+                searchString={searchVal}
+                direction="left"
+                placeholder="Search medium left..."
+              />
+            </Grid>
+            <Grid size={10}>
+              <Box mb={2}>
+                <Typography>Size - Small, Direction - Right</Typography>
+              </Box>
+              <ExpandableSearch
+                size="small"
+                testId="search-expandable-small-right"
+                onChange={setSearchVal}
+                searchString={searchVal}
                 direction="right"
-                setSearchString={setSearchVal}
+                placeholder="Search small right..."
+              />
+            </Grid>
+            <Grid size={10}>
+              <Box mb={2}>
+                <Typography>Size - Medium, Direction - Right</Typography>
+              </Box>
+              <ExpandableSearch
+                size="medium"
+                testId="search-expandable-medium-right"
+                onChange={setSearchVal}
+                searchString={searchVal}
+                direction="right"
+                placeholder="Search medium right..."
+              />
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+    );
+  },
+};
+
+export const ExpandableRight: ExpandableStory = {
+  args: {
+    size: 'medium',
+    direction: 'right',
+    placeholder: 'Search from right...',
+    searchString: '',
+    testId: 'search-expandable-right',
+  },
+  render: function ExpandableRight(args) {
+    const [searchVal, setSearchVal] = useState(args.searchString || '');
+
+    return (
+      <Card testId="card-expandable-search-right-wrapper">
+        <CardContent>
+          <Grid container spacing={3}>
+            <Grid size={10}>
+              <Box mb={2}>
+                <Typography>Right Expandable Search - {args.size} size</Typography>
+              </Box>
+              <ExpandableSearch
+                {...args}
+                onChange={setSearchVal}
                 searchString={searchVal}
               />
             </Grid>

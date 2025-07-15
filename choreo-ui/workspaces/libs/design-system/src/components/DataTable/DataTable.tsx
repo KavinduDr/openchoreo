@@ -12,7 +12,7 @@ import {
 } from '../TableDefault';
 import { Pagination } from '../Pagination';
 import { useChoreoTheme } from '@design-system/theme';
-import { SearchBar } from '../SearchBar';
+import { ExpandableSearch } from '../SearchBar';
 import { debounce } from 'lodash';
 
 export type DataTableColumn<T> = {
@@ -206,7 +206,7 @@ export const DataTable = <T,>(
           {
             enableFrontendSearch && (
               <Box width={theme.spacing(40)}>
-                <SearchBar size='medium' onChange={onSearch} testId="data-table" bordered color='secondary' />
+                <ExpandableSearch  direction="right" size='medium' searchString={search}  placeholder='Search..' testId="data-table"  onChange={onSearch} />
               </Box>
             )}
           {

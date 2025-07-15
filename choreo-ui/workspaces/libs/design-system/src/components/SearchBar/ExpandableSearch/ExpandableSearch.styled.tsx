@@ -27,7 +27,6 @@ export const StyledAutofocusField: ComponentType<StyledAutofocusFieldProps> =
         borderRadius: theme.shape.borderRadius,
         padding: theme.spacing(1, 1, 1, 1),
         transition: 'all 0.3s',
-        width: '100%',
         backgroundColor: theme.palette.common.white,
         height: size === 'small' ? theme.spacing(3.75) : theme.spacing(4.75),
         boxSizing: 'border-box',
@@ -69,8 +68,7 @@ export const StyledExpandableSearch: ComponentType<StyledExpandableSearchProps> 
         display: 'flex',
         alignItems: 'center',
         border: '1px solid transparent',
-        paddingLeft: theme.spacing(1),
-        paddingRight: theme.spacing(1.5),
+        padding: theme.spacing(0, 1, 0, 0),
         transition: 'all 0.3s',
 
         ...(direction === 'right' && {
@@ -81,27 +79,12 @@ export const StyledExpandableSearch: ComponentType<StyledExpandableSearchProps> 
           borderRadius: theme.shape.borderRadius,
           backgroundColor: theme.palette.common.white,
           border: `1px solid ${theme.palette.primary.light}`,
-          boxShadow: `0 0 0 2px ${theme.palette.primary.main}, inset 0 2px 2px ${alpha(
+          boxShadow: `0 1px 2px -1px ${alpha(
             theme.palette.common.black,
-            0.07
-          )}`,
+            0.08
+          )}, 0 -3px 9px 0 ${alpha(theme.palette.common.black, 0.04)} inset`,
           flex: 1,
         }),
-      },
-
-      '& .expandableSearchContRight': {
-        justifyContent: 'flex-end',
-      },
-
-      '& .expandableSearchContOpen': {
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: theme.palette.common.white,
-        border: `1px solid ${theme.palette.primary.light}`,
-        boxShadow: `0 0 0 2px ${theme.palette.primary.main}, inset 0 2px 2px ${alpha(
-          theme.palette.common.black,
-          0.07
-        )}`,
-        flex: 1,
       },
 
       '& .expandableSearchWrap': {

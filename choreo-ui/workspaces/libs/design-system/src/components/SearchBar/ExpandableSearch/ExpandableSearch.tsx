@@ -3,10 +3,11 @@ import {
   StyledAutofocusField,
   StyledExpandableSearch,
 } from './ExpandableSearch.styled';
-import { InputBase } from '@mui/material';
+import { Box, InputBase } from '@mui/material';
 import { IconButton } from '@design-system/components/IconButton';
 import Close from '@design-system/Icons/generated/Close';
 import Search from '@design-system/Icons/generated/Search';
+import clsx from 'clsx';
 
 export interface AutofocusFieldProps {
   onChange: (data: any) => void;
@@ -72,7 +73,7 @@ AutofocusField.displayName = 'AutofocusField';
 
 export interface ExpandableSearchProps {
   searchString: string;
-  setSearchString: (value: string) => void;
+  onChange: (value: string) => void;
   direction?: 'left' | 'right';
   placeholder?: string;
   testId: string;
@@ -88,7 +89,7 @@ export const ExpandableSearch = React.forwardRef<
 
   const {
     searchString,
-    setSearchString,
+    onChange,
     direction = 'left',
     placeholder,
     testId,
@@ -96,7 +97,7 @@ export const ExpandableSearch = React.forwardRef<
   } = props;
 
   const handleSearchFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchString(e.target.value);
+    onChange(e.target.value);
   };
 
   const handleSearchFieldBlur = (
@@ -111,7 +112,7 @@ export const ExpandableSearch = React.forwardRef<
     if (searchString === '') {
       setSearchShow(false);
     } else {
-      setSearchString('');
+      onChange('');
     }
     inputReference?.current?.focus();
   };
@@ -130,8 +131,14 @@ export const ExpandableSearch = React.forwardRef<
       direction={direction}
       isOpen={isSearchShow}
     >
-      <div
-        className={`expandableSearchCont ${isSearchShow ? 'expandableSearchContOpen' : ''}`}
+      <Box
+        className={clsx(
+          'expandableSearchCont',
+          {
+            'expandableSearchContOpen': isSearchShow,
+            'expandableSearchCont': !isSearchShow,
+          }
+        )}
       >
         {(direction === 'left' || (direction === 'right' && isSearchShow)) && (
           <IconButton
@@ -148,14 +155,20 @@ export const ExpandableSearch = React.forwardRef<
           </IconButton>
         )}
 
-        <div
-          className={`expandableSearchWrap ${isSearchShow ? 'expandableSearchWrapShow' : ''}`}
+        <Box
+          className={clsx(
+            'expandableSearchWrap',
+            {
+              'expandableSearchWrapShow': isSearchShow,
+            }
+          )}
         >
           <InputBase
             inputRef={inputReference}
             value={searchString}
             onChange={handleSearchFieldChange}
             onBlur={handleSearchFieldBlur}
+            size={size === 'small' ? 'small' : 'medium'}
             placeholder={placeholder || 'Search...'}
             className={`inputExpandable input${size ? size.charAt(0).toUpperCase() + size.slice(1) : ''}`}
             data-testid={`${testId}-search-input`}
@@ -170,7 +183,7 @@ export const ExpandableSearch = React.forwardRef<
                     e.preventDefault();
                   }}
                   color="secondary"
-                  size="small"
+                  size="tiny"
                   data-testid="search-clear-icon"
                   testId={`${testId}-clear`}
                   textVariant="link"
@@ -181,7 +194,7 @@ export const ExpandableSearch = React.forwardRef<
               )
             }
           />
-        </div>
+        </Box>
 
         {direction === 'right' && !isSearchShow && (
           <IconButton
@@ -197,7 +210,7 @@ export const ExpandableSearch = React.forwardRef<
             <Search fontSize="inherit" />
           </IconButton>
         )}
-      </div>
+      </Box>
     </StyledExpandableSearch>
   );
 });
