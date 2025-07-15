@@ -1,8 +1,10 @@
-import { Avatar, Box, useChoreoTheme } from "@open-choreo/design-system";
+import { Box, Toggler, useChoreoTheme } from "@open-choreo/design-system";
+import { useColorMode } from "@open-choreo/choreo-context";
 import React from "react";
 
 const TopRightMenuPanel: React.FC = () => {
   const theme = useChoreoTheme();
+  const { colorMode, setColorMode } = useColorMode();
   return (
     <Box
       display="flex"
@@ -12,16 +14,15 @@ const TopRightMenuPanel: React.FC = () => {
       alignItems="center"
       height="100%"
     >
-      <Box
-        display="flex"
-        flexDirection="row"
-        backgroundColor="secondary.light"
-        gap={theme.spacing(1)}
-        alignItems="center"
-        padding={theme.spacing(0.5)}
-      >
-        <Avatar color="primary">W</Avatar>
-      </Box>
+      <Toggler
+        key={colorMode}
+        onClick={() => {
+          setColorMode(colorMode === "light" ? "dark" : "light");
+        }}
+        checked={colorMode === "light"}
+        color="primary"
+        size="small"
+      />
     </Box>
   );
 };

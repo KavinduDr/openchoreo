@@ -69,11 +69,11 @@ function createDirectory(dirPath) {
 
 function getProjectPath(type) {
     if(type === 'layout' || type === 'component') {
-        const projectPath = path.resolve(__dirname, '../../workspaces/libs/design-system/src');
+        const projectPath = path.resolve(__dirname, '../../workspaces/libs/design-system/src', type + 's');
         return projectPath;    
     }
-    if(type === 'view') {
-        const projectPath = path.resolve(__dirname, '../../workspaces/libs/views/src');
+    if(type === 'common-view' || type === 'resource-view') {
+        const projectPath = path.resolve(__dirname, `../../workspaces/libs/${type}s/src`);
         return projectPath;
     }
     if (!fs.existsSync(projectPath)) {
@@ -88,7 +88,7 @@ function getProjectPath(type) {
 function createElement({ type, name }) {
     try {
         // Setup paths
-        const baseDir = path.resolve(__dirname, getProjectPath(type), type +'s');
+        const baseDir = path.resolve(__dirname, getProjectPath(type));
         const elementDir = path.join(baseDir, name);
 
         // Create directories
@@ -111,7 +111,7 @@ function createElement({ type, name }) {
           fs.writeFileSync(files.test, generateTestContent(name));
           fs.writeFileSync(files.index, `export { ${name} } from './${name}';\n`);
         }
-        if(type === 'view') {
+        if(type === 'common-view' || type === 'resource-view') {
             fs.writeFileSync(files.component, generateViewContent(name));
             fs.writeFileSync(files.stories, generateViewStoriesContent(name));
             fs.writeFileSync(files.index, `export { ${name} } from './${name}';\n`);

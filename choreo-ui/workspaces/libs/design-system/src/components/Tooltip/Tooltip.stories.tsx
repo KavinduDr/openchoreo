@@ -12,9 +12,18 @@ const meta: Meta<typeof Tooltip> = {
   component: Tooltip,
   tags: ['autodocs'],
   argTypes: {
-    onClick: {
-      action: 'clicked',
-      description: 'Click event handler',
+    placement: {
+      control: 'select',
+      options: ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end'],
+      description: 'Tooltip placement',
+    },
+    arrow: {
+      control: 'boolean',
+      description: 'Show arrow on tooltip',
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Disable the tooltip',
     },
   },
 };
@@ -24,9 +33,7 @@ type Story = StoryObj<typeof Tooltip>;
 
 export const Default: Story = {
   args: {
-    children: 'Tooltip Content',
     title: 'This is a tooltip',
-    example: 'This is an example of a tooltip',
   },
   render: (args) => (
     <Tooltip {...args}>
@@ -39,7 +46,6 @@ export const Default: Story = {
 
 export const WithIcon: Story = {
   args: {
-    children: 'Tooltip with icon',
     title: 'This is a tooltip with an icon',
   },
   render: (args) => {
@@ -51,43 +57,49 @@ export const WithIcon: Story = {
   },
 };
 
-export const primary: Story = {
+export const WithArrow: Story = {
+  args: {
+    title: 'This is a tooltip with an arrow',
+    arrow: true,
+  },
+  render: (args) => (
+    <Tooltip {...args}>
+      <Button variant="outlined" color="primary">
+        Hover me (with arrow)
+      </Button>
+    </Tooltip>
+  ),
+};
+
+export const DifferentPlacements: Story = {
   render: () => {
     return (
       <Card testId="tooltip">
         <CardContent>
           <Box mb={3}>
-            <Tooltip title="This is a create Button">
-              <Button testId="tooltip-action-1-button">Create Tooltip</Button>
+            <Tooltip title="This is a create Button" placement="top">
+              <Button testId="tooltip-action-1-button">Top Tooltip</Button>
             </Tooltip>
           </Box>
           <Box mb={3}>
-            <Tooltip title="This is a info icon" darken>
+            <Tooltip title="This is an info icon" placement="bottom">
               <Question />
             </Tooltip>
           </Box>
           <Box mb={3}>
             <Tooltip
-              title={
-                <Box>
-                  <Typography variant="h4">Title</Typography>
-                  <Typography variant="body1">
-                    Create programs that trigger via events. E.g., Business
-                    automation tasks.
-                  </Typography>
-                </Box>
-              }
+              title="Create programs that trigger via events. E.g., Business automation tasks."
+              placement="left"
             >
               <Info />
             </Tooltip>
           </Box>
           <Box mb={3}>
             <Tooltip
-              heading="heading"
-              example="1,2,3"
-              content="Tooltip content goes here"
+              title="This tooltip is disabled"
+              disabled={true}
             >
-              <Button testId="tooltip-action-3-button">Custom Content</Button>
+              <Button testId="tooltip-action-3-button">Disabled Tooltip</Button>
             </Tooltip>
           </Box>
         </CardContent>

@@ -9,10 +9,11 @@ import {
 interface CardActionsProps {
   children: React.ReactNode;
   testId: string;
+  noBorder?: boolean;
   sx?: SxProps<Theme>;
 }
 
-const StyledCardActions = styled(MuiCardActions)(({ theme }) => ({
+const StyledCardActions = styled(MuiCardActions)<{ noBorder?: boolean }>(({ theme, noBorder }) => ({
   padding: theme.spacing(1),
   '&:last-child': {
     paddingBottom: theme.spacing(1),
@@ -20,16 +21,17 @@ const StyledCardActions = styled(MuiCardActions)(({ theme }) => ({
   display: 'flex',
   gap: theme.spacing(1),
   paddingTop: theme.spacing(3),
-  borderTop: `1px solid ${theme.palette.grey[100]}`,
+  borderTop: noBorder ? 'none' : `1px solid ${theme.palette.grey[100]}`,
 }));
 
 export const CardActions = ({
   children,
   testId,
   sx,
+  noBorder,
   ...rest
 }: CardActionsProps) => (
-  <StyledCardActions data-cyid={`${testId}-card-actions`} sx={sx} {...rest}>
+  <StyledCardActions data-cyid={`${testId}-card-actions`} sx={sx} noBorder={noBorder} {...rest}>
     {children}
   </StyledCardActions>
 );

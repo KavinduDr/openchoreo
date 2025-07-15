@@ -1,12 +1,12 @@
 import {
   type PluginExtension,
-  rootExtensionPoints,
+  coreExtensionPoints,
 } from "@open-choreo/plugin-core";
 import React from "react";
 const TopRightMenuPanel = React.lazy(() => import("./TopRightMenuPanel"));
 
 export const panel: PluginExtension = {
-  extentionPoint: rootExtensionPoints.headerRight,
+  extentionPoint: coreExtensionPoints.headerRight,
   key: "toprightmenu",
   component: TopRightMenuPanel,
 };

@@ -12,56 +12,24 @@ export type iconButtonColorVariant =
   | 'success';
 export type iconButtonSizeVariant = 'tiny' | 'small' | 'medium';
 export type edgeVariant = 'start' | 'end' | false;
+export type iconButtonTextVariant = 'text' | 'link';
 
 export interface IconButtonProps {
-  /**
-   * The content of the component
-   */
   children?: React.ReactNode;
-  /**
-   * Additional className for the component
-   */
   className?: string;
-  /**
-   * Optional click handler
-   */
-  onClick?: (event: React.MouseEvent) => void;
-  /**
-   * If true, the component will be disabled
-   */
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
-  /**
-   * edge variant of the icon button
-   */
   edge?: edgeVariant;
-  /**
-   * The color variant of the component
-   */
   color?: iconButtonColorVariant;
-  /**
-   * The size variant of the component
-   */
+  testId: string;
+  variant?: iconButtonVariant;
+  textVariant?: iconButtonTextVariant;
   size?: iconButtonSizeVariant;
-  /**
-   * disable ripple effect
-   */
   disableRipple?: boolean;
-  /**
-   * disable focus ripple effect
-   */
   disableFocusRipple?: boolean;
-  /**
-   * disable touch ripple effect
-   */
   disableTouchRipple?: boolean;
-  /**
-   * The sx prop for custom styles
-   */
+  onMouseDown?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   sx?: React.CSSProperties;
-  /**
-   * Additional props for MUI IconButton
-   */
-  [key: string]: any;
 }
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
@@ -71,6 +39,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       disableRipple = true,
       disableFocusRipple = true,
       disableTouchRipple = true,
+      size = 'medium',
       ...props
     },
     ref
@@ -83,6 +52,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       disableFocusRipple={disableFocusRipple}
       disableTouchRipple={disableTouchRipple}
       disabled={props.disabled}
+      data-size={size}
       {...props}
     >
       {children}

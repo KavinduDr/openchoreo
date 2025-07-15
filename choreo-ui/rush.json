@@ -375,10 +375,7 @@
     //    * a key benefit of monorepos.  However there are occasional situations where
     //    * installing from NPM is needed.  A classic example is a cyclic dependency.
     //    * Imagine three Rush projects: "my-toolchain" depends on "my-tester", which depends
-    //    * on "my-library".  Suppose that we add "my-toolchain" to the "devDependencies"
-    //    * of "my-library" so it can be built by our toolchain.  This cycle creates
-    //    * a problem -- Rush can't build a project using a not-yet-built dependency.
-    //    * We can solve it by adding "my-toolchain" to the "decoupledLocalDependencies"
+    //    * on "my-library".  Suppose that we add "my-toolchain" to the "decoupledLocalDependencies"
     //    * of "my-library", so it builds using the last published release.  Choose carefully
     //    * which package to decouple; some choices are much easier to manage than others.
     //    *
@@ -454,33 +451,40 @@
       "projectFolder": "workspaces/plugins/plugin-core"
     },
     {
+      "packageName": "@open-choreo/definitions",
+      "projectFolder": "workspaces/libs/definitions"
+    },
+    {
       "packageName": "@open-choreo/plugin-overview",
       "projectFolder": "workspaces/plugins/overview"
+    },
+    {
+      "packageName": "@open-choreo/resource-views",
+      "projectFolder": "workspaces/libs/resource-views"
     },
     {
       "packageName": "@open-choreo/plugin-top-level-selector",
       "projectFolder": "workspaces/plugins/top-level-selector"
     },
     {
-      "packageName": "@open-choreo/choreo-api",
-      "projectFolder": "workspaces/libs/choreo-api"
+      "packageName": "@open-choreo/api-client",
+      "projectFolder": "workspaces/libs/api-client"
     },
     {
       "packageName": "@open-choreo/common-views",
-      "projectFolder": "workspaces/libs/views"
-    }
-
-,
+      "projectFolder": "workspaces/libs/common-views"
+    },
     {
       "packageName": "@open-choreo/top-right-menu",
       "projectFolder": "workspaces/plugins/top-right-menu"
     },
     {
-      "packageName": "@open-choreo/api-client",
-      "projectFolder": "workspaces/plugins/api-client"
+      "packageName": "@open-choreo/choreo-context",
+      "projectFolder": "workspaces/plugins/choreo-context"
     },
     {
       "packageName": "@open-choreo/resource-list",
       "projectFolder": "workspaces/plugins/resource-list"
-    }  ]
+    }  
+  ]
 }

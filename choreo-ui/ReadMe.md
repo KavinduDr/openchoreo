@@ -22,28 +22,28 @@ openchoreo/choreo-ui/
 │   ├── config/                         # Configuration files
 │   │   └── rush/                       # Rush configuration
 │   ├── git-hooks/                      # Git hook scripts
-│   ├── scripts/                        # Common utility scripts
-│   │   ├── create-element-rush.cjs     # Element creation script
-│   │   ├── create-plugin-rush.cjs      # Plugin creation script
-│   │   ├── element-generators.cjs      # Element file generators
-│   │   └── plugin-generators.cjs       # Plugin file generators
+│   └── scripts/                        # Common utility scripts
+│       ├── create-element-rush.cjs     # Element creation script
+│       ├── create-plugin-rush.cjs      # Plugin creation script
+│       ├── element-generators.cjs      # Element file generators
+│       └── plugin-generators.cjs       # Plugin file generators
 └── workspaces/                         # Main development workspace
     ├── apps/                           # Application projects
     │   └── console/                    # Main React shell application
     │
     ├── libs/                           # Shared libraries
     │   ├── design-system/              # UI component library
-    │   │
-    │   ├── views/                      # UI modules and views
-    │   │
-    │   └── choreo-api/             # API client library
+    │   ├── common-views/               # Shared view components
+    │   ├── api-client/                 # API client library
+    │   └── definitions/                # Type definitions
     │
     └── plugins/                        # Plugin modules
+        ├── plugin-core/                # Core plugin functionality
         ├── top-right-menu/             # Top right menu plugin
         ├── top-level-selector/         # Top level selector plugin
-        ├── api-client/                 # API client plugin
-        ├── plugin-core/                # Core plugin functionality
-        └── ...
+        ├── choreo-context/             # Choreo context and state management plugin
+        ├── overview/                   # Overview dashboard plugin
+        └── resource-list/              # Resource list plugin
 ```
 ## Development Workflow
 
@@ -124,7 +124,7 @@ rushx generate-images    # Generate image components
 rushx test               # Run tests
 
 # Common Views
-cd workspaces/libs/views
+cd workspaces/libs/common-views
 rushx build              # Build views library
 rushx storybook          # Start Storybook
 rushx test               # Run tests

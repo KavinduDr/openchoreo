@@ -1,13 +1,12 @@
 import {
   type PluginExtension,
-  rootExtensionPoints,
+  coreExtensionPoints,
 } from "@open-choreo/plugin-core";
-import React from "react";
 import ComponentOverview from "./ComponentOverview";
 export { componentOverviewMainExtensionPoint } from "./ComponentOverview";
 
 export const componentOverview: PluginExtension = {
-  extentionPoint: rootExtensionPoints.componentLevelPage,
+  extentionPoint: coreExtensionPoints.componentLevelPage,
   component: ComponentOverview,
   pathPattern: "",
 };

@@ -17,6 +17,9 @@ export default defineConfig({
   plugins: [
     react()
   ],
+  define: {
+    global: 'globalThis',
+  },
   build: {
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
@@ -36,7 +39,7 @@ export default defineConfig({
           'plugin-overview': ['@open-choreo/plugin-overview'],
           'plugin-top-level-selector': ['@open-choreo/plugin-top-level-selector'],
           'plugin-top-right-menu': ['@open-choreo/top-right-menu'],
-          'plugin-api-client': ['@open-choreo/api-client'],
+          'plugin-choreo-context': ['@open-choreo/choreo-context'],
         }
       }
     }

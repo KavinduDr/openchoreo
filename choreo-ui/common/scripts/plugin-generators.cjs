@@ -166,12 +166,12 @@ export const ${pluginName[0].toLowerCase() + pluginName.slice(1)}Plugin = {
 function generatePanelIndex(pluginName) {
     const pluginKey = pluginName.toLowerCase().replace(/([A-Z])/g, '-$1').toLowerCase();
     
-    return `import { type PluginExtension,  rootExtensionPoints } from "@open-choreo/plugin-core";
+    return `import { type PluginExtension,  coreExtensionPoints } from "@open-choreo/plugin-core";
 import React from "react";
 const ${pluginName}Panel = React.lazy(() => import("./${pluginName}Panel"));
 
 export const panel: PluginExtension = {
-    extentionPoint: rootExtensionPoints.headerLeft,
+    extentionPoint: coreExtensionPoints.headerLeft,
     key: "${pluginKey}",
     component: ${pluginName}Panel,
 };`;

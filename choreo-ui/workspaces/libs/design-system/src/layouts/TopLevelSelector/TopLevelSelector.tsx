@@ -101,7 +101,6 @@ export const TopLevelSelector = React.forwardRef<
           <SelectorHeader level={level} onClose={onClose} />
           <SelectorContent selectedItem={selectedItem} onOpen={handleOpen} disableMenu={items.length === 0} />
         </Box>
-
         <StyledPopover
           id={`${level}-popover`}
           open={open}
@@ -125,7 +124,7 @@ export const TopLevelSelector = React.forwardRef<
             items={items}
             selectedItem={selectedItem}
             onSelect={handleSelect}
-            onCreateNew={handleCreateNew}
+            onCreateNew={onCreateNew && handleCreateNew}
             level={level}
           />
         </StyledPopover>

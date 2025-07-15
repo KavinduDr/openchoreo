@@ -3,7 +3,7 @@ import { ReactNode, type ComponentType, type LazyExoticComponent } from "react";
 
 export enum PluginExtensionType {
   NAVIGATION = "nav-item",
-  PAGE = "page",
+  ROUTE = "route",
   PANEL = "panel",
   PROVIDER = "provider",
 }
@@ -46,7 +46,7 @@ export interface PluginExtensionNavigation {
   submenu?: PluginExtensionSubmenu[];
 }
 
-export interface PluginExtensionPage {
+export interface PluginExtensionRoute {
   extentionPoint: PluginExtensionPoint;
   pathPattern: string;
   component: ComponentType | LazyExoticComponent<ComponentType>;
@@ -66,26 +66,26 @@ export interface PluginExtensionProvider {
     | LazyExoticComponent<ComponentType<{ children: ReactNode }>>;
 }
 
-export const rootExtensionPoints = {
+export const coreExtensionPoints = {
   globalProvider: {
     id: "global",
     type: PluginExtensionType.PROVIDER,
   },
   componentLevelPage: {
     id: "component-level-page",
-    type: PluginExtensionType.PAGE,
+    type: PluginExtensionType.ROUTE,
   },
   projectLevelPage: {
     id: "project-level-page",
-    type: PluginExtensionType.PAGE,
+    type: PluginExtensionType.ROUTE,
   },
   orgLevelPage: {
     id: "org-level-page",
-    type: PluginExtensionType.PAGE,
+    type: PluginExtensionType.ROUTE,
   },
   globalPage: {
     id: "global-page",
-    type: PluginExtensionType.PAGE,
+    type: PluginExtensionType.ROUTE,
   },
   headerLeft: {
     id: "header-left",
@@ -119,6 +119,6 @@ export const rootExtensionPoints = {
 
 export type PluginExtension =
   | PluginExtensionNavigation
-  | PluginExtensionPage
+  | PluginExtensionRoute
   | PluginExtensionPanel
   | PluginExtensionProvider;

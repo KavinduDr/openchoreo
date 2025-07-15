@@ -1,0 +1,7 @@
+node_modules
+dist
+temp
+
+#storybook build directory
+storybook-static
+*storybook.log

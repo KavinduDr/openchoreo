@@ -1,7 +1,7 @@
 import {
   BasePathPatterns,
   type PluginExtension,
-  rootExtensionPoints,
+  coreExtensionPoints,
 } from "@open-choreo/plugin-core";
 import {
   MenuOverviewFilledIcon,
@@ -9,7 +9,7 @@ import {
 } from "@open-choreo/design-system";
 
 export const projectOverviewNavigation: PluginExtension = {
-  extentionPoint: rootExtensionPoints.projectNavigation,
+  extentionPoint: coreExtensionPoints.projectNavigation,
   icon: () => <MenuOverviewIcon fontSize="inherit" />,
   iconSelected: () => <MenuOverviewFilledIcon fontSize="inherit" />,
   path: "",
@@ -18,7 +18,7 @@ export const projectOverviewNavigation: PluginExtension = {
 };
 
 export const componentOverviewNavigation: PluginExtension = {
-  extentionPoint: rootExtensionPoints.componentNavigation,
+  extentionPoint: coreExtensionPoints.componentNavigation,
   icon: () => <MenuOverviewIcon fontSize="inherit" />,
   iconSelected: () => <MenuOverviewFilledIcon fontSize="inherit" />,
   path: "",
@@ -27,7 +27,7 @@ export const componentOverviewNavigation: PluginExtension = {
 };
 
 export const orgOverviewNavigation: PluginExtension = {
-  extentionPoint: rootExtensionPoints.orgNavigation,
+  extentionPoint: coreExtensionPoints.orgNavigation,
   icon: () => <MenuOverviewIcon fontSize="inherit" />,
   iconSelected: () => <MenuOverviewFilledIcon fontSize="inherit" />,
   path: "",

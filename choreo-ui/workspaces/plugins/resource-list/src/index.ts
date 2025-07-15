@@ -5,6 +5,7 @@ import {
   componentListPanel,
   projectOverviewComponentListPanel,
 } from "./ComponentListPanel";
+import { projectListPanel } from "./ProjectListPanel";
 
 export const resourceListingPlugin = {
   name: "Resource Listing",
@@ -14,5 +15,6 @@ export const resourceListingPlugin = {
     componentListNavigation,
     componentListPanel,
     projectOverviewComponentListPanel,
+    projectListPanel,
   ],
 } as PluginManifest;

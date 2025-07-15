@@ -16,7 +16,8 @@ export type ButtonVariant =
   | 'subtle'
   | 'link';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant?: ButtonVariant;
   disabled?: boolean;
@@ -30,9 +31,6 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
   href?: string;
-  /**
-   * Test id for the button
-   */
   testId?: string;
 }
 

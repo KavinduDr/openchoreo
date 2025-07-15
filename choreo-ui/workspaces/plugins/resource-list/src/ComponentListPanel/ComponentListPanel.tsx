@@ -1,12 +1,8 @@
-import {
-  FullPageLoader,
-  PageLayout,
-  PresetErrorPage,
-  ResourceTable,
-} from "@open-choreo/common-views";
-import { useGlobalState } from "@open-choreo/api-client";
+import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
+import { useGlobalState } from "@open-choreo/choreo-context";
 import { useHomePath } from "@open-choreo/plugin-core";
 import React from "react";
+import { ResourceTable } from "@open-choreo/resource-views";
 
 const ComponentListPanel: React.FC = () => {
   const { componentListQueryResult } = useGlobalState();
@@ -29,11 +25,21 @@ const ComponentListPanel: React.FC = () => {
       name: item.name,
       description: item.type,
       type: item.type,
-      lastUpdated: item.createdAt,
+      lastUpdated: new Date(item.createdAt),
       href: `${homePath}/component/${item.name}`,
     }),
   );
-  return <ResourceTable resources={components || []} />;
+  return (
+    <ResourceTable
+      resources={components || []}
+      resourceKind="component"
+      onRefresh={() => {
+        componentListQueryResult.refetch();
+      }}
+      isLoading={componentListQueryResult.isLoading}
+      enableAvatar={true}
+    />
+  );
 };
 
 export default ComponentListPanel;

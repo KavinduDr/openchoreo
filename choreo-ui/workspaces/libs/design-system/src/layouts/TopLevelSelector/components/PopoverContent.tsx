@@ -3,7 +3,7 @@ import { Box, Divider } from '@mui/material';
 import { AddIcon } from '@design-system/Icons';
 import { Button, SearchBar } from '@design-system/components';
 import { ItemList } from './ItemList';
-import { LevelItem, Level } from '../utils';
+import { LevelItem, Level, getLevelLabel } from '../utils';
 
 interface PopoverContentProps {
     search: string;
@@ -51,7 +51,6 @@ export const PopoverContent: React.FC<PopoverContentProps> = ({
                 testId="top-level-selector-search"
                 placeholder="Search"
             />
-
             {onCreateNew && (
                 <Box display="flex" gap={1}>
                     <Button
@@ -60,11 +59,10 @@ export const PopoverContent: React.FC<PopoverContentProps> = ({
                         onClick={onCreateNew}
                         disableRipple
                     >
-                        Create {level}
+                        Create {getLevelLabel(level)}
                     </Button>
                 </Box>
             )}
-
             {filteredRecentItems.length > 0 && (
                 <>
                     <Divider />
@@ -80,7 +78,7 @@ export const PopoverContent: React.FC<PopoverContentProps> = ({
                 <>
                     <Divider />
                     <ItemList
-                        title={`All {level}s`}
+                        title={`All ${getLevelLabel(level)}s`}
                         items={filteredItems}
                         selectedItemId={selectedItem.id}
                         onSelect={onSelect}

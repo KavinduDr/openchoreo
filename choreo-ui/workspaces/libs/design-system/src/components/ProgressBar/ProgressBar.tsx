@@ -22,7 +22,6 @@ export interface ProgressBarProps {
   valueBuffer?: number;
   size?: ProgressBarSize;
   sx?: React.CSSProperties;
-  [key: string]: any;
 }
 
 /**

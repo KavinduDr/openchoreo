@@ -3,8 +3,8 @@ import { MainLayout as BaseMainLayout } from "@open-choreo/common-views";
 import { useMemo, useCallback } from "react";
 import { matchPath, useLocation } from "react-router";
 import {
-  ExtentionMounter,
-  rootExtensionPoints,
+  PanelExtensionMounter,
+  coreExtensionPoints,
   useComponentHandle,
   useHomePath,
   useMainNavExtentions,
@@ -26,18 +26,18 @@ const LayoutHeader = React.memo(() => (
     alignItems="center"
     width="100%"
   >
-    <ExtentionMounter extentionPoint={rootExtensionPoints.headerLeft} />
-    <ExtentionMounter extentionPoint={rootExtensionPoints.headerRight} />
+    <PanelExtensionMounter extentionPoint={coreExtensionPoints.headerLeft} />
+    <PanelExtensionMounter extentionPoint={coreExtensionPoints.headerRight} />
   </Box>
 ));
 
 const LayoutFooter = React.memo(() => 
 <Box display="flex" flexDirection="row" justifyContent="space-between" alignItems="center" width="100%">
-  <ExtentionMounter extentionPoint={rootExtensionPoints.footer} />
+  <PanelExtensionMounter extentionPoint={coreExtensionPoints.footer} />
   </Box>);
 
 const LayoutRightSidebar = React.memo(() => (
-  <ExtentionMounter extentionPoint={rootExtensionPoints.sidebarRight} />
+  <PanelExtensionMounter extentionPoint={coreExtensionPoints.sidebarRight} />
 ));
 
 export function MainLayout({ children }: MainLayoutProps) {
@@ -45,9 +45,9 @@ export function MainLayout({ children }: MainLayoutProps) {
   const homePath = useHomePath();
   const orgHandle = useOrgHandle();
 
-  const navigationEntriesProject = useMainNavExtentions(rootExtensionPoints.projectNavigation, homePath);
-  const navigationEntriesComponent = useMainNavExtentions(rootExtensionPoints.componentNavigation, homePath);
-  const navigationEntriesOrg = useMainNavExtentions(rootExtensionPoints.orgNavigation, homePath);
+  const navigationEntriesProject = useMainNavExtentions(coreExtensionPoints.projectNavigation, homePath);
+  const navigationEntriesComponent = useMainNavExtentions(coreExtensionPoints.componentNavigation, homePath);
+  const navigationEntriesOrg = useMainNavExtentions(coreExtensionPoints.orgNavigation, homePath);
   const projectHandle = useProjectHandle();
   const componentHandle = useComponentHandle();
 

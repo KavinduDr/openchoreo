@@ -1,19 +1,16 @@
 import {
   BasePathPatterns,
   type PluginExtension,
-  PluginExtensionType,
-  rootExtensionPoints,
+  coreExtensionPoints,
 } from "@open-choreo/plugin-core";
 
 import {
-  Level,
   MenuComponentsFilledIcon,
   MenuComponentsIcon,
 } from "@open-choreo/design-system";
-import React from "react";
 
 export const componentListNavigation: PluginExtension = {
-  extentionPoint: rootExtensionPoints.projectNavigation,
+  extentionPoint: coreExtensionPoints.projectNavigation,
   icon: () => <MenuComponentsIcon fontSize="inherit" />,
   iconSelected: () => <MenuComponentsFilledIcon fontSize="inherit" />,
   path: "/components",

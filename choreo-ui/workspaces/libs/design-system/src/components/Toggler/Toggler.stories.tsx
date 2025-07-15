@@ -27,9 +27,7 @@ export default meta;
 type Story = StoryObj<typeof Toggler>;
 
 export const Default: Story = {
-  args: {
-    children: 'Toggler Content',
-  },
+  args: {},
 };
 
 export const Variants: Story = {

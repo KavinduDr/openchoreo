@@ -1,15 +1,16 @@
-import { useGlobalState } from "@open-choreo/api-client";
+import { useGlobalState } from "@open-choreo/choreo-context";
 import {
   FullPageLoader,
   PageLayout,
   PresetErrorPage,
 } from "@open-choreo/common-views";
 import {
-  ExtentionMounter,
+  PanelExtensionMounter,
   PluginExtensionPoint,
   PluginExtensionType,
 } from "@open-choreo/plugin-core";
 import React from "react";
+import { ResourcePageLayout } from "@open-choreo/resource-views";
 
 export const projectOverviewMainExtensionPoint: PluginExtensionPoint = {
   id: "project-overview-page-body",
@@ -17,7 +18,8 @@ export const projectOverviewMainExtensionPoint: PluginExtensionPoint = {
 };
 
 const ProjectOverview: React.FC = () => {
-  const { projectQueryResult } = useGlobalState();
+  const { projectQueryResult, componentListQueryResult, selectedProject } =
+    useGlobalState();
   if (projectQueryResult?.isLoading) {
     return <FullPageLoader />;
   }
@@ -31,12 +33,19 @@ const ProjectOverview: React.FC = () => {
   }
 
   return (
-    <PageLayout
-      testId="overview-page"
-      title={projectQueryResult?.data?.data?.name}
+    <ResourcePageLayout
+      resource={selectedProject}
+      testId="component-list-page"
+      isRefreshing={componentListQueryResult.isFetching}
+      isLoading={componentListQueryResult.isLoading}
+      onRefresh={() => {
+        componentListQueryResult.refetch();
+      }}
     >
-      <ExtentionMounter extentionPoint={projectOverviewMainExtensionPoint} />
-    </PageLayout>
+      <PanelExtensionMounter
+        extentionPoint={projectOverviewMainExtensionPoint}
+      />
+    </ResourcePageLayout>
   );
 };
 

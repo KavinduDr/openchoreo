@@ -92,7 +92,7 @@ export const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
             disableRipple={true}
             aria-label="first page"
             color="secondary"
-            variant="text"
+            textVariant="text"
             testId="first-page"
           >
             <FirstPage />
@@ -103,7 +103,7 @@ export const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
             disableRipple={true}
             aria-label="previous page"
             color="secondary"
-            variant="text"
+            textVariant="text"
             testId="previous-page"
           >
             <KeyboardArrowLeft />
@@ -115,7 +115,7 @@ export const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
             disableRipple={true}
             aria-label="next page"
             color="secondary"
-            variant="text"
+            textVariant="text"
             testId="next-page"
           >
             <KeyboardArrowRight />
@@ -126,7 +126,7 @@ export const Pagination = React.forwardRef<HTMLDivElement, PaginationProps>(
             disableRipple={true}
             aria-label="last page"
             color="secondary"
-            variant="text"
+            textVariant="text"
             testId="last-page"
           >
             <LastPage />

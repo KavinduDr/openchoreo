@@ -118,6 +118,24 @@ export const StyledIconButton = styled(IconButton, {
     ...colorStyles,
     opacity: disabled ? 0.5 : 1,
     cursor: disabled ? 'not-allowed' : 'pointer',
+    '&[data-size="small"]': {
+      padding: theme.spacing(0.875),
+      '& svg': {
+        fontSize: theme.spacing(2),
+      },
+    },
+    '&[data-size="medium"]': {
+      padding: theme.spacing(1),
+      '& > *:first-of-type': {
+        fontSize: theme.spacing(2.5),
+      },
+    },
+    '&[data-size="tiny"]': {
+      padding: theme.spacing(0.625),
+      '& svg': {
+        fontSize: theme.spacing(1.375),
+      },
+    },
     '&.Mui-disabled': {
       opacity: 0.5,
       cursor: 'not-allowed',

@@ -13,7 +13,6 @@ export interface TogglerProps {
   color?: colorVariant;
   sx?: React.CSSProperties;
   testId?: string; // Added missing testId prop
-  [key: string]: any;
 }
 
 /**
@@ -23,7 +22,6 @@ export interface TogglerProps {
 export const Toggler = React.forwardRef<HTMLButtonElement, TogglerProps>(
   (
     {
-      children,
       className,
       onClick,
       disabled = false,

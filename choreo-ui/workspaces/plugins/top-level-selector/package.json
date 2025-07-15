@@ -24,14 +24,17 @@
     "@open-choreo/design-system": "workspace:*",
     "@open-choreo/common-views": "workspace:*",
     "@open-choreo/plugin-core": "workspace:*",
-    "@open-choreo/api-client": "workspace:*",
+    "@open-choreo/choreo-context": "workspace:*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "lodash": "~4.17.21",
     "clsx": "~2.1.1",
     "@fontsource/roboto": "~5.2.5",
     "react-router": "~7.6.2",
-    "react-intl": "~7.1.11"
+    "react-intl": "~7.1.11",
+    "@open-choreo/api-client": "workspace:*",
+    "@open-choreo/definitions": "workspace:*",
+    "dayjs": "~1.11.13"
   },
   "devDependencies": {
     "@eslint/eslintrc": "~3.3.1",

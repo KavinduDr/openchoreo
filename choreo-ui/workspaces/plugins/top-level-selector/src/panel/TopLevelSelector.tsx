@@ -6,7 +6,11 @@ import {
   TopLevelSelector,
   useChoreoTheme,
 } from "@open-choreo/design-system";
-import { useGlobalState } from "@open-choreo/api-client";
+import { useGlobalState } from "@open-choreo/choreo-context";
+import {
+  getResourceDisplayName,
+  getResourceName,
+} from "@open-choreo/definitions";
 import {
   genaratePath,
   useComponentHandle,
@@ -18,16 +22,21 @@ import { useNavigate } from "react-router";
 const Panel: React.FC = () => {
   const theme = useChoreoTheme();
   const {
-    projectQueryResult,
-    componentQueryResult,
     componentListQueryResult,
     projectListQueryResult,
     organizationListQueryResult,
     selectedOrganization,
+    selectedProject,
+    selectedComponent,
   } = useGlobalState();
 
-  const projectName = projectQueryResult?.data?.data?.name;
-  const componentName = componentQueryResult?.data?.data?.name;
+  const projectDisplayName = getResourceDisplayName(selectedProject);
+  const componentDisplayName = getResourceDisplayName(selectedComponent);
+  const orgDisplayName = getResourceDisplayName(selectedOrganization);
+  const projectName = getResourceName(selectedProject);
+  const componentName = getResourceName(selectedComponent);
+  const orgName = getResourceName(selectedOrganization);
+
   const projectList = projectListQueryResult?.data;
   const componentList = componentListQueryResult?.data;
   const organizationList = organizationListQueryResult?.data;
@@ -71,7 +80,7 @@ const Panel: React.FC = () => {
     >
       <TopLevelSelector
         items={organizationList?.data?.items?.map((org) => ({
-          label: org.displayName,
+          label: getResourceDisplayName(org),
           id: org.name,
         }))}
         recentItems={[]}
@@ -80,7 +89,7 @@ const Panel: React.FC = () => {
           id: selectedOrganization?.name,
         }}
         level={Level.ORGANIZATION}
-        isHighlighted={!projectName}
+        isHighlighted={!projectDisplayName}
         onClick={() => {
           navigate(orgHome);
         }}
@@ -88,18 +97,18 @@ const Panel: React.FC = () => {
           navigateToOrg(item);
         }}
       />
-      {projectName && (
-        <AnimateSlide show={!!projectName} unmountOnExit>
+      {projectDisplayName && (
+        <AnimateSlide show={!!projectDisplayName} unmountOnExit>
           <TopLevelSelector
             items={
               projectList?.data.items?.map((project) => ({
-                label: project.name,
+                label: getResourceDisplayName(project),
                 id: project.name,
               })) || []
             }
             recentItems={[]}
-            selectedItem={{ label: projectName, id: projectName }}
-            isHighlighted={!componentName}
+            selectedItem={{ label: projectDisplayName, id: projectName }}
+            isHighlighted={!componentDisplayName}
             level={Level.PROJECT}
             onClose={() => navigate(orgHome)}
             onClick={() => {
@@ -111,17 +120,20 @@ const Panel: React.FC = () => {
           />
         </AnimateSlide>
       )}
-      {componentName && (
-        <AnimateSlide show={!!componentName} unmountOnExit>
+      {componentDisplayName && (
+        <AnimateSlide show={!!componentDisplayName} unmountOnExit>
           <TopLevelSelector
             items={
               componentList?.data?.items?.map((component) => ({
-                label: component.name,
+                label: getResourceDisplayName(component),
                 id: component.name,
               })) || []
             }
             recentItems={[]}
-            selectedItem={{ label: componentName, id: componentName }}
+            selectedItem={{
+              label: componentDisplayName,
+              id: componentName,
+            }}
             isHighlighted={true}
             level={Level.COMPONENT}
             onClose={() => navigate(projectHome)}

@@ -1,3 +1,3 @@
-export * from "./ExtentionMounter";
-export * from "./ExtentionProviderMounter";
-export * from "./PageExtentionsMounter";
+export * from "./PanelExtensionMounter";
+export * from "./WrapperExtensionMounter";
+export * from "./RouteExtensionMounter";

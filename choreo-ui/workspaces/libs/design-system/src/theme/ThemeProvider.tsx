@@ -21,6 +21,7 @@ export function ThemeProvider(props: ThemeProviderProps) {
         ...defaultTheme.typography.overline,
         textTransform: 'none' as const,
       },
+      fontFamily: "'Gilmer'",
     };
 
     return createTheme({
@@ -42,6 +43,7 @@ export function ThemeProvider(props: ThemeProviderProps) {
         ...defaultTheme.typography.overline,
         textTransform: 'none' as const,
       },
+      fontFamily: "'Gilmer'",
     };
 
     return createTheme({

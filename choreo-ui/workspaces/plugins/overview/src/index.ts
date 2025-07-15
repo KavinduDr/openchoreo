@@ -8,10 +8,7 @@ import { orgOverview } from "./OrgOverview";
 import { projectOverview } from "./ProjectOverview";
 import { componentOverview } from "./ComponentOverview";
 
-export {
-  organizationOverviewMainExtensionPoint,
-  organizationOverviewActions,
-} from "./OrgOverview";
+export { organizationOverviewMainExtensionPoint } from "./OrgOverview";
 export { projectOverviewMainExtensionPoint } from "./ProjectOverview";
 export { componentOverviewMainExtensionPoint } from "./ComponentOverview";
 
