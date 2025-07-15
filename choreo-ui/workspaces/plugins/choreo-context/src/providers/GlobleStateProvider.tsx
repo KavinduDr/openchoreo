@@ -34,7 +34,7 @@ export function GlobalStateProvider({
       navigate(
         genaratePath({
           orgHandle: getResourceName(organizationList?.data?.items[0]),
-        })
+        }),
       );
     }
   }, [orgHandle, organizationList]);

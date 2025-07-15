@@ -14,7 +14,12 @@ import {
 import { ChoreoClient } from "@open-choreo/api-client";
 import { useBasePath } from "@open-choreo/plugin-core";
 import { GlobalStateProvider } from "./GlobleStateProvider";
-import { QueryClientProvider, QueryClient, MutationCache, QueryCache } from "@tanstack/react-query";
+import {
+  QueryClientProvider,
+  QueryClient,
+  MutationCache,
+  QueryCache,
+} from "@tanstack/react-query";
 
 export interface ApiClientProviderProps {
   children: ReactNode;
@@ -42,30 +47,32 @@ const ApiClientProvider: React.FC<ApiClientProviderProps> = (
     [basePath],
   );
 
-  const queryClient = useMemo(() => new QueryClient(
-    {
-      mutationCache: new MutationCache({
-        onError: (error) => {
-          console.error(error);
+  const queryClient = useMemo(
+    () =>
+      new QueryClient({
+        mutationCache: new MutationCache({
+          onError: (error) => {
+            console.error(error);
+          },
+        }),
+        queryCache: new QueryCache({
+          onError: (error) => {
+            console.error(error);
+          },
+        }),
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+            refetchOnMount: false,
+            refetchOnReconnect: false,
+            retryOnMount: false,
+            retry: 3,
+            staleTime: 1000 * 10,
+          },
         },
       }),
-      queryCache: new QueryCache({
-        onError: (error) => {
-          console.error(error);
-        },
-      }), 
-      defaultOptions: {
-        queries: {  
-          refetchOnWindowFocus: false,
-          refetchOnMount: false,
-          refetchOnReconnect: false,
-          retryOnMount: false,
-          retry: 3,
-          staleTime: 1000 * 10,
-        },
-      },
-    }
-  ), []);
+    [],
+  );
   const [state, dispatch] = useReducer(appStateReducer, initialState);
 
   return (

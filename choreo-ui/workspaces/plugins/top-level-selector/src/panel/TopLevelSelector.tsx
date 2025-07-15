@@ -91,8 +91,8 @@ const Panel: React.FC = () => {
         }))}
         recentItems={[]}
         selectedItem={{
-          label: selectedOrganization?.displayName,
-          id: selectedOrganization?.name,
+          label: selectedOrganization?.data.displayName,
+          id: selectedOrganization?.data.name,
         }}
         level={Level.ORGANIZATION}
         isHighlighted={!projectDisplayName}
