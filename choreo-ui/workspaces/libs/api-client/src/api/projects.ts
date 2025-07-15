@@ -1,4 +1,5 @@
-import { apiRequest, ApiConfig } from '../core/config';
+import { apiRequest } from '../core/config';
+import type { ApiConfig } from '../core/config';
 import { type Project, type ProjectList } from '../types/types';
 
 export interface ProjectsApi {

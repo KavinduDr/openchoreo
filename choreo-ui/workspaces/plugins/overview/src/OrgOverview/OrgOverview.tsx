@@ -53,6 +53,7 @@ const OrgOverview: React.FC = () => {
       description={getResourceDescription(selectedOrganization)}
       actions={
         <IconButton
+          testId="org-overview-refresh-button"
           size="small"
           onClick={() => {
             projectListQueryResult.refetch();

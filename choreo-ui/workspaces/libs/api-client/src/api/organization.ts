@@ -1,4 +1,5 @@
-import { apiRequest, ApiConfig } from '../core/config';
+import { apiRequest } from '../core/config';
+import type { ApiConfig } from '../core/config';
 import { type OrganizationList } from '../types/types';
 
 export interface OrganizationApi {

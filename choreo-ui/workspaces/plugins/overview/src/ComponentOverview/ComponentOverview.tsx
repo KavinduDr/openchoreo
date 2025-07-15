@@ -48,6 +48,7 @@ const ComponentOverview: React.FC = () => {
       description={getResourceDescription(selectedComponent)}
       actions={
         <IconButton
+          testId="component-overview-refresh-button"
           size="small"
           onClick={() => {
             componentQueryResult.refetch();

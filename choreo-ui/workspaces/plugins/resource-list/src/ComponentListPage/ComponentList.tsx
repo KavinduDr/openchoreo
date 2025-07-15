@@ -26,6 +26,7 @@ const ComponentList: React.FC = () => {
       testId="component-list"
       actions={
         <IconButton
+          testId="component-list-refresh-button"
           size="small"
           onClick={() => {
             componentListQueryResult.refetch();

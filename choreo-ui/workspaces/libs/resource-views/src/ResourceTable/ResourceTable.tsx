@@ -38,14 +38,25 @@ export interface ResourceTableProps {
   actions?: React.ReactNode;
 }
 
-
 export function ResourceTable(props: ResourceTableProps) {
-  const { resources, onDeleteMember, resourceKind, enableAvatar, onRefresh, isLoading, actions } = props;
+  const {
+    resources,
+    onDeleteMember,
+    resourceKind,
+    enableAvatar,
+    onRefresh,
+    isLoading,
+    actions,
+  } = props;
   const theme = useChoreoTheme();
   const navigate = useNavigate();
   const intl = useIntl();
 
-  const DeleteBtn = ({ onClick }: { onClick: (event: React.MouseEvent<HTMLButtonElement>) => void }) => (
+  const DeleteBtn = ({
+    onClick,
+  }: {
+    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  }) => (
     <Button
       color="error"
       onClick={onClick}
@@ -62,104 +73,143 @@ export function ResourceTable(props: ResourceTableProps) {
     navigate(resource.href || '');
   };
 
-  const getResourceKindDisplayName = useCallback((resourceKind: ResourceKind) => {
-    switch (resourceKind) {
-      case 'project':
-        return intl.formatMessage({ id: "resourceTable.title.project", defaultMessage: "Projects" });
-      case 'component':
-        return intl.formatMessage({ id: "resourceTable.title.component", defaultMessage: "Components" });
-      case 'organization':
-        return intl.formatMessage({ id: "resourceTable.title.organization", defaultMessage: "Organizations" });
-      default:
-        return intl.formatMessage({ id: "resourceTable.title.resource", defaultMessage: "Resources" });
-    }
-  }, [resourceKind]);
+  const getResourceKindDisplayName = useCallback(
+    (resourceKind: ResourceKind) => {
+      switch (resourceKind) {
+        case 'project':
+          return intl.formatMessage({
+            id: 'resourceTable.title.project',
+            defaultMessage: 'Projects',
+          });
+        case 'component':
+          return intl.formatMessage({
+            id: 'resourceTable.title.component',
+            defaultMessage: 'Components',
+          });
+        case 'organization':
+          return intl.formatMessage({
+            id: 'resourceTable.title.organization',
+            defaultMessage: 'Organizations',
+          });
+        default:
+          return intl.formatMessage({
+            id: 'resourceTable.title.resource',
+            defaultMessage: 'Resources',
+          });
+      }
+    },
+    [resourceKind]
+  );
 
   const resourceListTitle = useMemo(() => {
     switch (resourceKind) {
       case 'project':
-        return intl.formatMessage({ id: "resourceTable.title.project", defaultMessage: "Project Listing" });
+        return intl.formatMessage({
+          id: 'resourceTable.title.project',
+          defaultMessage: 'Project Listing',
+        });
       case 'component':
-        return intl.formatMessage({ id: "resourceTable.title.component", defaultMessage: "Component Listing" });
+        return intl.formatMessage({
+          id: 'resourceTable.title.component',
+          defaultMessage: 'Component Listing',
+        });
       case 'organization':
-        return intl.formatMessage({ id: "resourceTable.title.organization", defaultMessage: "Organization Listing" });
+        return intl.formatMessage({
+          id: 'resourceTable.title.organization',
+          defaultMessage: 'Organization Listing',
+        });
       default:
-        return intl.formatMessage({ id: "resourceTable.title.resource", defaultMessage: "Resource Listing" });
+        return intl.formatMessage({
+          id: 'resourceTable.title.resource',
+          defaultMessage: 'Resource Listing',
+        });
     }
   }, [resourceKind]);
 
-  const resourceListColumns: DataTableColumn<ResourceTableItem>[] = useMemo(() => [
-    {
-      title: getResourceKindDisplayName(resourceKind),
-      field: 'name',
-      width: '25%',
-      render: (rowData: ResourceTableItem) => {
-        const { id, name } = rowData;
-        return (
-          <Box display="flex" alignItems="center" gap={8} key={id}>
-            {enableAvatar && (
-              <Avatar>
-                {name.charAt(0).toUpperCase()}
-              </Avatar>
-            )}
-            <Typography variant="body1" color="text.primary">{name}</Typography>
-          </Box>
-        );
+  const resourceListColumns: DataTableColumn<ResourceTableItem>[] = useMemo(
+    () => [
+      {
+        title: getResourceKindDisplayName(resourceKind),
+        field: 'name',
+        width: '25%',
+        render: (rowData: ResourceTableItem) => {
+          const { id, name } = rowData;
+          return (
+            <Box display="flex" alignItems="center" gap={8} key={id}>
+              {enableAvatar && <Avatar>{name.charAt(0).toUpperCase()}</Avatar>}
+              <Typography variant="body1" color="text.primary">
+                {name}
+              </Typography>
+            </Box>
+          );
+        },
       },
-    },
-    {
-      title: intl.formatMessage({ id: "resourceTable.title.description", defaultMessage: "Description" }),
-      field: 'description',
-      width: '25%',
-      render: (rowData: ResourceTableItem) => {
-        const { description } = rowData;
-        return (
-          <Typography variant="body1" color="text.primary">{description}</Typography>
-        );
+      {
+        title: intl.formatMessage({
+          id: 'resourceTable.title.description',
+          defaultMessage: 'Description',
+        }),
+        field: 'description',
+        width: '25%',
+        render: (rowData: ResourceTableItem) => {
+          const { description } = rowData;
+          return (
+            <Typography variant="body1" color="text.primary">
+              {description}
+            </Typography>
+          );
+        },
       },
-    },
-    {
-      title: intl.formatMessage({ id: "resourceTable.title.type", defaultMessage: "Type" }),
-      field: 'type',
-      width: '25%',
-      render: (rowData: ResourceTableItem) => {
-        const { type } = rowData;
-        return (
-          <Typography variant="body1" color="text.primary">{type}</Typography>
-        );
+      {
+        title: intl.formatMessage({
+          id: 'resourceTable.title.type',
+          defaultMessage: 'Type',
+        }),
+        field: 'type',
+        width: '25%',
+        render: (rowData: ResourceTableItem) => {
+          const { type } = rowData;
+          return (
+            <Typography variant="body1" color="text.primary">
+              {type}
+            </Typography>
+          );
+        },
       },
-    },
-    {
-      title: intl.formatMessage({ id: "resourceTable.title.lastUpdated", defaultMessage: "Last Updated" }),
-      field: 'lastUpdated',
-      align: 'right',
-      width: '25%',
-      render: (rowData: ResourceTableItem, isHover: boolean) =>
-      (
-        <Box display="flex" alignItems="center" gap={8} key={rowData.id}>
-          {
-            isHover && rowData?.id && onDeleteMember ? (
+      {
+        title: intl.formatMessage({
+          id: 'resourceTable.title.lastUpdated',
+          defaultMessage: 'Last Updated',
+        }),
+        field: 'lastUpdated',
+        align: 'right',
+        width: '25%',
+        render: (rowData: ResourceTableItem, isHover: boolean) => (
+          <Box display="flex" alignItems="center" gap={8} key={rowData.id}>
+            {isHover && rowData?.id && onDeleteMember ? (
               <DeleteBtn
                 onClick={(event) => {
                   event.stopPropagation();
                   onDeleteMember(rowData?.id, rowData?.name);
                 }}
               />
-            ) :
-              (
-                <>
-                  <TimeIcon fontSize="inherit" color='secondary' />
-                  <Typography variant="body1" color="text.primary">{dayjs(rowData.lastUpdated).format('DD/MM/YYYY HH:mm')}</Typography>
-                </>
-              )
-          }
-        </Box>
-      ),
-    },
-  ], [resourceKind, enableAvatar, onDeleteMember, getResourceKindDisplayName]);
+            ) : (
+              <>
+                <TimeIcon fontSize="inherit" color="secondary" />
+                <Typography variant="body1" color="text.primary">
+                  {dayjs(rowData.lastUpdated).format('DD/MM/YYYY HH:mm')}
+                </Typography>
+              </>
+            )}
+          </Box>
+        ),
+      },
+    ],
+    [resourceKind, enableAvatar, onDeleteMember, getResourceKindDisplayName]
+  );
 
   return (
-    <Box display='flex' flexDirection='column' gap={theme.spacing(1)}>
+    <Box display="flex" flexDirection="column" gap={theme.spacing(1)}>
       <DataTable<ResourceTableItem>
         actions={actions}
         enableFrontendSearch
@@ -174,9 +224,15 @@ export function ResourceTable(props: ResourceTableProps) {
         titleActions={
           <Box display="flex" alignItems="center" gap={theme.spacing(1)}>
             {onRefresh && (
-              <IconButton onClick={onRefresh} size="small" variant="outlined" color="primary"  >
+              <IconButton
+                testId="refresh-button"
+                onClick={onRefresh}
+                size="small"
+                textVariant="outlined"
+                color="primary"
+              >
                 <Rotate disabled={!isLoading}>
-                  <RefreshIcon color='primary' />
+                  <RefreshIcon color="primary" />
                 </Rotate>
               </IconButton>
             )}

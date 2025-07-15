@@ -12,7 +12,7 @@ export type iconButtonColorVariant =
   | 'success';
 export type iconButtonSizeVariant = 'tiny' | 'small' | 'medium';
 export type edgeVariant = 'start' | 'end' | false;
-export type iconButtonTextVariant = 'text' | 'link';
+export type iconButtonTextVariant = 'text' | 'link' | 'outlined';
 
 export interface IconButtonProps {
   children?: React.ReactNode;

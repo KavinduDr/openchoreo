@@ -1,4 +1,5 @@
-import { ApiConfig, defaultConfig } from './config';
+import type { ApiConfig } from './config';
+import { defaultConfig } from './config';
 import { projectsApi, type ProjectsApi } from '../api/projects';
 import { componentsApi, type ComponentsApi } from '../api/components';
 import { organizationApi, type OrganizationApi } from '../api/organization';
