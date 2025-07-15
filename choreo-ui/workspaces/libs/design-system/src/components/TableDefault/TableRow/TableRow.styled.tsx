@@ -7,12 +7,13 @@ import {
 interface TableRowProps extends MUITableRowProps {
   deletable?: boolean;
   disabled?: boolean;
+  disableHover?: boolean;
   noBorderBottom?: boolean;
 }
 
 export const StyledTableRow: React.ComponentType<TableRowProps> = styled(
   MUITableRow
-)<TableRowProps>(({ theme, disabled, noBorderBottom }) => ({
+)<TableRowProps>(({ theme, disabled, noBorderBottom, disableHover }) => ({
   opacity: disabled ? 0.7 : 1,
   color: disabled ? theme.palette.text.disabled : theme.palette.text.primary,
   cursor: disabled ? 'not-allowed' : 'pointer',
@@ -23,6 +24,7 @@ export const StyledTableRow: React.ComponentType<TableRowProps> = styled(
     },
   }),
   '&:hover': {
-    backgroundColor: disabled ? 'transparent' : theme.palette.action.hover,
+    backgroundColor:
+      disabled || disableHover ? 'transparent' : theme.palette.action.hover,
   },
 }));

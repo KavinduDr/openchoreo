@@ -5,6 +5,7 @@ export interface TableRowProps {
   deletable?: boolean;
   disabled?: boolean;
   noBorderBottom?: boolean;
+  disableHover?: boolean;
   onClick?: (event: React.MouseEvent<HTMLTableRowElement>) => void;
 }
 

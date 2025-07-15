@@ -74,7 +74,7 @@ export function ComponentTypes(props: ComponentListProps) {
         {heading && <Typography variant="h4">{heading}</Typography>}
         <Box>
           {rows.map((row) => (
-            <TableRow key={row.type + row.webAppType}>
+            <TableRow key={row.type + row.webAppType} disableHover={true}>
               <TableCell align="left">
                 <Typography variant="body1">{row.type}</Typography>
               </TableCell>
@@ -84,7 +84,7 @@ export function ComponentTypes(props: ComponentListProps) {
               </TableCell>
             </TableRow>
           ))}
-          <TableRow>
+          <TableRow disableHover={true}>
             <TableCell align="left">
               <Typography variant="h5">Total</Typography>
             </TableCell>
