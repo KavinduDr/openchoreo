@@ -1,7 +1,16 @@
 import React from 'react';
 import { StyledRadioIndicator } from './Radio.styled';
+import { RadioProps } from '@mui/material';
+import { colorVariant } from './Radio.styled';
 
-export const RadioIndicator = React.forwardRef<HTMLDivElement>((props) => {
+export interface RadioIndicatorProps extends RadioProps {
+  color?: colorVariant;
+}
+
+export const RadioIndicator = React.forwardRef<
+  HTMLDivElement,
+  RadioIndicatorProps
+>((props: RadioIndicatorProps, _ref) => {
   return (
     <StyledRadioIndicator
       {...props}
