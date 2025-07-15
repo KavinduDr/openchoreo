@@ -279,9 +279,9 @@ export const Enhanced: Story = {
                           checked={
                             rows.length > 0 && selected.length === rows.length
                           }
-                          onChange={handleSelectAllClick}
+                          // onChange={handleSelectAllClick}
                           disableRipple={true}
-                          inputProps={{ 'aria-label': 'select all desserts' }}
+                          aria-label="select all desserts"
                           testId="table-head"
                         />
                       </Tooltip>

@@ -12,20 +12,23 @@ export type iconButtonColorVariant =
   | 'success';
 export type iconButtonSizeVariant = 'tiny' | 'small' | 'medium';
 export type edgeVariant = 'start' | 'end' | false;
+export type iconButtonTextVariant = 'text' | 'link';
 
 export interface IconButtonProps {
   children?: React.ReactNode;
   className?: string;
-  onClick?: (event: React.MouseEvent) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   edge?: edgeVariant;
   color?: iconButtonColorVariant;
   testId: string;
   variant?: iconButtonVariant;
+  textVariant?: iconButtonTextVariant;
   size?: iconButtonSizeVariant;
   disableRipple?: boolean;
   disableFocusRipple?: boolean;
   disableTouchRipple?: boolean;
+  onMouseDown?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   sx?: React.CSSProperties;
 }
 

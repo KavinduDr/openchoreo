@@ -75,7 +75,7 @@ export function GlobalStateProvider({
   const componentQueryResult = useComponent(
     orgHandle,
     projectHandle,
-    componentHandle
+    componentHandle,
   );
   const componentListQueryResult = useComponentList(orgHandle, projectHandle);
   const projectListQueryResult = useProjectList(orgHandle);
@@ -90,14 +90,14 @@ export function GlobalStateProvider({
       navigate(
         genaratePath({
           orgHandle: organizationListQueryResult.data.data.items[0].name,
-        })
+        }),
       );
     }
   }, [orgHandle, organizationListQueryResult.data]);
 
   const selectedOrganization = useMemo(() => {
     return organizationListQueryResult?.data?.data?.items.find(
-      (org) => org.name === orgHandle
+      (org) => org.name === orgHandle,
     );
   }, [organizationListQueryResult, orgHandle]);
 

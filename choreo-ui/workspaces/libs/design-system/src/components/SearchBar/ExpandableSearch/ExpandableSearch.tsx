@@ -49,7 +49,7 @@ export const AutofocusField = React.forwardRef<
               size="tiny"
               data-testid="search-clear-icon"
               testId={`${props.testId}-clear`}
-              variant="link"
+              textVariant="link"
             >
               <Close fontSize="inherit" />
             </IconButton>
@@ -140,7 +140,7 @@ export const ExpandableSearch = React.forwardRef<
             data-testid="search-icon"
             testId="search-icon"
             color="secondary"
-            variant="text"
+            textVariant="text"
             disabled={isSearchShow}
             className="searchIconButton"
           >
@@ -173,7 +173,7 @@ export const ExpandableSearch = React.forwardRef<
                   size="small"
                   data-testid="search-clear-icon"
                   testId={`${testId}-clear`}
-                  variant="link"
+                  textVariant="link"
                   className="clearIconButton"
                 >
                   <Close fontSize="inherit" />
@@ -190,7 +190,7 @@ export const ExpandableSearch = React.forwardRef<
             data-testid="search-icon"
             testId="search-icon"
             color="secondary"
-            variant="text"
+            textVariant="text"
             disabled={isSearchShow}
             className="searchIconButton"
           >

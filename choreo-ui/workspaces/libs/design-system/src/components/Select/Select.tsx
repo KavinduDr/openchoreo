@@ -181,7 +181,7 @@ function SelectComponent<T>(props: ISelectProps<T>) {
           }),
         }}
         clearIcon={
-          <IconButton size="small" testId="selector-clear" variant="text">
+          <IconButton size="small" testId="selector-clear" textVariant="text">
             <Close fontSize="inherit" color="secondary" />
           </IconButton>
         }
@@ -223,7 +223,7 @@ function SelectComponent<T>(props: ISelectProps<T>) {
               <IconButton
                 size="small"
                 testId="selector-dropdown"
-                variant="text"
+                textVariant="text"
                 className={classes.popupIcon}
                 disableRipple={true}
                 disableFocusRipple={true}

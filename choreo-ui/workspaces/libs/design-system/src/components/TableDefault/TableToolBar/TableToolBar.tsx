@@ -20,7 +20,7 @@ export const TableToolbar: React.FC<TableToolbarProps> = ({ numSelected }) => {
             <Tooltip title="Delete">
               <IconButton
                 color="secondary"
-                variant="link"
+                textVariant="link"
                 aria-label="delete"
                 testId="delete"
               >
@@ -40,7 +40,7 @@ export const TableToolbar: React.FC<TableToolbarProps> = ({ numSelected }) => {
           <Tooltip title="Filter list">
             <IconButton
               color="secondary"
-              variant="link"
+              textVariant="link"
               aria-label="filter list"
               testId="filters"
             >
