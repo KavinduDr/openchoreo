@@ -1,7 +1,5 @@
-import { useContext } from "react";
 import { useGlobalState } from "./useGlobleState";
 import { ActionType } from "../reducers/appState";
-// import { GlobalStateContext } from "src/providers/GlobleStateProvider";
 
 export const useColorMode = () => {
   const {

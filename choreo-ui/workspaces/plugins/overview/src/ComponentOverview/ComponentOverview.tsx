@@ -3,7 +3,7 @@ import {
   PageLayout,
   PresetErrorPage,
 } from "@open-choreo/common-views";
-import { useGlobalState } from "@open-choreo/choreo-context";
+import { useSelectedComponent } from "@open-choreo/choreo-context";
 import React from "react";
 import {
   PanelExtensionMounter,
@@ -20,53 +20,45 @@ import {
   IconButton,
   useChoreoTheme,
 } from "@open-choreo/design-system";
+import { ResourcePageLayout } from "@open-choreo/resource-views";
 
 export const componentOverviewMainExtensionPoint: PluginExtensionPoint = {
   id: "component-overview-page-body",
   type: PluginExtensionType.PANEL,
 };
 const ComponentOverview: React.FC = () => {
-  const { componentQueryResult, selectedComponent } = useGlobalState();
+  const {
+    data: selectedComponent,
+    isLoading,
+    isError,
+    isFetching,
+    refetch,
+  } = useSelectedComponent();
   const theme = useChoreoTheme();
 
-  if (componentQueryResult?.isLoading) {
+  if (isLoading) {
     return <FullPageLoader />;
   }
 
-  if (componentQueryResult?.error) {
+  if (isError) {
     return <PresetErrorPage preset="500" />;
   }
 
-  if (!componentQueryResult?.data) {
+  if (!selectedComponent) {
     return <PresetErrorPage preset="404" />;
   }
 
   return (
-    <PageLayout
-      testId="overview-page"
-      title={getResourceDisplayName(selectedComponent)}
-      description={getResourceDescription(selectedComponent)}
-      actions={
-        <IconButton
-          testId="component-overview-refresh-button"
-          size="small"
-          onClick={() => {
-            componentQueryResult.refetch();
-          }}
-        >
-          <Rotate
-            disabled={!componentQueryResult.isFetching}
-            color={theme.pallet.primary.main}
-          >
-            <RefreshIcon fontSize="inherit" />
-          </Rotate>
-        </IconButton>
-      }
+    <ResourcePageLayout
+      resource={selectedComponent?.data}
+      testId="component-overview-page"
+      isRefreshing={isFetching}
+      isLoading={isLoading}
     >
       <PanelExtensionMounter
         extentionPoint={componentOverviewMainExtensionPoint}
       />
-    </PageLayout>
+    </ResourcePageLayout>
   );
 };
 

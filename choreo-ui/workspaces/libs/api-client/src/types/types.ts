@@ -12,6 +12,10 @@ export interface OrganizationList {
   data: OrganizationListData;
 }
 
+export interface Organization {
+  success: boolean;
+  data: OrganizationItem;
+}
 
 export interface ProjectListData {
   items: ProjectItem[];

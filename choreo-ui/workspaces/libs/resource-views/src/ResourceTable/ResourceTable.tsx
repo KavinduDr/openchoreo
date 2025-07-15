@@ -136,7 +136,11 @@ export function ResourceTable(props: ResourceTableProps) {
           const { id, name } = rowData;
           return (
             <Box display="flex" alignItems="center" gap={8} key={id}>
-              {enableAvatar && <Avatar>{name.charAt(0).toUpperCase()}</Avatar>}
+              {enableAvatar && (
+                <Avatar color="secondary">
+                  {name.charAt(0).toUpperCase()}
+                </Avatar>
+              )}
               <Typography variant="body1" color="text.primary">
                 {name}
               </Typography>

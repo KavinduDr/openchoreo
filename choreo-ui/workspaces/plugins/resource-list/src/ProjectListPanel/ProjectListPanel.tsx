@@ -1,11 +1,10 @@
 import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
-import { useGlobalState } from "@open-choreo/choreo-context";
+import { useProjectList } from "@open-choreo/choreo-context";
 import {
   genaratePath,
   PanelExtensionMounter,
   PluginExtensionPoint,
   PluginExtensionType,
-  useHomePath,
   useOrgHandle,
 } from "@open-choreo/plugin-core";
 import React, { useMemo, useState } from "react";
@@ -26,14 +25,14 @@ export const organizationOverviewActionsExtensionPoint: PluginExtensionPoint = {
 };
 
 export const ProjectListPanel: React.FC = () => {
-  const { projectListQueryResult } = useGlobalState();
   const orgHandle = useOrgHandle();
+  const { data: projectList, isLoading, isError } = useProjectList(orgHandle);
   const [search, setSearch] = useState("");
   const { formatMessage } = useIntl();
 
   const projects = useMemo(
     () =>
-      projectListQueryResult?.data?.data?.items
+      projectList?.data?.items
         ?.filter((item) =>
           item.name.toLowerCase().includes(search.toLowerCase()),
         )
@@ -48,18 +47,18 @@ export const ProjectListPanel: React.FC = () => {
             projectHandle: getResourceName(item),
           }),
         })),
-    [projectListQueryResult?.data?.data.items, search, orgHandle],
+    [projectList, search, orgHandle],
   );
 
-  if (projectListQueryResult?.isLoading) {
+  if (isLoading) {
     return <FullPageLoader />;
   }
 
-  if (projectListQueryResult?.error) {
+  if (isError) {
     return <PresetErrorPage preset="500" />;
   }
 
-  if (!projectListQueryResult?.data) {
+  if (!projectList) {
     return <PresetErrorPage preset="404" />;
   }
 

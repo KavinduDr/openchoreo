@@ -44,9 +44,11 @@ export const PopoverContent: React.FC<PopoverContentProps> = ({
     }, [recentItems, search]);
 
     return (
-        <Box display="flex" flexDirection="column" gap={1} p={1}>
+        <Box display="flex" flexDirection="column" gap={1} p={0.5}>
             <SearchBar
                 inputValue={search}
+                size="small"
+                bordered
                 onChange={onSearchChange}
                 testId="top-level-selector-search"
                 placeholder="Search"

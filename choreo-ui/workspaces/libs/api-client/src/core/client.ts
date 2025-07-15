@@ -35,4 +35,5 @@ export class ChoreoClient implements ChoreoApiClient {
 
   // Organization API methods
   listOrganizations = () => organizationApi.listOrganizations(this.config);
+  getOrganization = (orgHandle: string) => organizationApi.getOrganization(orgHandle, this.config);
 } 

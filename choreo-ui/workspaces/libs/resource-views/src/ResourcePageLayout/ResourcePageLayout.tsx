@@ -11,6 +11,7 @@ import {
   Typography,
   useChoreoTheme,
 } from '@open-choreo/design-system';
+import { FormattedMessage } from 'react-intl';
 
 export interface ResourcePageLayoutProps {
   resource: Resource;
@@ -26,6 +27,11 @@ export interface ResourcePageLayoutProps {
 export function ResourcePageLayout(props: ResourcePageLayoutProps) {
   const { resource, testId, children, backUrl, backButtonText, isRefreshing, onRefresh } = props;
   const theme = useChoreoTheme();
+
+  const resourceDisplayName = getResourceDisplayName(resource);
+  const resourceDescription = getResourceDescription(resource);
+  const resourceDisplayNameFirstLetter = resourceDisplayName.charAt(0).toUpperCase();
+
   return (
     <Box
       testId={`page-layout-${testId}`}
@@ -58,19 +64,21 @@ export function ResourcePageLayout(props: ResourcePageLayoutProps) {
         <Box display="flex" flexDirection="column" gap={2}>
           <Box display="flex" alignItems="center" gap={2}>
             <Box display="flex" alignItems="flex-start" gap={theme.spacing(2)}>
-              <Avatar width={theme.spacing(10)} height={theme.spacing(10)} variant='circular'>
-                {getResourceDisplayName(resource).charAt(0)}
+              <Avatar width={theme.spacing(10)} height={theme.spacing(10)} variant='circular' color='primary' sx={{fontSize: theme.spacing(4)}}>
+                {resourceDisplayNameFirstLetter}
               </Avatar>
               <Box display="flex" flexDirection="column" gap={theme.spacing(0.25)} padding={theme.spacing(1, 0.5)}>
                 <Box display="flex" alignItems="center" gap={theme.spacing(0.5)}>
-                  <Typography variant="h2">{getResourceDisplayName(resource)}</Typography>
+                  <Typography variant="h2">{resourceDisplayName}</Typography>
+                  {onRefresh && (
                   <IconButton testId={`page-layout-refresh-button-${testId}`} size='small' onClick={onRefresh}>
                     <Rotate disabled={!isRefreshing} color={theme.pallet.primary.main}>
-                      <RefreshIcon fontSize='small' />
-                    </Rotate>
-                  </IconButton>
+                        <RefreshIcon fontSize='small' />
+                      </Rotate>
+                    </IconButton>
+                  )}
                 </Box>
-                <Typography variant="body2">{getResourceDescription(resource)}</Typography>
+                <Typography variant="body1">{resourceDescription ? resourceDescription : <FormattedMessage id="resource-page-layout.no-description" defaultMessage="No description provided." />}</Typography>
               </Box>
             </Box>
           </Box>

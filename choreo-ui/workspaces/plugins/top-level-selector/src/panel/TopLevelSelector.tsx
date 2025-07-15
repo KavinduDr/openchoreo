@@ -6,7 +6,14 @@ import {
   TopLevelSelector,
   useChoreoTheme,
 } from "@open-choreo/design-system";
-import { useGlobalState } from "@open-choreo/choreo-context";
+import {
+  useSelectedOrganization,
+  useSelectedProject,
+  useProjectList,
+  useSelectedComponent,
+  useOrganizationList,
+  useComponentList,
+} from "@open-choreo/choreo-context";
 import {
   getResourceDisplayName,
   getResourceName,
@@ -21,29 +28,28 @@ import { useNavigate } from "react-router";
 
 const Panel: React.FC = () => {
   const theme = useChoreoTheme();
-  const {
-    componentListQueryResult,
-    projectListQueryResult,
-    organizationListQueryResult,
-    selectedOrganization,
-    selectedProject,
-    selectedComponent,
-  } = useGlobalState();
-
-  const projectDisplayName = getResourceDisplayName(selectedProject);
-  const componentDisplayName = getResourceDisplayName(selectedComponent);
-  const orgDisplayName = getResourceDisplayName(selectedOrganization);
-  const projectName = getResourceName(selectedProject);
-  const componentName = getResourceName(selectedComponent);
-  const orgName = getResourceName(selectedOrganization);
-
-  const projectList = projectListQueryResult?.data;
-  const componentList = componentListQueryResult?.data;
-  const organizationList = organizationListQueryResult?.data;
 
   const orgHandle = useOrgHandle();
   const projectHandle = useProjectHandle();
   const componentHandle = useComponentHandle();
+  const res = useSelectedOrganization();
+
+  const { data: selectedOrganization } = useSelectedOrganization();
+
+  const { data: selectedProject } = useSelectedProject();
+
+  const { data: selectedComponent } = useSelectedComponent();
+
+  const { data: organizationList } = useOrganizationList();
+  const { data: projectList } = useProjectList(orgHandle);
+  const { data: componentList } = useComponentList(orgHandle, projectHandle);
+
+  const projectDisplayName = getResourceDisplayName(selectedProject?.data);
+  const componentDisplayName = getResourceDisplayName(selectedComponent?.data);
+  const orgDisplayName = getResourceDisplayName(selectedOrganization?.data);
+  const projectName = getResourceName(selectedProject?.data);
+  const componentName = getResourceName(selectedComponent?.data);
+  const orgName = getResourceName(selectedOrganization?.data);
 
   const navigate = useNavigate();
 
@@ -101,7 +107,7 @@ const Panel: React.FC = () => {
         <AnimateSlide show={!!projectDisplayName} unmountOnExit>
           <TopLevelSelector
             items={
-              projectList?.data.items?.map((project) => ({
+              projectList?.data?.items?.map((project) => ({
                 label: getResourceDisplayName(project),
                 id: project.name,
               })) || []

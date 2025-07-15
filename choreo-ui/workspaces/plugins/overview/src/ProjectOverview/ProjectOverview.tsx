@@ -1,9 +1,5 @@
-import { useGlobalState } from "@open-choreo/choreo-context";
-import {
-  FullPageLoader,
-  PageLayout,
-  PresetErrorPage,
-} from "@open-choreo/common-views";
+import { useSelectedProject } from "@open-choreo/choreo-context";
+import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import {
   PanelExtensionMounter,
   PluginExtensionPoint,
@@ -18,29 +14,31 @@ export const projectOverviewMainExtensionPoint: PluginExtensionPoint = {
 };
 
 const ProjectOverview: React.FC = () => {
-  const { projectQueryResult, componentListQueryResult, selectedProject } =
-    useGlobalState();
-  if (projectQueryResult?.isLoading) {
+  const {
+    data: selectedProject,
+    isLoading,
+    isError,
+    isFetching,
+    refetch,
+  } = useSelectedProject();
+  if (isLoading) {
     return <FullPageLoader />;
   }
 
-  if (projectQueryResult?.error) {
+  if (isError) {
     return <PresetErrorPage preset="500" />;
   }
 
-  if (!projectQueryResult?.data) {
+  if (!selectedProject) {
     return <PresetErrorPage preset="404" />;
   }
 
   return (
     <ResourcePageLayout
-      resource={selectedProject}
-      testId="component-list-page"
-      isRefreshing={componentListQueryResult.isFetching}
-      isLoading={componentListQueryResult.isLoading}
-      onRefresh={() => {
-        componentListQueryResult.refetch();
-      }}
+      resource={selectedProject?.data}
+      testId="project-overview-page"
+      isRefreshing={isFetching}
+      isLoading={isLoading}
     >
       <PanelExtensionMounter
         extentionPoint={projectOverviewMainExtensionPoint}

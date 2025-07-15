@@ -23,7 +23,7 @@ export const StyledTable: ComponentType<
         overflow: 'visible',
         boxShadow: theme.shadows[1],
         borderRadius: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: theme.palette.background.default,
       },
     },
     '& .MuiTableCell-body': {
@@ -50,7 +50,6 @@ export const StyledTable: ComponentType<
     '& .MuiTableBody-root': {
       '& .MuiTableRow-root': {
         borderRadius: theme.spacing(1),
-        backgroundColor: theme.palette.common.white,
         transition: 'box-shadow 0.3s ease',
         boxShadow: theme.shadows[1],
         '&:hover': {
@@ -73,7 +72,7 @@ export const StyledTable: ComponentType<
       opacity: 0.8,
     },
     '& .MuiTableCell-body': {
-      backgroundColor: theme.palette.common.white,
+      backgroundColor: theme.palette.background.paper,
       padding: theme.spacing(1, 2),
       transition: 'border 0.3s ease',
       border: '1px solid transparent',

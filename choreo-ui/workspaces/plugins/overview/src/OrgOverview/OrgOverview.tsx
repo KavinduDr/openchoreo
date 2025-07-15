@@ -3,7 +3,7 @@ import {
   PageLayout,
   PresetErrorPage,
 } from "@open-choreo/common-views";
-import { useGlobalState } from "@open-choreo/choreo-context";
+import { useSelectedOrganization } from "@open-choreo/choreo-context";
 import {
   PanelExtensionMounter,
   PluginExtensionPoint,
@@ -21,6 +21,7 @@ import {
   getResourceDescription,
   getResourceDisplayName,
 } from "@open-choreo/definitions";
+import { ResourcePageLayout } from "@open-choreo/resource-views";
 
 export const organizationOverviewMainExtensionPoint: PluginExtensionPoint = {
   id: "org-overview-page-body",
@@ -29,49 +30,40 @@ export const organizationOverviewMainExtensionPoint: PluginExtensionPoint = {
 
 const OrgOverview: React.FC = () => {
   const {
-    projectListQueryResult,
-    selectedOrganization,
-    organizationListQueryResult,
-  } = useGlobalState();
+    data: selectedOrganization,
+    isLoading,
+    isError,
+    isFetching,
+    refetch,
+  } = useSelectedOrganization();
+
   const theme = useChoreoTheme();
-  if (organizationListQueryResult?.isLoading) {
+  if (isLoading) {
     return <FullPageLoader />;
   }
 
-  if (organizationListQueryResult?.error) {
+  if (isError) {
     return <PresetErrorPage preset="500" />;
   }
 
-  if (!organizationListQueryResult?.data) {
+  if (!selectedOrganization) {
     return <PresetErrorPage preset="404" />;
   }
 
   return (
-    <PageLayout
-      testId="overview-page"
-      title={getResourceDisplayName(selectedOrganization)}
-      description={getResourceDescription(selectedOrganization)}
-      actions={
-        <IconButton
-          testId="org-overview-refresh-button"
-          size="small"
-          onClick={() => {
-            projectListQueryResult.refetch();
-          }}
-        >
-          <Rotate
-            disabled={!projectListQueryResult.isFetching}
-            color={theme.pallet.primary.main}
-          >
-            <RefreshIcon fontSize="inherit" />
-          </Rotate>
-        </IconButton>
-      }
+    <ResourcePageLayout
+      resource={selectedOrganization?.data}
+      testId="org-overview-page"
+      isRefreshing={isFetching}
+      isLoading={isLoading}
+      onRefresh={() => {
+        refetch();
+      }}
     >
       <PanelExtensionMounter
         extentionPoint={organizationOverviewMainExtensionPoint}
       />
-    </PageLayout>
+    </ResourcePageLayout>
   );
 };
 

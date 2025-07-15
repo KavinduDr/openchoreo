@@ -3,11 +3,13 @@ import {
   PageLayout,
   PresetErrorPage,
 } from "@open-choreo/common-views";
-import { useGlobalState } from "@open-choreo/choreo-context";
+import { useComponentList } from "@open-choreo/choreo-context";
 import {
   PanelExtensionMounter,
   PluginExtensionPoint,
   PluginExtensionType,
+  useOrgHandle,
+  useProjectHandle,
 } from "@open-choreo/plugin-core";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -20,7 +22,19 @@ export const componentListMainExtensionPoint: PluginExtensionPoint = {
 
 const ComponentList: React.FC = () => {
   const { formatMessage } = useIntl();
-  const { componentListQueryResult } = useGlobalState();
+  const orgHandle = useOrgHandle();
+  const projectHandle = useProjectHandle();
+  const { isLoading, isError, isFetching, refetch } = useComponentList(
+    orgHandle,
+    projectHandle,
+  );
+  if (isLoading) {
+    return <FullPageLoader />;
+  }
+
+  if (isError) {
+    return <PresetErrorPage preset="500" />;
+  }
   return (
     <PageLayout
       testId="component-list"
@@ -29,10 +43,10 @@ const ComponentList: React.FC = () => {
           testId="component-list-refresh-button"
           size="small"
           onClick={() => {
-            componentListQueryResult.refetch();
+            refetch();
           }}
         >
-          <Rotate disabled={!componentListQueryResult.isFetching}>
+          <Rotate disabled={!isFetching}>
             <RefreshIcon fontSize="inherit" />
           </Rotate>
         </IconButton>

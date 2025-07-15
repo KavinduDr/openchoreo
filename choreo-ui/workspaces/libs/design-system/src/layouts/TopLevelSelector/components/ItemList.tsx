@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { Box, List, ListItem, ListItemButton, ListItemText, Typography, useTheme } from '@mui/material';
 import { LevelItem } from '../utils';
 
 interface ItemListProps {
@@ -17,7 +17,9 @@ export const ItemList: React.FC<ItemListProps> = ({
     items,
     selectedItemId,
     onSelect,
-}) => (
+}) => {
+    const theme = useTheme();
+    return (
     <Box display="flex" flexDirection="column">
         <Typography variant="body2" color="text.secondary">
             {title}
@@ -26,6 +28,9 @@ export const ItemList: React.FC<ItemListProps> = ({
             {items.map((item) => (
                 <ListItem disablePadding key={item.id}>
                     <ListItemButton
+                        sx={{
+                            padding: theme.spacing(0.5, 1),
+                        }}
                         onClick={(e) => {
                             e.stopPropagation();
                             e.preventDefault();
@@ -40,4 +45,5 @@ export const ItemList: React.FC<ItemListProps> = ({
             ))}
         </List>
     </Box>
-); 
+    );
+};

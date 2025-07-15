@@ -23,6 +23,7 @@ export type { OrganizationApi } from './api/organization';
 export type {
   OrganizationList,
   OrganizationListData,
+  Organization,
   Project,
   ProjectList,
   Component,

@@ -48,7 +48,7 @@ export const StyledPopover: ComponentType<PopoverProps> = styled(Popover)(
   ({ theme }) => ({
     '& .MuiPopover-paper': {
       boxShadow: theme.shadows[1],
-      width: theme.spacing(40),
+      width: theme.spacing(30),
     },
   })
 );
