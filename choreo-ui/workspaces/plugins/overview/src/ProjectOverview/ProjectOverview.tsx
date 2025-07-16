@@ -53,7 +53,7 @@ const ProjectOverview: React.FC = () => {
       isRefreshing={isFetching}
       isLoading={isLoading}
     >
-      <GridContainer>
+      <GridContainer spacing={2}>
         <GridItem size={{ xs: 12, sm: 12, md: 8, lg: 9, xl: 10 }}>
           <PanelExtensionMounter
             extentionPoint={projectOverviewMainExtensionPoint}
