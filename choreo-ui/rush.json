@@ -480,7 +480,7 @@
     },
     {
       "packageName": "@open-choreo/choreo-context",
-      "projectFolder": "workspaces/plugins/choreo-context"
+      "projectFolder": "workspaces/libs/choreo-context"
     },
     {
       "packageName": "@open-choreo/resource-list",
