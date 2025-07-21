@@ -14,7 +14,7 @@ importers:
     dependencies:
       '@open-choreo/choreo-context':
         specifier: workspace:*
-        version: link:../../plugins/choreo-context
+        version: link:../../libs/choreo-context
       '@open-choreo/common-views':
         specifier: workspace:*
         version: link:../../libs/common-views
@@ -191,6 +191,112 @@ importers:
       eslint-plugin-react-refresh:
         specifier: ^0.4.19
         version: 0.4.20(eslint@9.28.0)
+      globals:
+        specifier: ~16.2.0
+        version: 16.2.0
+      typescript:
+        specifier: ~5.8.3
+        version: 5.8.3
+      typescript-eslint:
+        specifier: ^8.30.1
+        version: 8.37.0(eslint@9.28.0)(typescript@5.8.3)
+
+  ../../workspaces/libs/choreo-context:
+    dependencies:
+      '@fontsource/roboto':
+        specifier: ~5.2.5
+        version: 5.2.6
+      '@open-choreo/api-client':
+        specifier: workspace:*
+        version: link:../api-client
+      '@open-choreo/common-views':
+        specifier: workspace:*
+        version: link:../common-views
+      '@open-choreo/definitions':
+        specifier: workspace:*
+        version: link:../definitions
+      '@open-choreo/design-system':
+        specifier: workspace:*
+        version: link:../design-system
+      '@open-choreo/plugin-core':
+        specifier: workspace:*
+        version: link:../../plugins/plugin-core
+      '@tanstack/react-query':
+        specifier: ~5.81.5
+        version: 5.81.5(react@19.1.0)
+      clsx:
+        specifier: ~2.1.1
+        version: 2.1.1
+      dayjs:
+        specifier: ~1.11.13
+        version: 1.11.13
+      lodash:
+        specifier: ~4.17.21
+        version: 4.17.21
+      react:
+        specifier: ^19.1.0
+        version: 19.1.0
+      react-dom:
+        specifier: ^19.1.0
+        version: 19.1.0(react@19.1.0)
+      react-intl:
+        specifier: ~7.1.11
+        version: 7.1.11(react@19.1.0)(typescript@5.8.3)
+      react-router:
+        specifier: ~7.6.2
+        version: 7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+    devDependencies:
+      '@eslint/eslintrc':
+        specifier: ~3.3.1
+        version: 3.3.1
+      '@eslint/js':
+        specifier: ~9.28.0
+        version: 9.28.0
+      '@formatjs/cli':
+        specifier: ~6.7.2
+        version: 6.7.2(@vue/compiler-core@3.5.17)
+      '@tanstack/eslint-plugin-query':
+        specifier: ~5.81.2
+        version: 5.81.2(eslint@9.28.0)(typescript@5.8.3)
+      '@types/lodash':
+        specifier: ~4.17.17
+        version: 4.17.20
+      '@types/react':
+        specifier: ^19.1.2
+        version: 19.1.8
+      '@types/react-dom':
+        specifier: ^19.1.2
+        version: 19.1.6(@types/react@19.1.8)
+      '@typescript-eslint/eslint-plugin':
+        specifier: ~8.33.1
+        version: 8.33.1(@typescript-eslint/parser@8.33.1(eslint@9.28.0)(typescript@5.8.3))(eslint@9.28.0)(typescript@5.8.3)
+      '@typescript-eslint/parser':
+        specifier: ~8.33.1
+        version: 8.33.1(eslint@9.28.0)(typescript@5.8.3)
+      eslint:
+        specifier: ~9.28.0
+        version: 9.28.0
+      eslint-plugin-import:
+        specifier: ~2.31.0
+        version: 2.31.0(eslint@9.28.0)
+      eslint-plugin-jest-dom:
+        specifier: ~5.5.0
+        version: 5.5.0(@testing-library/dom@10.4.0)(eslint@9.28.0)
+      eslint-plugin-prettier:
+        specifier: ~5.4.1
+        version: 5.4.1(eslint-config-prettier@10.1.5(eslint@9.28.0))(eslint@9.28.0)(prettier@3.6.2)
+      eslint-plugin-react:
+        specifier: ~7.37.5
+        version: 7.37.5(eslint@9.28.0)
+      eslint-plugin-react-hooks:
+        specifier: ~5.2.0
+        version: 5.2.0(eslint@9.28.0)
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.19
+        version: 0.4.20(eslint@9.28.0)
+      eslint-plugin-testing-library:
+        specifier: ~7.4.0
+        version: 7.4.0(eslint@9.28.0)(typescript@5.8.3)
       globals:
         specifier: ~16.2.0
         version: 16.2.0
@@ -814,112 +920,6 @@ importers:
         specifier: ^3.1.3
         version: 3.2.4(@types/node@22.16.3)(jsdom@26.1.0)(less@4.3.0)
 
-  ../../workspaces/plugins/choreo-context:
-    dependencies:
-      '@fontsource/roboto':
-        specifier: ~5.2.5
-        version: 5.2.6
-      '@open-choreo/api-client':
-        specifier: workspace:*
-        version: link:../../libs/api-client
-      '@open-choreo/common-views':
-        specifier: workspace:*
-        version: link:../../libs/common-views
-      '@open-choreo/definitions':
-        specifier: workspace:*
-        version: link:../../libs/definitions
-      '@open-choreo/design-system':
-        specifier: workspace:*
-        version: link:../../libs/design-system
-      '@open-choreo/plugin-core':
-        specifier: workspace:*
-        version: link:../plugin-core
-      '@tanstack/react-query':
-        specifier: ~5.81.5
-        version: 5.81.5(react@19.1.0)
-      clsx:
-        specifier: ~2.1.1
-        version: 2.1.1
-      dayjs:
-        specifier: ~1.11.13
-        version: 1.11.13
-      lodash:
-        specifier: ~4.17.21
-        version: 4.17.21
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-      react-dom:
-        specifier: ^19.1.0
-        version: 19.1.0(react@19.1.0)
-      react-intl:
-        specifier: ~7.1.11
-        version: 7.1.11(react@19.1.0)(typescript@5.8.3)
-      react-router:
-        specifier: ~7.6.2
-        version: 7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-    devDependencies:
-      '@eslint/eslintrc':
-        specifier: ~3.3.1
-        version: 3.3.1
-      '@eslint/js':
-        specifier: ~9.28.0
-        version: 9.28.0
-      '@formatjs/cli':
-        specifier: ~6.7.2
-        version: 6.7.2(@vue/compiler-core@3.5.17)
-      '@tanstack/eslint-plugin-query':
-        specifier: ~5.81.2
-        version: 5.81.2(eslint@9.28.0)(typescript@5.8.3)
-      '@types/lodash':
-        specifier: ~4.17.17
-        version: 4.17.20
-      '@types/react':
-        specifier: ^19.1.2
-        version: 19.1.8
-      '@types/react-dom':
-        specifier: ^19.1.2
-        version: 19.1.6(@types/react@19.1.8)
-      '@typescript-eslint/eslint-plugin':
-        specifier: ~8.33.1
-        version: 8.33.1(@typescript-eslint/parser@8.33.1(eslint@9.28.0)(typescript@5.8.3))(eslint@9.28.0)(typescript@5.8.3)
-      '@typescript-eslint/parser':
-        specifier: ~8.33.1
-        version: 8.33.1(eslint@9.28.0)(typescript@5.8.3)
-      eslint:
-        specifier: ~9.28.0
-        version: 9.28.0
-      eslint-plugin-import:
-        specifier: ~2.31.0
-        version: 2.31.0(eslint@9.28.0)
-      eslint-plugin-jest-dom:
-        specifier: ~5.5.0
-        version: 5.5.0(@testing-library/dom@10.4.0)(eslint@9.28.0)
-      eslint-plugin-prettier:
-        specifier: ~5.4.1
-        version: 5.4.1(eslint-config-prettier@10.1.5(eslint@9.28.0))(eslint@9.28.0)(prettier@3.6.2)
-      eslint-plugin-react:
-        specifier: ~7.37.5
-        version: 7.37.5(eslint@9.28.0)
-      eslint-plugin-react-hooks:
-        specifier: ~5.2.0
-        version: 5.2.0(eslint@9.28.0)
-      eslint-plugin-react-refresh:
-        specifier: ^0.4.19
-        version: 0.4.20(eslint@9.28.0)
-      eslint-plugin-testing-library:
-        specifier: ~7.4.0
-        version: 7.4.0(eslint@9.28.0)(typescript@5.8.3)
-      globals:
-        specifier: ~16.2.0
-        version: 16.2.0
-      typescript:
-        specifier: ~5.8.3
-        version: 5.8.3
-      typescript-eslint:
-        specifier: ^8.30.1
-        version: 8.37.0(eslint@9.28.0)(typescript@5.8.3)
-
   ../../workspaces/plugins/overview:
     dependencies:
       '@fontsource/roboto':
@@ -927,7 +927,7 @@ importers:
         version: 5.2.6
       '@open-choreo/choreo-context':
         specifier: workspace:*
-        version: link:../choreo-context
+        version: link:../../libs/choreo-context
       '@open-choreo/common-views':
         specifier: workspace:*
         version: link:../../libs/common-views
@@ -1118,7 +1118,7 @@ importers:
         version: 5.2.6
       '@open-choreo/choreo-context':
         specifier: workspace:*
-        version: link:../choreo-context
+        version: link:../../libs/choreo-context
       '@open-choreo/common-views':
         specifier: workspace:*
         version: link:../../libs/common-views
@@ -1224,7 +1224,7 @@ importers:
         version: link:../../libs/api-client
       '@open-choreo/choreo-context':
         specifier: workspace:*
-        version: link:../choreo-context
+        version: link:../../libs/choreo-context
       '@open-choreo/common-views':
         specifier: workspace:*
         version: link:../../libs/common-views
@@ -1324,7 +1324,7 @@ importers:
         version: 5.2.6
       '@open-choreo/choreo-context':
         specifier: workspace:*
-        version: link:../choreo-context
+        version: link:../../libs/choreo-context
       '@open-choreo/common-views':
         specifier: workspace:*
         version: link:../../libs/common-views
@@ -6400,7 +6400,7 @@ snapshots:
 
   '@stoplight/types@14.1.0':
     dependencies:
-      '@types/json-schema': 7.0.11
+      '@types/json-schema': 7.0.15
       utility-types: 3.11.0
 
   '@stoplight/types@14.1.1':
@@ -7220,7 +7220,7 @@ snapshots:
 
   ajv-formats@3.0.1:
     dependencies:
-      ajv: 8.13.0
+      ajv: 8.17.1
 
   ajv@6.12.6:
     dependencies:
@@ -8828,7 +8828,7 @@ snapshots:
 
   mkdirp@0.5.6:
     dependencies:
-      minimist: 1.2.6
+      minimist: 1.2.8
 
   mlly@1.7.4:
     dependencies:
