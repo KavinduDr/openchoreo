@@ -1,5 +1,6 @@
 export interface IAppState {
   colorMode: "light" | "dark";
+  basePath?: string; // Optional basePath for API client
 }
 
 export const initialState: IAppState = {
