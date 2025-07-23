@@ -1,5 +1,5 @@
 import { Box } from "@open-choreo/design-system";
-import { usePanelExtentions } from "../../hooks";
+import { useExtentions } from "../../hooks";
 import { PluginExtensionPoint } from "../../plugin-types";
 
 export interface PanelExtensionMounterCommonProps {
@@ -8,7 +8,7 @@ export interface PanelExtensionMounterCommonProps {
 
 export function PanelExtensionMounter(props: PanelExtensionMounterCommonProps) {
   const { extensionPoint } = props;
-  const extentions = usePanelExtentions(extensionPoint);
+  const extentions = useExtentions(extensionPoint);
   return (
     <Box testId={`extention-mounter-${extensionPoint.id}`}>
       {extentions.map((entry) => (
