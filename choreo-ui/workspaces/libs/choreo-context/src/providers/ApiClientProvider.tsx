@@ -42,16 +42,10 @@ export const ApiClientContext = createContext<IApiClientContext>({
 const ApiClientProvider: React.FC<ApiClientProviderProps> = (
   props: ApiClientProviderProps,
 ) => {
-  // Initialize state with basePath from props
-  const initialAppState = {
-    ...initialState,
-    basePath: props.basePath,
-  };
-
-  const [state, dispatch] = useReducer(appStateReducer, initialAppState);
+  const { basePath, children } = props;
+  const [state, dispatch] = useReducer(appStateReducer, initialState);
 
   // Use the basePath from state (which includes the one from props)
-  const basePath = state.basePath || "";
 
   const apiClient = useMemo(
     () => new ChoreoClient({ baseUrl: basePath }),
@@ -90,7 +84,7 @@ const ApiClientProvider: React.FC<ApiClientProviderProps> = (
       <ApiClientContext.Provider
         value={{ apiClient, basePath, state, dispatch }}
       >
-        <GlobalStateProvider>{props.children}</GlobalStateProvider>
+        <GlobalStateProvider>{children}</GlobalStateProvider>
       </ApiClientContext.Provider>
     </QueryClientProvider>
   );
