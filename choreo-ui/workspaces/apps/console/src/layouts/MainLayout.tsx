@@ -5,12 +5,14 @@ import { matchPath, useLocation } from "react-router";
 import {
   PanelExtensionMounter,
   coreExtensionPoints,
+  useMainNavExtentions,
+} from "@open-choreo/plugin-core";
+import {
   useComponentHandle,
   useHomePath,
-  useMainNavExtentions,
   useOrgHandle,
   useProjectHandle,
-} from "@open-choreo/plugin-core";
+} from "@open-choreo/choreo-context";
 import React from "react";
 
 interface MainLayoutProps {
@@ -31,10 +33,17 @@ const LayoutHeader = React.memo(() => (
   </Box>
 ));
 
-const LayoutFooter = React.memo(() => 
-<Box display="flex" flexDirection="row" justifyContent="space-between" alignItems="center" width="100%">
-  <PanelExtensionMounter extensionPoint={coreExtensionPoints.footer} />
-  </Box>);
+const LayoutFooter = React.memo(() => (
+  <Box
+    display="flex"
+    flexDirection="row"
+    justifyContent="space-between"
+    alignItems="center"
+    width="100%"
+  >
+    <PanelExtensionMounter extensionPoint={coreExtensionPoints.footer} />
+  </Box>
+));
 
 const LayoutRightSidebar = React.memo(() => (
   <PanelExtensionMounter extensionPoint={coreExtensionPoints.sidebarRight} />
@@ -45,12 +54,20 @@ export function MainLayout({ children }: MainLayoutProps) {
   const homePath = useHomePath();
   const orgHandle = useOrgHandle();
 
-  const navigationEntriesProject = useMainNavExtentions(coreExtensionPoints.projectNavigation, homePath);
-  const navigationEntriesComponent = useMainNavExtentions(coreExtensionPoints.componentNavigation, homePath);
-  const navigationEntriesOrg = useMainNavExtentions(coreExtensionPoints.orgNavigation, homePath);
+  const navigationEntriesProject = useMainNavExtentions(
+    coreExtensionPoints.projectNavigation,
+    homePath
+  );
+  const navigationEntriesComponent = useMainNavExtentions(
+    coreExtensionPoints.componentNavigation,
+    homePath
+  );
+  const navigationEntriesOrg = useMainNavExtentions(
+    coreExtensionPoints.orgNavigation,
+    homePath
+  );
   const projectHandle = useProjectHandle();
   const componentHandle = useComponentHandle();
-
 
   const navigationEntries = useMemo(() => {
     if (componentHandle) {
@@ -61,23 +78,27 @@ export function MainLayout({ children }: MainLayoutProps) {
       return navigationEntriesOrg;
     }
     return [];
-  }, [componentHandle, projectHandle, orgHandle, navigationEntriesComponent, navigationEntriesProject, navigationEntriesOrg]);
-
-
-
+  }, [
+    componentHandle,
+    projectHandle,
+    orgHandle,
+    navigationEntriesComponent,
+    navigationEntriesProject,
+    navigationEntriesOrg,
+  ]);
 
   // Memoize the processed menu items to prevent unnecessary re-computations
   const processedMenuItems = useMemo(() => {
     if (!orgHandle || !navigationEntries?.length) {
       return [];
     }
-    return navigationEntries.map(mainEntry => ({
+    return navigationEntries.map((mainEntry) => ({
       ...mainEntry,
-      href: typeof mainEntry.href === 'string' ? mainEntry.href : undefined,
-      subMenuItems: mainEntry?.subMenuItems?.map(subEntry => ({
+      href: typeof mainEntry.href === "string" ? mainEntry.href : undefined,
+      subMenuItems: mainEntry?.subMenuItems?.map((subEntry) => ({
         ...subEntry,
-        href: typeof subEntry.href === 'string' ? subEntry.href : undefined,
-      }))
+        href: typeof subEntry.href === "string" ? subEntry.href : undefined,
+      })),
     }));
   }, [orgHandle, navigationEntries, homePath]);
 
@@ -89,7 +110,7 @@ export function MainLayout({ children }: MainLayoutProps) {
     // First, check for submenu matches
     for (const entry of navigationEntries) {
       if (entry.subMenuItems?.length) {
-        const matchingSubmenu = entry.subMenuItems.find(submenu =>
+        const matchingSubmenu = entry.subMenuItems.find((submenu) =>
           matchPath(submenu.pathPattern, location.pathname)
         );
         if (matchingSubmenu) {
@@ -99,7 +120,7 @@ export function MainLayout({ children }: MainLayoutProps) {
     }
 
     // Then check for main menu matches
-    const matchingEntry = navigationEntries.find(entry =>
+    const matchingEntry = navigationEntries.find((entry) =>
       matchPath(entry.pathPattern, location.pathname)
     );
 

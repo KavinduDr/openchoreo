@@ -1,8 +1,8 @@
 import {
-  BasePathPatterns,
   type PluginExtension,
   coreExtensionPoints,
 } from "@open-choreo/plugin-core";
+import { BasePathPatterns } from "@open-choreo/choreo-context";
 import {
   MenuOverviewFilledIcon,
   MenuOverviewIcon,

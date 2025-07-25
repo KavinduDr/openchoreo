@@ -1,2 +1,2 @@
 export * from "./plugin";
-export * from "./paths";
+// export * from "./paths";

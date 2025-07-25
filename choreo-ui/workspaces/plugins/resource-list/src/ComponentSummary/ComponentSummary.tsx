@@ -3,7 +3,7 @@ import {
   useHomePath,
   useOrgHandle,
   useProjectHandle,
-} from "@open-choreo/plugin-core";
+} from "@open-choreo/choreo-context";
 import { useComponentList } from "@open-choreo/choreo-context";
 import {
   getComponentType,
@@ -37,7 +37,7 @@ const ComponentSummary: React.FC = () => {
         lastUpdated: new Date(getResourceCreatedAt(item)),
         href: `${homePath}/component/${getResourceName(item)}`,
       })),
-    [components, homePath],
+    [components, homePath]
   );
 
   if (isLoading) {

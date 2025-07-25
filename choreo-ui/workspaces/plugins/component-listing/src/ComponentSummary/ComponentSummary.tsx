@@ -3,8 +3,8 @@ import {
   useHomePath,
   useOrgHandle,
   useProjectHandle,
-} from "@open-choreo/plugin-core";
-import { useComponentList } from "@open-choreo/choreo-context";
+  useComponentList,
+} from "@open-choreo/choreo-context";
 import {
   getComponentType,
   getResourceCreatedAt,
