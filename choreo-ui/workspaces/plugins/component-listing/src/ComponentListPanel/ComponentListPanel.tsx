@@ -1,10 +1,10 @@
 import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
-import { useComponentList } from "@open-choreo/choreo-context";
 import {
+  useComponentList,
   useHomePath,
   useOrgHandle,
   useProjectHandle,
-} from "@open-choreo/plugin-core";
+} from "@open-choreo/choreo-context";
 import React, { useMemo } from "react";
 import { ResourceTable } from "@open-choreo/resource-views";
 import {

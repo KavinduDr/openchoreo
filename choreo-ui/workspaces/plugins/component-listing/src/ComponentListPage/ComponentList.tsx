@@ -3,13 +3,15 @@ import {
   PageLayout,
   PresetErrorPage,
 } from "@open-choreo/common-views";
-import { useComponentList } from "@open-choreo/choreo-context";
+import {
+  useComponentList,
+  useProjectHandle,
+  useOrgHandle,
+} from "@open-choreo/choreo-context";
 import {
   PanelExtensionMounter,
   PluginExtensionPoint,
   PluginExtensionType,
-  useOrgHandle,
-  useProjectHandle,
 } from "@open-choreo/plugin-core";
 import React from "react";
 import { useIntl } from "react-intl";
