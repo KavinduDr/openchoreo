@@ -221,9 +221,6 @@ importers:
       '@open-choreo/design-system':
         specifier: workspace:*
         version: link:../design-system
-      '@open-choreo/plugin-core':
-        specifier: workspace:*
-        version: link:../../plugins/plugin-core
       '@tanstack/react-query':
         specifier: ~5.81.5
         version: 5.81.5(react@19.1.0)
@@ -1134,6 +1131,9 @@ importers:
 
   ../../workspaces/plugins/plugin-core:
     dependencies:
+      '@open-choreo/choreo-context':
+        specifier: workspace:*
+        version: link:../../libs/choreo-context
       '@open-choreo/common-views':
         specifier: workspace:*
         version: link:../../libs/common-views

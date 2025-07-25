@@ -9,4 +9,5 @@ export const componentOverview: PluginExtension = {
   extensionPoint: coreExtensionPoints.componentLevelPage,
   component: ComponentOverview,
   pathPattern: "",
+  when: "component",
 };

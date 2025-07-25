@@ -6,16 +6,33 @@ import {
   PluginExtensionPanel,
   PluginExtensionProvider,
   PluginExtensionRoute,
-  PathsPatterns,
 } from "../../plugin-types";
+import {
+  usePathMatchComponent,
+  usePathMatchProject,
+  usePathMatchOrg,
+} from "@open-choreo/choreo-context";
 import { usePluginRegistry } from "../../Providers";
-import { useMatch, useParams } from "react-router";
+// import { useMatch, useParams } from "react-router";
+
+// Helper to get current context
+function GetCurrentContext() {
+  const componentMatch = usePathMatchComponent();
+  const projectMatch = usePathMatchProject();
+  const orgMatch = usePathMatchOrg();
+
+  if (componentMatch) return "component";
+  if (projectMatch) return "project";
+  if (orgMatch) return "org";
+  return "global";
+}
 
 export function useMainNavExtentions(
   extensionPoint: PluginExtensionPoint,
   rootPath: string,
 ) {
   const pluginRegistry = usePluginRegistry();
+  const context = GetCurrentContext();
   const navigationEntries: NavItemExpandableSubMenu[] = useMemo(
     () =>
       pluginRegistry.flatMap((plugin) =>
@@ -23,7 +40,8 @@ export function useMainNavExtentions(
           plugin.extensions.filter(
             (entry) =>
               entry.extensionPoint.id === extensionPoint.id &&
-              entry.extensionPoint.type === extensionPoint.type,
+              entry.extensionPoint.type === extensionPoint.type &&
+              (!entry.when || entry.when === context),
           ) as PluginExtensionNavigation[]
         ).map(
           (entry) =>
@@ -45,128 +63,38 @@ export function useMainNavExtentions(
             }) as NavItemExpandableSubMenu,
         ),
       ),
-    [pluginRegistry, extensionPoint, rootPath],
+    [pluginRegistry, extensionPoint, rootPath, context],
   );
 
   return navigationEntries;
 }
 
-function PanelExtentions(extensionPoint: PluginExtensionPoint) {
+export function useExtentions(extensionPoint: PluginExtensionPoint) {
+  const extentionPointType = extensionPoint.type;
   const pluginRegistry = usePluginRegistry();
-  const entries: PluginExtensionPanel[] = useMemo(
-    () =>
-      pluginRegistry.flatMap(
-        (plugin) =>
-          plugin.extensions.filter(
-            (entry) =>
-              entry.extensionPoint.id === extensionPoint.id &&
-              entry.extensionPoint.type === extensionPoint.type,
-          ) as PluginExtensionPanel[],
-      ),
-    [pluginRegistry, extensionPoint],
-  );
-  return entries;
-}
+  const context = GetCurrentContext();
 
-function ProviderExtentions(extensionPoint: PluginExtensionPoint) {
-  const pluginRegistry = usePluginRegistry();
-  const entries: PluginExtensionProvider[] = useMemo(
+  // Move all useMemo calls outside of the switch statement to avoid conditional hooks
+  const filteredExtensions = useMemo(
     () =>
-      pluginRegistry.flatMap(
-        (plugin) =>
-          plugin.extensions.filter(
-            (entry) =>
-              entry.extensionPoint.id === extensionPoint.id &&
-              entry.extensionPoint.type === extensionPoint.type,
-          ) as PluginExtensionProvider[],
-      ),
-    [pluginRegistry, extensionPoint],
-  );
-  return entries;
-}
-
-function RouteExtentions(extensionPoint: PluginExtensionPoint) {
-  const pluginRegistry = usePluginRegistry();
-  return useMemo(() => {
-    return pluginRegistry.flatMap(
-      (plugin) =>
+      pluginRegistry.flatMap((plugin) =>
         plugin.extensions.filter(
           (entry) =>
             entry.extensionPoint.id === extensionPoint.id &&
-            entry.extensionPoint.type === extensionPoint.type,
-        ) as PluginExtensionRoute[],
-    );
-  }, [pluginRegistry, extensionPoint]);
-}
+            entry.extensionPoint.type === extensionPoint.type &&
+            (!entry.when || entry.when === context),
+        ),
+      ),
+    [pluginRegistry, extensionPoint, context],
+  );
 
-export function useUrlParams() {
-  return useParams<{
-    orgHandle: string;
-    projectHandle: string;
-    componentHandle: string;
-    page: string;
-    subPage: string;
-  }>();
-}
-
-export function usePathMatchOrg() {
-  return useMatch(PathsPatterns.ORG_LEVEL);
-}
-
-export function useOrgHandle() {
-  const match = usePathMatchOrg();
-  return match?.params?.orgHandle;
-}
-
-export function useProjectHandle() {
-  const match = usePathMatchProject();
-  return match?.params?.projectHandle;
-}
-
-export function useComponentHandle() {
-  const match = usePathMatchComponent();
-  return match?.params?.componentHandle;
-}
-
-export function usePathMatchProject() {
-  return useMatch(PathsPatterns.PROJECT_LEVEL);
-}
-
-export function usePathMatchComponent() {
-  return useMatch(PathsPatterns.COMPONENT_LEVEL);
-}
-
-export function useHomePath() {
-  const orgMatch = usePathMatchOrg();
-  const projectMatch = usePathMatchProject();
-  const componentMatch = usePathMatchComponent();
-  return useMemo(() => {
-    if (componentMatch?.params) {
-      const { orgHandle, projectHandle, componentHandle } =
-        componentMatch.params;
-      return `/organization/${orgHandle}/project/${projectHandle}/component/${componentHandle}`;
-    }
-    if (projectMatch?.params) {
-      const { orgHandle, projectHandle } = projectMatch.params;
-      return `/organization/${orgHandle}/project/${projectHandle}`;
-    }
-    if (orgMatch?.params) {
-      const { orgHandle } = orgMatch.params;
-      return `/organization/${orgHandle}`;
-    }
-    return `/`;
-  }, [orgMatch, projectMatch, componentMatch]);
-}
-
-export function useExtentions(extensionPoint: PluginExtensionPoint) {
-  const extentionPointType = extensionPoint.type;
   switch (extentionPointType) {
     case "panel":
-      return PanelExtentions(extensionPoint);
+      return filteredExtensions as PluginExtensionPanel[];
     case "provider":
-      return ProviderExtentions(extensionPoint);
+      return filteredExtensions as PluginExtensionProvider[];
     case "route":
-      return RouteExtentions(extensionPoint);
+      return filteredExtensions as PluginExtensionRoute[];
     default:
       throw new Error(`Unknown extension point type: ${extentionPointType}`);
   }

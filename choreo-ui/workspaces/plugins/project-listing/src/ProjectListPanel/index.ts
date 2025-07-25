@@ -7,4 +7,5 @@ export const projectListPanel: PluginExtension = {
   extensionPoint: organizationOverviewMainExtensionPoint,
   component: ProjectListPanel,
   key: "project-list-panel",
+  when: "org",
 };

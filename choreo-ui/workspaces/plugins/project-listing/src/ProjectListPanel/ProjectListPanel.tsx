@@ -1,11 +1,13 @@
 import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
-import { useProjectList } from "@open-choreo/choreo-context";
 import {
+  useProjectList,
   genaratePath,
+  useOrgHandle,
+} from "@open-choreo/choreo-context";
+import {
   PanelExtensionMounter,
   PluginExtensionPoint,
   PluginExtensionType,
-  useOrgHandle,
 } from "@open-choreo/plugin-core";
 import React, { useMemo, useState } from "react";
 import { Box, SearchBar } from "@open-choreo/design-system";

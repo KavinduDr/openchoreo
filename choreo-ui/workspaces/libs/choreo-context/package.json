@@ -23,7 +23,6 @@
   "dependencies": {
     "@open-choreo/design-system": "workspace:*",
     "@open-choreo/common-views": "workspace:*",
-    "@open-choreo/plugin-core": "workspace:*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "lodash": "~4.17.21",

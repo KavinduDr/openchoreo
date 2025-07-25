@@ -17,6 +17,7 @@ export interface PluginManifest {
   name: string;
   description: string;
   extensions: PluginExtension[];
+  when: string;
 }
 
 export interface PluginExtensionSubmenu {
@@ -43,18 +44,21 @@ export interface PluginExtensionNavigation {
   path?: string;
   pathPattern?: string;
   submenu?: PluginExtensionSubmenu[];
+  when?: string;
 }
 
 export interface PluginExtensionRoute {
   extensionPoint: PluginExtensionPoint;
   pathPattern: string;
   component: ComponentType | LazyExoticComponent<ComponentType>;
+  when?: string;
 }
 
 export interface PluginExtensionPanel {
   extensionPoint: PluginExtensionPoint;
   key: string;
   component: ComponentType | LazyExoticComponent<ComponentType>;
+  when?: string;
 }
 
 export interface PluginExtensionProvider {
@@ -63,6 +67,7 @@ export interface PluginExtensionProvider {
   component:
     | ComponentType<{ children: ReactNode }>
     | LazyExoticComponent<ComponentType<{ children: ReactNode }>>;
+  when?: string;
 }
 
 export const coreExtensionPoints = {

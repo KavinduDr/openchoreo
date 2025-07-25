@@ -1,9 +1,8 @@
 import {
-  BasePathPatterns,
   type PluginExtension,
   coreExtensionPoints,
 } from "@open-choreo/plugin-core";
-
+import { BasePathPatterns } from "@open-choreo/choreo-context";
 import {
   MenuComponentsFilledIcon,
   MenuComponentsIcon,
@@ -16,4 +15,5 @@ export const componentListNavigation: PluginExtension = {
   path: "/components",
   name: "Components",
   pathPattern: BasePathPatterns.PROJECT_LEVEL + "/components",
+  when: "project",
 };
