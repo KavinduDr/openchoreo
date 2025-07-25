@@ -8,4 +8,5 @@ export const componentSummary: PluginExtension = {
   extensionPoint: projectOverviewSecondaryExtensionPoint,
   component: ComponentSummary,
   key: "component-summary",
+  when: "project",
 };

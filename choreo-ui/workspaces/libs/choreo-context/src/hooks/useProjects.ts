@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useClient } from "./useClient";
-import { useOrgHandle, useProjectHandle } from "@open-choreo/plugin-core";
+import { useOrgHandle, useProjectHandle } from "./useUrlParams";
 
 export const useProjectList = (orgName: string) => {
   const client = useClient();

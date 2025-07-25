@@ -13,17 +13,15 @@ import {
   useSelectedComponent,
   useOrganizationList,
   useComponentList,
+  genaratePath,
+  useComponentHandle,
+  useOrgHandle,
+  useProjectHandle,
 } from "@open-choreo/choreo-context";
 import {
   getResourceDisplayName,
   getResourceName,
 } from "@open-choreo/definitions";
-import {
-  genaratePath,
-  useComponentHandle,
-  useOrgHandle,
-  useProjectHandle,
-} from "@open-choreo/plugin-core";
 import { useNavigate } from "react-router";
 
 const Panel: React.FC = () => {

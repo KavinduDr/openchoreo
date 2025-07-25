@@ -1,7 +1,8 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import { useProjectList } from "@open-choreo/choreo-context";
-import { genaratePath, PanelExtensionMounter, PluginExtensionType, useOrgHandle, } from "@open-choreo/plugin-core";
+import { PanelExtensionMounter, PluginExtensionType, } from "@open-choreo/plugin-core";
+import { genaratePath, useOrgHandle } from "@open-choreo/choreo-context";
 import { useMemo, useState } from "react";
 import { Box, SearchBar } from "@open-choreo/design-system";
 import { useIntl } from "react-intl";

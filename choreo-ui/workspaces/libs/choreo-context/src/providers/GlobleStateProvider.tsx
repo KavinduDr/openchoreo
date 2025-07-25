@@ -7,8 +7,9 @@ import {
 } from "../reducers/appState";
 import { useOrganizationList } from "../hooks";
 import { useNavigate } from "react-router";
-import { genaratePath, useOrgHandle } from "@open-choreo/plugin-core";
+import { useOrgHandle } from "./../hooks/useUrlParams";
 import { getResourceName } from "@open-choreo/definitions";
+import { genaratePath } from "./../paths/paths";
 
 export interface GlobalState {
   appState: IAppState;

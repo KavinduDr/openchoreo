@@ -2,7 +2,7 @@ import {
   useOrgHandle,
   useComponentHandle,
   useProjectHandle,
-} from "@open-choreo/plugin-core";
+} from "./useUrlParams";
 import { useClient } from "./useClient";
 import { useQuery } from "@tanstack/react-query";
 

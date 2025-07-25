@@ -8,10 +8,12 @@ export const componentListPanel: PluginExtension = {
   extensionPoint: projectOverviewMainExtensionPoint,
   component: ComponentListPanel,
   key: "component-list-panel",
+  when: "project",
 };
 
 export const projectOverviewComponentListPanel: PluginExtension = {
   extensionPoint: componentListMainExtensionPoint,
   component: ComponentListPanel,
   key: "component-list-project-overview-panel",
+  when: "project",
 };

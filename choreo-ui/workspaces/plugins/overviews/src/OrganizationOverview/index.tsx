@@ -13,4 +13,5 @@ export const organizationOverview: PluginExtension = {
   extensionPoint: coreExtensionPoints.orgLevelPage,
   component: OrganizationOverview,
   pathPattern: "",
+  when: "org",
 };
