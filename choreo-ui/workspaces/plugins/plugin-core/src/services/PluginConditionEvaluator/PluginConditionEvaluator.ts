@@ -20,57 +20,98 @@ export function GetCurrentContext() {
   return "global";
 }
 
-// Build context object for eval()
+// Build context object for evaluation
 export function BuildContextObject() {
   const componentMatch = usePathMatchComponent();
   const projectMatch = usePathMatchProject();
   const orgMatch = usePathMatchOrg();
   const componentType = useComponentType();
+  console.log("componentType", componentType);
 
   return {
-    // Boolean flags for current level
+    level: componentMatch
+      ? "component"
+      : projectMatch
+        ? "project"
+        : orgMatch
+          ? "org"
+          : "global",
     component: !!componentMatch,
     project: !!projectMatch,
     org: !!orgMatch,
     global: !componentMatch && !projectMatch && !orgMatch,
-
-    // Component type for type comparisons
-    type: componentType,
-
-    // Common component types as boolean flags
+    type: componentType || "",
+    // Add boolean flags for common component types
     "web-app": componentType === "WebApplication",
     "web-service": componentType === "WebService",
     api: componentType === "API",
     frontend: componentType === "Frontend",
     backend: componentType === "Backend",
-    microservice: componentType === "Microservice",
-
-    // String values for exact comparisons
-    componentType: componentType,
   };
 }
 
-// Main evaluation function using eval()
+// Evaluate complex when expressions
 export function evaluateWhenExpression(
   when: string | undefined,
-  context: any,
+  context: Record<string, any>,
 ): boolean {
-  if (!when) return true; // No condition means always render
+  if (!when) return true; // If no when condition, always render
 
   try {
-    // Create a safe evaluation context with only the properties we want to expose
-    const evalContext = {
-      ...context,
-      // Add any additional helper functions if needed
-      // For example: isType: (type) => context.type === type,
-    };
+    // Split by logical operators
+    const conditions = when.split(/\s+(?:&&|\|\|)\s+/);
+    const operators = when.match(/\s+(?:&&|\|\|)\s+/g) || [];
 
-    // Use eval() with the controlled context
-    return eval(when);
+    if (conditions.length === 1) {
+      // Single condition
+      return evaluateSingleCondition(conditions[0].trim(), context);
+    }
+
+    // Multiple conditions with logical operators
+    let result = evaluateSingleCondition(conditions[0].trim(), context);
+
+    for (let i = 0; i < operators.length; i++) {
+      const operator = operators[i].trim();
+      const nextCondition = conditions[i + 1].trim();
+      const nextResult = evaluateSingleCondition(nextCondition, context);
+
+      if (operator === "&&") {
+        result = result && nextResult;
+      } else if (operator === "||") {
+        result = result || nextResult;
+      }
+    }
+
+    return result;
   } catch (error) {
-    console.warn(`Failed to evaluate condition "${when}":`, error);
-    return false; // Fail safe - don't render if evaluation fails
+    console.error("Error evaluating when expression:", when, error);
+    return false;
   }
+}
+
+// Evaluate a single condition
+function evaluateSingleCondition(
+  condition: string,
+  context: Record<string, any>,
+): boolean {
+  // Handle equality comparisons like "type === 'web-app'"
+  const equalityMatch = condition.match(/^(\w+)\s*===\s*['"]([^'"]+)['"]$/);
+  if (equalityMatch) {
+    const [, key, value] = equalityMatch;
+    return context[key] === value;
+  }
+
+  // Handle simple boolean checks like "component", "web-app"
+  if (condition in context) {
+    return !!context[condition];
+  }
+
+  // Handle string values that should be compared to type
+  if (context.type && context.type === condition) {
+    return true;
+  }
+
+  return false;
 }
 
 // Hook to get filtered extensions based on when conditions
@@ -80,20 +121,17 @@ export function useFilteredExtensions(extensionPoint: any) {
 
   return useMemo(() => {
     return pluginRegistry.flatMap((plugin) =>
-      plugin.extensions
-        .filter((extension: any) => {
-          // First filter by extension point
-          if (extension.extensionPoint.id !== extensionPoint.id) {
-            return false;
-          }
+      plugin.extensions.filter((entry) => {
+        // First check if extension point matches
+        const extensionPointMatches =
+          entry.extensionPoint.id === extensionPoint.id &&
+          entry.extensionPoint.type === extensionPoint.type;
 
-          // Then evaluate the when condition
-          return evaluateWhenExpression(extension.when, context);
-        })
-        .map((extension: any) => ({
-          ...extension,
-          pluginName: plugin.name,
-        })),
+        if (!extensionPointMatches) return false;
+
+        // Then evaluate when condition
+        return evaluateWhenExpression(entry.when, context);
+      }),
     );
-  }, [pluginRegistry, context, extensionPoint.id]);
+  }, [pluginRegistry, extensionPoint, context]);
 }
