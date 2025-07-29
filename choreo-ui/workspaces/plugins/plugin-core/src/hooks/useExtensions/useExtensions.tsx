@@ -31,7 +31,7 @@ function GetCurrentContext() {
 
 export function useMainNavExtentions(
   extensionPoint: PluginExtensionPoint,
-  rootPath: string
+  rootPath: string,
 ) {
   const pluginRegistry = usePluginRegistry();
   const context = GetCurrentContext();
@@ -43,7 +43,7 @@ export function useMainNavExtentions(
             (entry) =>
               entry.extensionPoint.id === extensionPoint.id &&
               entry.extensionPoint.type === extensionPoint.type &&
-              (!entry.when || entry.when === context)
+              (!entry.when || entry.when === context),
           ) as PluginExtensionNavigation[]
         ).map(
           (entry) =>
@@ -62,10 +62,10 @@ export function useMainNavExtentions(
                 href: rootPath + entry.path + submenu.path,
                 pathPattern: submenu.pathPattern,
               })),
-            } as NavItemExpandableSubMenu)
-        )
+            }) as NavItemExpandableSubMenu,
+        ),
       ),
-    [pluginRegistry, extensionPoint, rootPath, context]
+    [pluginRegistry, extensionPoint, rootPath, context],
   );
 
   return navigationEntries;
@@ -84,10 +84,10 @@ export function useExtentions(extensionPoint: PluginExtensionPoint) {
           (entry) =>
             entry.extensionPoint.id === extensionPoint.id &&
             entry.extensionPoint.type === extensionPoint.type &&
-            (!entry.when || entry.when === context)
-        )
+            (!entry.when || entry.when === context),
+        ),
       ),
-    [pluginRegistry, extensionPoint, context]
+    [pluginRegistry, extensionPoint, context],
   );
 
   switch (extentionPointType) {
