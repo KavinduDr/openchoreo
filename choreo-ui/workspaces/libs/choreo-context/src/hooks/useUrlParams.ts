@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useMatch, useParams } from "react-router";
 import { PathsPatterns } from "./../paths";
-import { useComponent } from "./useComponent";
+import { useComponent, useSelectedComponent } from "./useComponent";
 
 export function useUrlParams() {
   return useParams<{
@@ -42,8 +42,8 @@ export function usePathMatchComponent() {
 
 export function useComponentType() {
   const componentMatch = usePathMatchComponent();
-  const component = useComponent(componentMatch?.params.orgHandle);
-  return component.data.data.type;
+  const component = useSelectedComponent();
+  return component?.data?.data?.type;
 }
 
 export function useHomePath() {

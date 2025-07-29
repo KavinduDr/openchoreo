@@ -6,6 +6,7 @@ import {
   projectOverviewComponentListPanel,
 } from "./ComponentListPanel";
 import { componentSummary } from "./ComponentSummary";
+import { componentDetails } from "./ComponentDetails";
 
 export const componentListingPlugin = {
   name: "Component Listing Plugin",
@@ -16,5 +17,6 @@ export const componentListingPlugin = {
     componentListPanel,
     projectOverviewComponentListPanel,
     componentSummary,
+    componentDetails,
   ],
 } as PluginManifest;

@@ -2,5 +2,6 @@
 export * from './ResourceList';
 export * from './ResourceTable';
 export * from './ResourcePageLayout';
-export * from  './EnvCardBase';
+export * from './EnvCardBase';
 export * from './ComponentTypes';
+export * from './ComponentView';
