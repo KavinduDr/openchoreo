@@ -15,7 +15,7 @@ export const projectOverviewNavigation: PluginExtension = {
   path: "",
   name: "Overview",
   pathPattern: BasePathPatterns.PROJECT_LEVEL,
-  when: "project",
+  when: "level === 'project'",
 };
 
 export const componentOverviewNavigation: PluginExtension = {
@@ -25,7 +25,7 @@ export const componentOverviewNavigation: PluginExtension = {
   path: "",
   name: "Overview",
   pathPattern: BasePathPatterns.COMPONENT_LEVEL,
-  when: "component",
+  when: "level === 'component'",
 };
 
 export const organizationOverviewNavigation: PluginExtension = {
@@ -35,5 +35,5 @@ export const organizationOverviewNavigation: PluginExtension = {
   path: "",
   name: "Overview",
   pathPattern: BasePathPatterns.ORG_LEVEL,
-  when: "org",
+  when: "level === 'org'",
 };

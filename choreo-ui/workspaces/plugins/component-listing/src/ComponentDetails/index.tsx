@@ -8,5 +8,5 @@ export const componentDetails: PluginExtension = {
   extensionPoint: componentOverviewMainExtensionPoint,
   component: ComponentDetails,
   key: "component-details",
-  when: "component && type === 'WebApplication'",
+  when: "level === 'component' && type === 'WebApplication'",
 };

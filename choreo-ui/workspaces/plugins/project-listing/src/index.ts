@@ -5,5 +5,4 @@ export const projectListingPlugin = {
   name: "Project Listing Plugin",
   description: "List down selected organization's projects",
   extensions: [projectListPanel],
-  when: "org",
 } as PluginManifest;

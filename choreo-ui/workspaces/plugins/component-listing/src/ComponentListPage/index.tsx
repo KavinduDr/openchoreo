@@ -8,5 +8,5 @@ export const componentList: PluginExtension = {
   extensionPoint: coreExtensionPoints.projectLevelPage,
   component: ComponentList,
   pathPattern: "/components",
-  when: "project",
+  when: "level === 'project'",
 };
