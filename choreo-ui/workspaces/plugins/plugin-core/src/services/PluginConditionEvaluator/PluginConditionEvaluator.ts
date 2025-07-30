@@ -32,10 +32,10 @@ export function BuildContextObject() {
     level: componentMatch
       ? "component"
       : projectMatch
-        ? "project"
-        : orgMatch
-          ? "org"
-          : "global",
+      ? "project"
+      : orgMatch
+      ? "org"
+      : "global",
     component: !!componentMatch,
     project: !!projectMatch,
     org: !!orgMatch,
@@ -53,7 +53,7 @@ export function BuildContextObject() {
 // Evaluate complex when expressions
 export function evaluateWhenExpression(
   when: string | undefined,
-  context: Record<string, any>,
+  context: Record<string, any>
 ): boolean {
   if (!when) return true; // If no when condition, always render
 
@@ -61,6 +61,7 @@ export function evaluateWhenExpression(
     // Split by logical operators
     const conditions = when.split(/\s+(?:&&|\|\|)\s+/);
     const operators = when.match(/\s+(?:&&|\|\|)\s+/g) || [];
+    console.log(conditions, operators);
 
     if (conditions.length === 1) {
       // Single condition
@@ -92,7 +93,7 @@ export function evaluateWhenExpression(
 // Evaluate a single condition
 function evaluateSingleCondition(
   condition: string,
-  context: Record<string, any>,
+  context: Record<string, any>
 ): boolean {
   // Handle equality comparisons like "type === 'web-app'"
   const equalityMatch = condition.match(/^(\w+)\s*===\s*['"]([^'"]+)['"]$/);
@@ -131,7 +132,7 @@ export function useFilteredExtensions(extensionPoint: any) {
 
         // Then evaluate when condition
         return evaluateWhenExpression(entry.when, context);
-      }),
+      })
     );
   }, [pluginRegistry, extensionPoint, context]);
 }
