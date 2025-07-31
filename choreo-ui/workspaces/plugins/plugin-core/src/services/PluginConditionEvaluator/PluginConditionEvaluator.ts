@@ -26,16 +26,16 @@ export function BuildContextObject() {
   const projectMatch = usePathMatchProject();
   const orgMatch = usePathMatchOrg();
   const componentType = useComponentType();
-  console.log("componentType", componentType);
+  // console.log("componentType", componentType);
 
   return {
     level: componentMatch
       ? "component"
       : projectMatch
-      ? "project"
-      : orgMatch
-      ? "org"
-      : "global",
+        ? "project"
+        : orgMatch
+          ? "org"
+          : "global",
     component: !!componentMatch,
     project: !!projectMatch,
     org: !!orgMatch,
@@ -53,35 +53,40 @@ export function BuildContextObject() {
 // Evaluate complex when expressions
 export function evaluateWhenExpression(
   when: string | undefined,
-  context: Record<string, any>
+  context: Record<string, any>,
 ): boolean {
   if (!when) return true; // If no when condition, always render
 
   try {
     // Split by logical operators
-    const conditions = when.split(/\s+(?:&&|\|\|)\s+/);
-    const operators = when.match(/\s+(?:&&|\|\|)\s+/g) || [];
-    console.log(conditions, operators);
+    // const conditions = when.split(/\s+(?:&&|\|\|)\s+/);
+    // const operators = when.match(/\s+(?:&&|\|\|)\s+/g) || [];
+    // console.log(conditions, operators);
+    const level = context.level;
+    const type = context.type;
+    // console.log(eval(when));
 
-    if (conditions.length === 1) {
-      // Single condition
-      return evaluateSingleCondition(conditions[0].trim(), context);
-    }
+    // if (conditions.length === 1) {
+    //   // Single condition
+    //   return evaluateSingleCondition(conditions[0].trim(), context);
+    // }
 
-    // Multiple conditions with logical operators
-    let result = evaluateSingleCondition(conditions[0].trim(), context);
+    // // Multiple conditions with logical operators
+    // let result = evaluateSingleCondition(conditions[0].trim(), context);
 
-    for (let i = 0; i < operators.length; i++) {
-      const operator = operators[i].trim();
-      const nextCondition = conditions[i + 1].trim();
-      const nextResult = evaluateSingleCondition(nextCondition, context);
+    // for (let i = 0; i < operators.length; i++) {
+    //   const operator = operators[i].trim();
+    //   const nextCondition = conditions[i + 1].trim();
+    //   const nextResult = evaluateSingleCondition(nextCondition, context);
 
-      if (operator === "&&") {
-        result = result && nextResult;
-      } else if (operator === "||") {
-        result = result || nextResult;
-      }
-    }
+    //   if (operator === "&&") {
+    //     result = result && nextResult;
+    //   } else if (operator === "||") {
+    //     result = result || nextResult;
+    //   }
+    // }
+
+    const result = eval(when);
 
     return result;
   } catch (error) {
@@ -93,7 +98,7 @@ export function evaluateWhenExpression(
 // Evaluate a single condition
 function evaluateSingleCondition(
   condition: string,
-  context: Record<string, any>
+  context: Record<string, any>,
 ): boolean {
   // Handle equality comparisons like "type === 'web-app'"
   const equalityMatch = condition.match(/^(\w+)\s*===\s*['"]([^'"]+)['"]$/);
@@ -132,7 +137,7 @@ export function useFilteredExtensions(extensionPoint: any) {
 
         // Then evaluate when condition
         return evaluateWhenExpression(entry.when, context);
-      })
+      }),
     );
   }, [pluginRegistry, extensionPoint, context]);
 }
