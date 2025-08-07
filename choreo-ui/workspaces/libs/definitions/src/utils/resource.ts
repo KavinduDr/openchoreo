@@ -1,4 +1,8 @@
-import { ComponentItem, type ProjectItem, type Resource } from "../types/resource";
+import {
+  type ComponentItem,
+  type ProjectItem,
+  type Resource,
+} from "../types/resource";
 
 export function getResourceDisplayName(resource: Resource) {
   return resource?.displayName || resource?.name;

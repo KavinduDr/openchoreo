@@ -1,5 +1,5 @@
-import { apiRequest, ApiConfig } from '../core/config';
-import { type OrganizationList, type Organization } from '../types/types';
+import { apiRequest, type ApiConfig } from "../core/config";
+import { type OrganizationList, type Organization } from "../types/types";
 
 export interface OrganizationApi {
   listOrganizations(config?: ApiConfig): Promise<OrganizationList>;
@@ -8,11 +8,21 @@ export interface OrganizationApi {
 
 export const organizationApi: OrganizationApi = {
   async listOrganizations(config?: ApiConfig): Promise<OrganizationList> {
-    return apiRequest<OrganizationList>(`/api/v1/orgs`, { method: 'GET' }, config);
+    return apiRequest<OrganizationList>(
+      `/api/v1/orgs`,
+      { method: "GET" },
+      config
+    );
   },
-  
-  async getOrganization(orgHandle: string, config?: ApiConfig): Promise<Organization> {
-    return apiRequest<Organization>(`/api/v1/orgs/${orgHandle}`, { method: 'GET' }, config);
-  },
-}; 
 
+  async getOrganization(
+    orgHandle: string,
+    config?: ApiConfig
+  ): Promise<Organization> {
+    return apiRequest<Organization>(
+      `/api/v1/orgs/${orgHandle}`,
+      { method: "GET" },
+      config
+    );
+  },
+};
