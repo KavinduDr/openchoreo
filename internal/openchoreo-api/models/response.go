@@ -31,8 +31,6 @@ type ProjectResponse struct {
 	OrgName            string    `json:"orgName"`
 	DisplayName        string    `json:"displayName,omitempty"`
 	Description        string    `json:"description,omitempty"`
-	RepositoryURL      string    `json:"repositoryUrl,omitempty"`
-	RepositoryBranch   string    `json:"repositoryBranch,omitempty"`
 	DeploymentPipeline string    `json:"deploymentPipeline,omitempty"`
 	CreatedAt          time.Time `json:"createdAt"`
 	Status             string    `json:"status,omitempty"`
@@ -41,12 +39,11 @@ type ProjectResponse struct {
 // ComponentResponse represents a component in API responses
 type ComponentResponse struct {
 	Name           string                                 `json:"name"`
+	DisplayName    string                                 `json:"displayName,omitempty"`
 	Description    string                                 `json:"description,omitempty"`
 	Type           string                                 `json:"type"`
 	ProjectName    string                                 `json:"projectName"`
 	OrgName        string                                 `json:"orgName"`
-	RepositoryURL  string                                 `json:"repositoryUrl"`
-	Branch         string                                 `json:"branch,omitempty"`
 	CreatedAt      time.Time                              `json:"createdAt"`
 	Status         string                                 `json:"status,omitempty"`
 	Service        *openchoreov1alpha1.ServiceSpec        `json:"service,omitempty"`
@@ -97,19 +94,25 @@ type DataPlaneResponse struct {
 	Status                  string    `json:"status,omitempty"`
 }
 
+// BuildResponse represents a build in API responses
+type BuildResponse struct {
+	Name          string                            `json:"name"`
+	ComponentName string                            `json:"componentName"`
+	ProjectName   string                            `json:"projectName"`
+	OrgName       string                            `json:"orgName"`
+	Commit        string                            `json:"commit,omitempty"`
+	Branch        string                            `json:"branch,omitempty"`
+	Image         string                            `json:"image,omitempty"`
+	Status        string                            `json:"status,omitempty"`
+	BuildStatus   *openchoreov1alpha1.BuildV2Status `json:"buildStatus"`
+	CreatedAt     time.Time                         `json:"createdAt"`
+}
+
 // Response helper functions
 func SuccessResponse[T any](data T) APIResponse[T] {
 	return APIResponse[T]{
 		Success: true,
 		Data:    data,
-	}
-}
-
-func ErrorResponse(message, code string) APIResponse[any] {
-	return APIResponse[any]{
-		Success: false,
-		Error:   message,
-		Code:    code,
 	}
 }
 
@@ -122,5 +125,13 @@ func ListSuccessResponse[T any](items []T, total, page, pageSize int) APIRespons
 			Page:       page,
 			PageSize:   pageSize,
 		},
+	}
+}
+
+func ErrorResponse(message, code string) APIResponse[any] {
+	return APIResponse[any]{
+		Success: false,
+		Error:   message,
+		Code:    code,
 	}
 }

@@ -1,3 +1,8 @@
+# Global values shared across all components
+global:
+  # Common labels to add to all resources
+  commonLabels: {}
+
 # Customizing OpenSearch configurations
 opensearch:
   image:
@@ -9,7 +14,6 @@ opensearch:
     type: NodePort
     httpPort: 9200
     transportPort: 9300
-    nameSuffix: "opensearch"
     # NodePort configuration for cross-cluster access
     nodePort: 30920  # Fixed port for external access from other clusters
   
@@ -21,7 +25,7 @@ opensearch:
     disableSecurity: true
   
   authentication:
-    basicauth:
+    basicAuth:
       username: admin
       password: admin
   
@@ -51,14 +55,13 @@ opensearchDashboard:
   service:
     type: NodePort
     port: 5601
-    nameSuffix: "opensearch-dashboard"
   
   config:
     disableSecurity: true
   
   replicas: 1
 
-# Choreo Observer Service Configuration
+# OpenChoreo Observer Service Configuration
 observer:
   replicas: 1
   
@@ -70,12 +73,6 @@ observer:
   service:
     type: ClusterIP
     port: 8080
-  
-  opensearch:
-    # References the OpenSearch configuration above
-    # address: constructed in observer-deployment.yaml template
-    username: "{{ .Values.opensearch.authentication.basicauth.username }}"
-    password: "{{ .Values.opensearch.authentication.basicauth.password }}"
   
   logLevel: info
   

@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: opensearch-readiness
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "openchoreo-observability-plane.componentLabels" (dict "context" . "component" "opensearch-readiness") | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "10"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 6
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: opensearch-readiness
+        image: curlimages/curl:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Waiting for OpenSearch to be ready..."
+          until curl -s http://opensearch:9200/_cluster/health | grep -q '"status":"green\|yellow"'; do
+            echo "OpenSearch not ready yet, waiting 10 seconds..."
+            sleep 10
+          done
+          echo "OpenSearch is ready!"
+          curl -s http://opensearch:9200/_cluster/health
