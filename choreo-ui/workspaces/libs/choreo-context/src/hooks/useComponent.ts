@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 export const useComponent = (
   orgName: string,
   projectId?: string,
-  componentId?: string,
+  componentId?: string
 ) => {
   const client = useClient();
   const { data, isLoading, isError, isFetching, refetch } = useQuery({
@@ -57,7 +57,7 @@ export const useSelectedComponent = () => {
   const { data, isLoading, isError, isFetching, refetch } = useComponent(
     orgHandle,
     projectHandle,
-    componentHandle,
+    componentHandle
   );
   return {
     data,

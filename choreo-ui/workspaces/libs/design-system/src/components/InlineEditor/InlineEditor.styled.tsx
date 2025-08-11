@@ -8,7 +8,7 @@ export interface StyledInlineEditorProps {
 
 export const StyledInlineEditor: ComponentType<
   StyledInlineEditorProps & BoxProps
-> = styled(Box)<BoxProps & StyledInlineEditorProps>(({ disabled, theme }) => ({
+> = styled(Box)<BoxProps & StyledInlineEditorProps>(({ theme }) => ({
   '& .inlineEditContainer': {
     display: 'flex',
     flexDirection: 'column',
