@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyledCheckbox } from './Checkbox.styled';
-import { Checkbox as MUICheckbox } from '@mui/material';
+import {
+  Checkbox as MUICheckbox,
+  CheckboxProps as MuiCheckboxProps,
+} from '@mui/material';
 
 export type CheckboxSize = 'small' | 'medium';
 
@@ -13,7 +16,7 @@ export type CheckboxColor =
   | 'info'
   | 'success';
 
-export interface CheckboxProps {
+export interface CheckboxProps extends MuiCheckboxProps {
   children?: React.ReactNode;
   className?: string;
   onClick?: (event: React.MouseEvent) => void;
@@ -46,12 +49,7 @@ export const Checkbox = React.forwardRef<HTMLDivElement, CheckboxProps>(
     ref
   ) => {
     return (
-      <StyledCheckbox
-        ref={ref}
-        className={className}
-        disabled={disabled}
-        {...props}
-      >
+      <StyledCheckbox ref={ref} className={className} disabled={disabled}>
         <MUICheckbox
           {...props}
           className={className}
