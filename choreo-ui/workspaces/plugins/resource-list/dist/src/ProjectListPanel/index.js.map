@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/ProjectListPanel/index.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,sCAAsC,EAAE,MAAM,8BAA8B,CAAC;AACtF,OAAO,EAAE,gBAAgB,EAAE,MAAM,oBAAoB,CAAC;AAEtD,OAAO,EAAE,yCAAyC,EAAE,MAAM,oBAAoB,CAAC;AAE/E,MAAM,CAAC,MAAM,gBAAgB,GAAoB;IAC/C,cAAc,EAAE,sCAAsC;IACtD,SAAS,EAAE,gBAAgB;IAC3B,GAAG,EAAE,oBAAoB;CAC1B,CAAC"}
