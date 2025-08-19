@@ -75,6 +75,7 @@ export function evaluateWhenExpression(
     const org = context.org?.data || null;
     // console.log("component: ", context.component?.data);
     // console.log("organization: ", context.org?.data);
+    // eslint-disable-next-line no-eval
     const result = eval(when);
 
     return result;
