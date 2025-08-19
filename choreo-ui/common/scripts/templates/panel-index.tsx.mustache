@@ -1,0 +1,9 @@
+import { type PluginExtension,  coreExtensionPoints } from "@open-choreo/plugin-core";
+import React from "react";
+const {{pluginName}}Panel = React.lazy(() => import("./{{pluginName}}Panel"));
+
+export const panel: PluginExtension = {
+    extensionPoint: coreExtensionPoints.headerLeft,
+    key: "{{pluginKey}}",
+    component: {{pluginName}}Panel,
+};

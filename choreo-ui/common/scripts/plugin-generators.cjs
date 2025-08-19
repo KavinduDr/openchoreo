@@ -1,3 +1,18 @@
+const fs = require('fs');
+const path = require('path');
+
+/**
+ * Simple template renderer - replaces {{variable}} with values from data object
+ * @param {string} template - Template string with {{variable}} placeholders
+ * @param {object} data - Data object with variable values
+ * @returns {string} Rendered template
+ */
+function simpleTemplateRender(template, data) {
+    return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+        return data[key] !== undefined ? data[key] : match;
+    });
+}
+
 /**
  * Converts PascalCase to kebab-case
  * @param {string} str - PascalCase string
@@ -8,66 +23,39 @@ function toKebabCase(str) {
 }
 
 /**
+ * Converts PascalCase to display name with spaces
+ * @param {string} str - PascalCase string
+ * @returns {string} display name string
+ */
+function toDisplayName(str) {
+    return str.replace(/([A-Z])/g, ' $1').trim();
+}
+
+/**
+ * Renders a mustache template with provided data
+ * @param {string} templateName - Name of the template file
+ * @param {object} data - Data to render the template with
+ * @returns {string} Rendered template content
+ */
+function renderTemplate(templateName, data) {
+    const templatePath = path.join(__dirname, 'templates', templateName);
+    const template = fs.readFileSync(templatePath, 'utf8');
+    return simpleTemplateRender(template, data);
+}
+
+/**
  * Generates the package.json content for a plugin
  * @param {string} pluginName - Name of the plugin
  * @returns {string} Package.json content
  */
 function generatePackageJson(pluginName) {
-    return `{
-  "name": "@open-choreo/${toKebabCase(pluginName)}",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "baseUrl": ".",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "test": "echo \\"Error: no test specified\\" && exit 1",
-    "dev": "tsc -project tsconfig.json  --watch",
-    "clean": "rm -rf dist",
-    "lint": "eslint --config ./eslint.config.js",
-    "build": "rushx clean && rushx lint --fix && tsc -project tsconfig.json"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@open-choreo/design-system": "workspace:*",
-    "@open-choreo/common-views": "workspace:*",
-    "@open-choreo/plugin-core": "workspace:*",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "@eslint/eslintrc": "~3.3.1",
-    "@typescript-eslint/eslint-plugin": "~8.33.1",
-    "@typescript-eslint/parser": "~8.33.1",
-    "eslint-plugin-import": "~2.31.0",
-    "eslint-plugin-jest-dom": "~5.5.0",
-    "eslint-plugin-react": "~7.37.5",
-    "eslint-plugin-testing-library": "~7.4.0",
-    "@types/lodash": "~4.17.17",
-    "lodash": "~4.17.21",
-    "clsx": "~2.1.1",
-    "@fontsource/roboto": "~5.2.5",
-    "react-router": "~7.6.2"
-  },
-  "devDependencies": {
-    "@eslint/js": "~9.28.0",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
-    "eslint": "~9.28.0",
-    "eslint-plugin-react-hooks": "~5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "~16.2.0",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.30.1",
-    "eslint-plugin-prettier": "~5.4.1",
-    "lodash": "^4.17.21",
-    "@types/lodash": "^4.17.17"
-  }
-}`;
+    const data = {
+        kebabName: toKebabCase(pluginName),
+        pluginName,
+        displayName: toDisplayName(pluginName),
+        camelName: pluginName[0].toLowerCase() + pluginName.slice(1)
+    };
+    return renderTemplate('package.json.mustache', data);
 }
 
 /**
@@ -75,32 +63,7 @@ function generatePackageJson(pluginName) {
  * @returns {string} tsconfig.json content
  */
 function generateTsConfig() {
-    return `{
-  // "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "dist",
-    "declaration": true,
-    "declarationDir": "dist",
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"], 
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "target": "ESNext",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": false,
-    "baseUrl": ".",
-    "rootDir": "."
-  },
-  "include": ["./index.ts"],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
-}`;
+    return renderTemplate('tsconfig.json.mustache', {});
 }
 
 /**
@@ -108,26 +71,7 @@ function generateTsConfig() {
  * @returns {string} eslint.config.js content
  */
 function generateEslintConfig() {
-    return `import eslintConfig from "../../../eslint.config.base.cjs"
-
-export default [
-  ...eslintConfig,
-  {
-    files: [
-      '**/*.ts',
-      '**/*.tsx',
-      '**/*.js',
-      '**/*.jsx',
-      '**/*.mjs',
-      '**/*.cjs'
-    ],
-  },
-  {
-    ignores: [
-      "**/dist",
-    ],
-  }
-]`;
+    return renderTemplate('eslint.config.js.mustache', {});
 }
 
 /**
@@ -135,7 +79,7 @@ export default [
  * @returns {string} index.ts content
  */
 function generateMainIndex() {
-    return `export * from "./src";`;
+    return renderTemplate('index.ts.mustache', {});
 }
 
 /**
@@ -144,18 +88,12 @@ function generateMainIndex() {
  * @returns {string} src/index.ts content
  */
 function generateSrcIndex(pluginName) {
-    const pluginKey = pluginName.toLowerCase().replace(/([A-Z])/g, '-$1').toLowerCase();
-    const pluginDisplayName = pluginName.replace(/([A-Z])/g, ' $1').trim();
-    
-    return `import { type PluginManifest } from "@open-choreo/plugin-core";
-
-import {panel} from "./panel";
-
-export const ${pluginName[0].toLowerCase() + pluginName.slice(1)}Plugin = {
-    name: "${pluginDisplayName}",
-    description: "${pluginDisplayName} Plugin",
-    extensions: [panel],
-} as PluginManifest;`;
+    const data = {
+        pluginName,
+        displayName: toDisplayName(pluginName),
+        camelName: pluginName[0].toLowerCase() + pluginName.slice(1)
+    };
+    return renderTemplate('src-index.ts.mustache', data);
 }
 
 /**
@@ -164,17 +102,11 @@ export const ${pluginName[0].toLowerCase() + pluginName.slice(1)}Plugin = {
  * @returns {string} panel/index.tsx content
  */
 function generatePanelIndex(pluginName) {
-    const pluginKey = pluginName.toLowerCase().replace(/([A-Z])/g, '-$1').toLowerCase();
-    
-    return `import { type PluginExtension,  coreExtensionPoints } from "@open-choreo/plugin-core";
-import React from "react";
-const ${pluginName}Panel = React.lazy(() => import("./${pluginName}Panel"));
-
-export const panel: PluginExtension = {
-    extensionPoint: coreExtensionPoints.headerLeft,
-    key: "${pluginKey}",
-    component: ${pluginName}Panel,
-};`;
+    const data = {
+        pluginName,
+        pluginKey: pluginName.toLowerCase().replace(/([A-Z])/g, '-$1').toLowerCase()
+    };
+    return renderTemplate('panel-index.tsx.mustache', data);
 }
 
 /**
@@ -183,37 +115,10 @@ export const panel: PluginExtension = {
  * @returns {string} panel component content
  */
 function generatePanelComponent(pluginName) {
-    return `import { Box, Typography, useChoreoTheme } from "@open-choreo/design-system";
-import React from "react";
-
-const ${pluginName}Panel: React.FC = () => {
-    const theme = useChoreoTheme();
-    return (
-        <Box 
-            display="flex" 
-            flexDirection="row" 
-            gap={theme.spacing(1)} 
-            padding={theme.spacing(0, 2)} 
-            alignItems="center" 
-            height="100%"
-        >
-            <Box 
-                display="flex" 
-                flexDirection="row" 
-                backgroundColor="secondary.light" 
-                gap={theme.spacing(1)} 
-                alignItems="center" 
-                padding={theme.spacing(0.5)}
-            >
-                <Typography variant="h4">
-                    ${pluginName}
-                </Typography>
-            </Box>
-        </Box>
-    );
-};
-
-export default ${pluginName}Panel;`;
+    const data = {
+        pluginName
+    };
+    return renderTemplate('panel-component.tsx.mustache', data);
 }
 
 /**
@@ -221,15 +126,57 @@ export default ${pluginName}Panel;`;
  * @returns {string} .gitignore content
  */
 function generateGitignore() {
-    return `node_modules
-dist
+    return renderTemplate('gitignore.mustache', {});
+}
 
-#storybook build directory
-storybook-static
-*storybook.log`;
+/**
+ * Generates all plugin files using templates
+ * @param {string} pluginName - Name of the plugin
+ * @param {string} outputPath - Path where the plugin files should be generated
+ * @returns {object} Object containing all generated file contents
+ */
+function generateAllPluginFiles(pluginName, outputPath = null) {
+    const files = {
+        'package.json': generatePackageJson(pluginName),
+        'tsconfig.json': generateTsConfig(),
+        'eslint.config.js': generateEslintConfig(),
+        'index.ts': generateMainIndex(),
+        'src/index.ts': generateSrcIndex(pluginName),
+        'src/panel/index.tsx': generatePanelIndex(pluginName),
+        [`src/panel/${pluginName}Panel.tsx`]: generatePanelComponent(pluginName),
+        '.gitignore': generateGitignore()
+    };
+
+    // If outputPath is provided, write files to disk
+    if (outputPath) {
+        const fs = require('fs');
+        const path = require('path');
+        
+        // Create directories if they don't exist
+        const srcDir = path.join(outputPath, 'src');
+        const panelDir = path.join(srcDir, 'panel');
+        
+        if (!fs.existsSync(outputPath)) fs.mkdirSync(outputPath, { recursive: true });
+        if (!fs.existsSync(srcDir)) fs.mkdirSync(srcDir, { recursive: true });
+        if (!fs.existsSync(panelDir)) fs.mkdirSync(panelDir, { recursive: true });
+        
+        // Write files
+        Object.entries(files).forEach(([fileName, content]) => {
+            const filePath = path.join(outputPath, fileName);
+            const dir = path.dirname(filePath);
+            if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+            fs.writeFileSync(filePath, content);
+        });
+    }
+
+    return files;
 }
 
 module.exports = {
+    simpleTemplateRender,
+    toKebabCase,
+    toDisplayName,
+    renderTemplate,
     generatePackageJson,
     generateTsConfig,
     generateEslintConfig,
@@ -237,5 +184,6 @@ module.exports = {
     generateSrcIndex,
     generatePanelIndex,
     generatePanelComponent,
-    generateGitignore
+    generateGitignore,
+    generateAllPluginFiles
 }; 

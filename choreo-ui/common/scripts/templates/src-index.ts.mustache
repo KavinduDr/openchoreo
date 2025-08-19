@@ -1,0 +1,9 @@
+import { type PluginManifest } from "@open-choreo/plugin-core";
+
+import {panel} from "./panel";
+
+export const {{camelName}}Plugin = {
+    name: "{{displayName}}",
+    description: "{{displayName}} Plugin",
+    extensions: [panel],
+} as PluginManifest;
