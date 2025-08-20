@@ -55,5 +55,7 @@
     "eslint-plugin-prettier": "~5.4.1",
     "@formatjs/cli": "~6.7.2",
     "@open-choreo/eslint-config": "workspace:*"
+    "@formatjs/cli": "~6.7.2",
+    "@asgardeo/react": "^0.5.18"
   }
 }

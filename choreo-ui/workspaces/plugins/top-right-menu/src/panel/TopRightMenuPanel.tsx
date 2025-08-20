@@ -1,6 +1,14 @@
 import React from "react";
 import { useColorMode } from "@open-choreo/choreo-context";
 import { Box, Toggler, useChoreoTheme } from "@open-choreo/design-system";
+import { useColorMode } from "@open-choreo/choreo-context";
+import React from "react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignOutButton,
+} from "@asgardeo/react";
 
 const TopRightMenuPanel: React.FC = () => {
   const theme = useChoreoTheme();
@@ -23,6 +31,12 @@ const TopRightMenuPanel: React.FC = () => {
         color="primary"
         size="small"
       />
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
+      <SignedIn>
+        <SignOutButton />
+      </SignedIn>
     </Box>
   );
 };

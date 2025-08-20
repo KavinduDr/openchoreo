@@ -74,8 +74,11 @@ export function evaluateWhenExpression(
     // console.log("component: ", context.component?.data);
     // console.log("organization: ", context.org?.data);
 
+<<<<<<< HEAD
     console.log(component, project, org);
 
+=======
+>>>>>>> bbdecfb49 (feat: integrate Asgardeo authentication and update plugins)
     const result = eval(when);
 
     return result;

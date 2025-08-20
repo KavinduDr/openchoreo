@@ -1,4 +1,4 @@
-import eslintConfig from "@open-choreo/eslint-config";;
+import eslintConfig from "../../../eslint.config.base.cjs";
 
 export default [
   ...eslintConfig,
@@ -10,9 +10,18 @@ export default [
       "**/*.jsx",
       "**/*.mjs",
       "**/*.cjs",
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.mjs",
+      "**/*.cjs",
     ],
   },
   {
+    ignores: ["**/dist"],
+  },
+];
     ignores: ["**/dist"],
   },
 ];

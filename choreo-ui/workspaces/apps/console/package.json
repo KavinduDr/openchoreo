@@ -53,5 +53,8 @@
     "@stoplight/prism-cli": "~5.14.2",
     "@formatjs/cli": "~6.7.2",
     "@open-choreo/eslint-config": "workspace:*"
+    "@formatjs/cli": "~6.7.2",
+    "@asgardeo/react": "^0.5.18",
+    "@asgardeo/react-router": "^0.0.11"
   }
 }
