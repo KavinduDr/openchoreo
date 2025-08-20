@@ -10,18 +10,9 @@ export default [
       "**/*.jsx",
       "**/*.mjs",
       "**/*.cjs",
-      "**/*.ts",
-      "**/*.tsx",
-      "**/*.js",
-      "**/*.jsx",
-      "**/*.mjs",
-      "**/*.cjs",
     ],
   },
   {
-    ignores: ["**/dist"],
-  },
-];
     ignores: ["**/dist"],
   },
 ];
