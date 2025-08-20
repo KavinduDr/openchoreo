@@ -15,6 +15,7 @@ async function initializeApp() {
           <AsgardeoProvider
             clientId="a6Sf_moAUbIPX2JZ440djfunA94a"
             baseUrl="https://api.asgardeo.io/t/starkindustriesdemo"
+            scopes={["openid", "profile", "email"]}
           >
             <App />
           </AsgardeoProvider>
