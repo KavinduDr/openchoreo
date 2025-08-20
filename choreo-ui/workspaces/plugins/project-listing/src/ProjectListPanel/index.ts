@@ -1,6 +1,6 @@
 import { organizationOverviewMainExtensionPoint } from "@open-choreo/overviews";
-import { ProjectListPanel } from "./ProjectListPanel";
 import { PluginExtension } from "@open-choreo/plugin-core";
+import { ProjectListPanel } from "./ProjectListPanel";
 export { organizationOverviewActionsExtensionPoint } from "./ProjectListPanel";
 
 export const projectListPanel: PluginExtension = {

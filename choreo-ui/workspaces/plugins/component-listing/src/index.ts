@@ -1,12 +1,12 @@
 import { type PluginManifest } from "@open-choreo/plugin-core";
+import { componentDetails } from "./ComponentDetails";
 import { componentList } from "./ComponentListPage";
-import { componentListNavigation } from "./NavItems";
 import {
   componentListPanel,
   projectOverviewComponentListPanel,
 } from "./ComponentListPanel";
 import { componentSummary } from "./ComponentSummary";
-import { componentDetails } from "./ComponentDetails";
+import { componentListNavigation } from "./NavItems";
 
 export const componentListingPlugin = {
   name: "Component Listing Plugin",

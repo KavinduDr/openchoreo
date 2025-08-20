@@ -1,10 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
+import { useClient } from "./useClient";
 import {
   useOrgHandle,
   useComponentHandle,
   useProjectHandle,
 } from "./useUrlParams";
-import { useClient } from "./useClient";
-import { useQuery } from "@tanstack/react-query";
 
 export const useComponent = (
   orgName: string,

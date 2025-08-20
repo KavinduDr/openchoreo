@@ -57,6 +57,7 @@
     "lodash": "^4.17.21",
     "@types/lodash": "^4.17.17",
     "@formatjs/cli": "~6.7.2",
-    "react-intl": "~7.1.11"
+    "react-intl": "~7.1.11",
+    "@open-choreo/eslint-config": "workspace:*"
   }
 }

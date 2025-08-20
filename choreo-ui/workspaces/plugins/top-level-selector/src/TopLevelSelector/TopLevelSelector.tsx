@@ -1,12 +1,4 @@
 import {
-  AnimateSlide,
-  Box,
-  Level,
-  LevelItem,
-  TopLevelSelector,
-  useChoreoTheme,
-} from "@open-choreo/design-system";
-import {
   useSelectedOrganization,
   useSelectedProject,
   useProjectList,
@@ -22,6 +14,14 @@ import {
   getResourceDisplayName,
   getResourceName,
 } from "@open-choreo/definitions";
+import {
+  AnimateSlide,
+  Box,
+  Level,
+  LevelItem,
+  TopLevelSelector,
+  useChoreoTheme,
+} from "@open-choreo/design-system";
 import { useNavigate } from "react-router";
 
 const Panel: React.FC = () => {

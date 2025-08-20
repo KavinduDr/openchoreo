@@ -2,7 +2,7 @@ import { type ApiConfig, defaultConfig } from "./config";
 import { projectsApi, type ProjectsApi } from "../api/projects";
 import { componentsApi, type ComponentsApi } from "../api/components";
 import { organizationApi, type OrganizationApi } from "../api/organization";
-import { buildsApi } from "index";
+import { buildsApi } from "../api/build";
 
 export interface ChoreoApiClient
   extends ProjectsApi,

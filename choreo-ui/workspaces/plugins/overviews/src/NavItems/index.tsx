@@ -1,12 +1,12 @@
-import {
-  type PluginExtension,
-  coreExtensionPoints,
-} from "@open-choreo/plugin-core";
 import { BasePathPatterns } from "@open-choreo/choreo-context";
 import {
   MenuOverviewFilledIcon,
   MenuOverviewIcon,
 } from "@open-choreo/design-system";
+import {
+  type PluginExtension,
+  coreExtensionPoints,
+} from "@open-choreo/plugin-core";
 
 export const projectOverviewNavigation: PluginExtension = {
   extensionPoint: coreExtensionPoints.projectNavigation,

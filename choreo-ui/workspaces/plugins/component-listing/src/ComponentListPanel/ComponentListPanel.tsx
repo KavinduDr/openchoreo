@@ -1,12 +1,11 @@
-import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
+import React, { useMemo } from "react";
 import {
   useComponentList,
   useHomePath,
   useOrgHandle,
   useProjectHandle,
 } from "@open-choreo/choreo-context";
-import React, { useMemo } from "react";
-import { ResourceTable } from "@open-choreo/resource-views";
+import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import {
   getComponentType,
   getResourceCreatedAt,
@@ -14,6 +13,7 @@ import {
   getResourceDisplayName,
   getResourceName,
 } from "@open-choreo/definitions";
+import { ResourceTable } from "@open-choreo/resource-views";
 
 const ComponentListPanel: React.FC = () => {
   const orgHandle = useOrgHandle();

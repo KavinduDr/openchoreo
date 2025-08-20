@@ -489,10 +489,14 @@
     {
       "packageName": "@open-choreo/project-listing",
       "projectFolder": "workspaces/plugins/project-listing"
-    }
-,
+    },
     {
       "packageName": "@open-choreo/deployment",
       "projectFolder": "workspaces/plugins/deployment"
-    }  ]
+    },
+    {
+      "packageName": "@open-choreo/eslint-config",
+      "projectFolder": "workspaces/packages/eslint-config"
+    }
+  ]
 }

@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { useClient } from "./useClient";
 import { BuildPlaneList } from "@open-choreo/api-client";
 import { BuildPlane } from "@open-choreo/definitions";
+import { useQuery } from "@tanstack/react-query";
+import { useClient } from "./useClient";
 
 export const useBuildPlanes = (orgHandle: string, projectHandle: string) => {
   const client = useClient();

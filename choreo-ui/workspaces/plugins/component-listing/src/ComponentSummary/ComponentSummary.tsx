@@ -5,6 +5,7 @@ import {
   useProjectHandle,
   useComponentList,
 } from "@open-choreo/choreo-context";
+import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import {
   getComponentType,
   getResourceCreatedAt,
@@ -12,7 +13,6 @@ import {
   getResourceDisplayName,
   getResourceName,
 } from "@open-choreo/definitions";
-import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import { ComponentTypes } from "@open-choreo/resource-views";
 
 const ComponentSummary: React.FC = () => {
@@ -22,7 +22,6 @@ const ComponentSummary: React.FC = () => {
     data: components,
     isLoading,
     isError,
-    refetch,
   } = useComponentList(orgHandle, projectHandle);
   const homePath = useHomePath();
 

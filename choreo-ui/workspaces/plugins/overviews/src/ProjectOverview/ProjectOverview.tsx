@@ -1,18 +1,18 @@
+import React from "react";
 import { useSelectedProject } from "@open-choreo/choreo-context";
 import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
-import {
-  PanelExtensionMounter,
-  PluginExtensionPoint,
-  PluginExtensionType,
-} from "@open-choreo/plugin-core";
-import React from "react";
-import { ResourcePageLayout } from "@open-choreo/resource-views";
 import {
   Box,
   GridContainer,
   GridItem,
   useChoreoTheme,
 } from "@open-choreo/design-system";
+import {
+  PanelExtensionMounter,
+  PluginExtensionPoint,
+  PluginExtensionType,
+} from "@open-choreo/plugin-core";
+import { ResourcePageLayout } from "@open-choreo/resource-views";
 
 export const projectOverviewMainExtensionPoint: PluginExtensionPoint = {
   id: "project-overview-page-body",

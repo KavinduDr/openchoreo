@@ -45,6 +45,7 @@
     "lodash": "^4.17.21",
     "@types/lodash": "^4.17.17",
     "@tanstack/eslint-plugin-query": "~5.81.2",
-    "@formatjs/cli": "~6.7.2"
+    "@formatjs/cli": "~6.7.2",
+    "@open-choreo/eslint-config": "workspace:*"
   }
 }

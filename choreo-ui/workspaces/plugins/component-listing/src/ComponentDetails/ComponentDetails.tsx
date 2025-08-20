@@ -1,26 +1,17 @@
+import { useMemo } from "react";
 import {
-  useHomePath,
   useOrgHandle,
   useProjectHandle,
   useSelectedComponent,
 } from "@open-choreo/choreo-context";
 import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
-import { useMemo } from "react";
 import { ComponentView } from "@open-choreo/resource-views";
 
 const ComponentDetails: React.FC = () => {
   const orgHandle = useOrgHandle();
   const projectHandle = useProjectHandle();
-  const selectedComponent = useSelectedComponent();
 
-  const {
-    data: component,
-    isLoading,
-    isError,
-    refetch,
-  } = useSelectedComponent();
-
-  const homePath = useHomePath();
+  const { data: component, isLoading, isError } = useSelectedComponent();
 
   const componentDetails = useMemo(
     () => ({
@@ -30,7 +21,7 @@ const ComponentDetails: React.FC = () => {
       lastUpdated: new Date(component?.data?.createdAt),
       href: `${orgHandle}/${projectHandle}/component/${component?.data?.name}`,
     }),
-    [component, homePath],
+    [component, orgHandle, projectHandle],
   );
 
   if (isLoading) {

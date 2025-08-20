@@ -5,20 +5,20 @@ import React, {
   useMemo,
   useReducer,
 } from "react";
-import {
-  appStateReducer,
-  IAppState,
-  IAppStateAction,
-  initialState,
-} from "../reducers/appState";
 import { ChoreoClient } from "@open-choreo/api-client";
-import { GlobalStateProvider } from "./GlobleStateProvider";
 import {
   QueryClientProvider,
   QueryClient,
   MutationCache,
   QueryCache,
 } from "@tanstack/react-query";
+import {
+  appStateReducer,
+  IAppState,
+  IAppStateAction,
+  initialState,
+} from "../reducers/appState";
+import { GlobalStateProvider } from "./GlobleStateProvider";
 
 export interface ApiClientProviderProps {
   children: ReactNode;
@@ -39,7 +39,7 @@ export const ApiClientContext = createContext<IApiClientContext>({
   basePath: undefined,
 });
 
-const ApiClientProvider: React.FC<ApiClientProviderProps> = (
+export const ApiClientProvider: React.FC<ApiClientProviderProps> = (
   props: ApiClientProviderProps,
 ) => {
   const { basePath, children } = props;

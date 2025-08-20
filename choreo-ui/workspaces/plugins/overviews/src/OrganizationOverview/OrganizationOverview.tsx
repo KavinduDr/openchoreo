@@ -1,17 +1,17 @@
-import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
-import { useSelectedOrganization } from "@open-choreo/choreo-context";
-import {
-  PanelExtensionMounter,
-  PluginExtensionPoint,
-  PluginExtensionType,
-} from "@open-choreo/plugin-core";
 import React from "react";
+import { useSelectedOrganization } from "@open-choreo/choreo-context";
+import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import {
   Box,
   GridContainer,
   GridItem,
   useChoreoTheme,
 } from "@open-choreo/design-system";
+import {
+  PanelExtensionMounter,
+  PluginExtensionPoint,
+  PluginExtensionType,
+} from "@open-choreo/plugin-core";
 import { ResourcePageLayout } from "@open-choreo/resource-views";
 
 export const organizationOverviewMainExtensionPoint: PluginExtensionPoint = {

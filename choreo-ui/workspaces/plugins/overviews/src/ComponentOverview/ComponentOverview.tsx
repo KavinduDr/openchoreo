@@ -1,6 +1,6 @@
-import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
-import { useSelectedComponent } from "@open-choreo/choreo-context";
 import React from "react";
+import { useSelectedComponent } from "@open-choreo/choreo-context";
+import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import {
   PanelExtensionMounter,
   PluginExtensionPoint,

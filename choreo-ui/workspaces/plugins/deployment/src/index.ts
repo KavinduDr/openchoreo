@@ -1,7 +1,7 @@
 import { type PluginManifest } from "@open-choreo/plugin-core";
 
-import {deploymentMenu} from "./NavItems"
-import {deploymentPage} from "./Deployment"
+import { deploymentPage } from "./Deployment";
+import { deploymentMenu } from "./NavItems";
 
 export const deploymentPlugin = {
   name: "Deployment",

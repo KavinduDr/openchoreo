@@ -1,21 +1,21 @@
-import {
-  FullPageLoader,
-  PageLayout,
-  PresetErrorPage,
-} from "@open-choreo/common-views";
+import React from "react";
 import {
   useComponentList,
   useProjectHandle,
   useOrgHandle,
 } from "@open-choreo/choreo-context";
 import {
+  FullPageLoader,
+  PageLayout,
+  PresetErrorPage,
+} from "@open-choreo/common-views";
+import { RefreshIcon, Rotate, IconButton } from "@open-choreo/design-system";
+import {
   PanelExtensionMounter,
   PluginExtensionPoint,
   PluginExtensionType,
 } from "@open-choreo/plugin-core";
-import React from "react";
 import { useIntl } from "react-intl";
-import { RefreshIcon, Rotate, IconButton } from "@open-choreo/design-system";
 
 export const componentListMainExtensionPoint: PluginExtensionPoint = {
   id: "component-list-page-body",

@@ -55,6 +55,7 @@
     "typescript-eslint": "^8.30.1",
     "eslint-plugin-prettier": "~5.4.1",
     "@tanstack/eslint-plugin-query": "~5.81.2",
-    "@formatjs/cli": "~6.7.2"
+    "@formatjs/cli": "~6.7.2",
+    "@open-choreo/eslint-config": "workspace:*"
   }
 }

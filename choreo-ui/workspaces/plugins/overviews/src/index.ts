@@ -1,4 +1,5 @@
 import { type PluginManifest } from "@open-choreo/plugin-core";
+import { componentOverview } from "./ComponentOverview";
 import {
   componentOverviewNavigation,
   organizationOverviewNavigation,
@@ -6,7 +7,6 @@ import {
 } from "./NavItems";
 import { organizationOverview } from "./OrganizationOverview";
 import { projectOverview } from "./ProjectOverview";
-import { componentOverview } from "./ComponentOverview";
 
 export {
   organizationOverviewMainExtensionPoint,

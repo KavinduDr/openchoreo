@@ -1,14 +1,14 @@
 import { createContext, Dispatch, useEffect, useReducer } from "react";
+import { getResourceName } from "@open-choreo/definitions";
+import { useNavigate } from "react-router";
+import { useOrganizationList } from "../hooks";
 import {
   appStateReducer,
   IAppState,
   IAppStateAction,
   initialState,
 } from "../reducers/appState";
-import { useOrganizationList } from "../hooks";
-import { useNavigate } from "react-router";
 import { useOrgHandle } from "./../hooks/useUrlParams";
-import { getResourceName } from "@open-choreo/definitions";
 import { generatePath } from "./../paths/paths";
 
 export interface GlobalState {
