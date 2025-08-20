@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App.tsx";
 import { GlobalProviders } from "./providers/GlobalProviders.tsx";
 import { getPluginRegistry } from "./plugins";
+import { AsgardeoProvider } from "@asgardeo/react";
 
 async function initializeApp() {
   const pluginRegistry = await getPluginRegistry();
@@ -11,10 +12,15 @@ async function initializeApp() {
     <StrictMode>
       <Suspense fallback={<div />}>
         <GlobalProviders pluginRegistry={pluginRegistry}>
-          <App />
+          <AsgardeoProvider
+            clientId="a6Sf_moAUbIPX2JZ440djfunA94a"
+            baseUrl="https://api.asgardeo.io/t/starkindustriesdemo"
+          >
+            <App />
+          </AsgardeoProvider>
         </GlobalProviders>
       </Suspense>
-    </StrictMode>,
+    </StrictMode>
   );
 }
 
