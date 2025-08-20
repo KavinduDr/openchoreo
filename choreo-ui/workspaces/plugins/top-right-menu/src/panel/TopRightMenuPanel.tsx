@@ -1,12 +1,12 @@
 import React from "react";
-import { useColorMode } from "@open-choreo/choreo-context";
-import { Box, Toggler, useChoreoTheme } from "@open-choreo/design-system";
 import {
   SignedIn,
   SignedOut,
   SignInButton,
   SignOutButton,
 } from "@asgardeo/react";
+import { useColorMode } from "@open-choreo/choreo-context";
+import { Box, Toggler, useChoreoTheme } from "@open-choreo/design-system";
 
 const TopRightMenuPanel: React.FC = () => {
   const theme = useChoreoTheme();

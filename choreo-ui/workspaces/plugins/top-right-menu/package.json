@@ -54,8 +54,7 @@
     "typescript-eslint": "^8.30.1",
     "eslint-plugin-prettier": "~5.4.1",
     "@formatjs/cli": "~6.7.2",
-    "@asgardeo/react": "^0.5.18""@formatjs/cli": "~6.7.2",
-    "@open-choreo/eslint-config": "workspace:*""@formatjs/cli": "~6.7.2",
-    "@asgardeo/react": "^0.5.18"
+    "@asgardeo/react": "^0.5.18",
+    "@open-choreo/eslint-config": "workspace:*"
   }
 }
