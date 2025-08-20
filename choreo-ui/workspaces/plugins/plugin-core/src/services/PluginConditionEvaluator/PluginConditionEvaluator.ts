@@ -30,7 +30,7 @@ export function BuildContextObject() {
   const { data: componentObj } = useComponent(
     orgHandle || "",
     projectHandle || "",
-    componentHandle || "",
+    componentHandle || ""
   );
   const { data: projectObj } = useProject(orgHandle || "", projectHandle || "");
   const { data: orgObj } = useOrganization(orgHandle || "");
@@ -42,10 +42,10 @@ export function BuildContextObject() {
     level: componentObj
       ? "component"
       : projectObj
-        ? "project"
-        : orgHandle
-          ? "org"
-          : "global",
+      ? "project"
+      : orgHandle
+      ? "org"
+      : "global",
     component: componentObj || null,
     project: projectObj || null,
     org: orgObj || null, // Replace with org object if you have a hook for it
@@ -62,7 +62,7 @@ export function BuildContextObject() {
 // Evaluate complex when expressions
 export function evaluateWhenExpression(
   when: string | undefined,
-  context: Record<string, any>,
+  context: Record<string, any>
 ): boolean {
   if (!when) return true; // If no when condition, always render
 
@@ -74,11 +74,8 @@ export function evaluateWhenExpression(
     // console.log("component: ", context.component?.data);
     // console.log("organization: ", context.org?.data);
 
-<<<<<<< HEAD
     console.log(component, project, org);
 
-=======
->>>>>>> bbdecfb49 (feat: integrate Asgardeo authentication and update plugins)
     const result = eval(when);
 
     return result;
@@ -130,7 +127,7 @@ export function useFilteredExtensions(extensionPoint: any) {
 
         // Then evaluate when condition
         return evaluateWhenExpression(entry.when, context);
-      }),
+      })
     );
   }, [pluginRegistry, extensionPoint, context]);
 }
