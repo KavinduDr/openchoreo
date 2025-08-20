@@ -1,8 +1,6 @@
 import React from "react";
 import { useColorMode } from "@open-choreo/choreo-context";
 import { Box, Toggler, useChoreoTheme } from "@open-choreo/design-system";
-import { useColorMode } from "@open-choreo/choreo-context";
-import React from "react";
 import {
   SignedIn,
   SignedOut,
