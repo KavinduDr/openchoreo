@@ -9,7 +9,7 @@ import { useOrganizationList } from "../hooks";
 import { useNavigate } from "react-router";
 import { useOrgHandle } from "./../hooks/useUrlParams";
 import { getResourceName } from "@open-choreo/definitions";
-import { genaratePath } from "./../paths/paths";
+import { generatePath } from "./../paths/paths";
 
 export interface GlobalState {
   appState: IAppState;
@@ -33,7 +33,7 @@ export function GlobalStateProvider({
   useEffect(() => {
     if (!orgHandle && organizationList?.data?.items.length > 0) {
       navigate(
-        genaratePath({
+        generatePath({
           orgHandle: getResourceName(organizationList?.data?.items[0]),
         }),
       );

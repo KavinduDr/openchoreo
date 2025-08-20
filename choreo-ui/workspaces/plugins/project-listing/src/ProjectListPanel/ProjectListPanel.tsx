@@ -1,7 +1,7 @@
 import { FullPageLoader, PresetErrorPage } from "@open-choreo/common-views";
 import {
   useProjectList,
-  genaratePath,
+  generatePath,
   useOrgHandle,
 } from "@open-choreo/choreo-context";
 import {
@@ -44,7 +44,7 @@ export const ProjectListPanel: React.FC = () => {
           description: getResourceDescription(item) || "",
           type: getResourceStatus(item),
           lastUpdated: getResourceCreatedAt(item),
-          href: genaratePath({
+          href: generatePath({
             orgHandle,
             projectHandle: getResourceName(item),
           }),

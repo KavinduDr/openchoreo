@@ -10,7 +10,7 @@ export enum PathsPatterns {
   COMPONENT_LEVEL = `${BasePathPatterns.COMPONENT_LEVEL}/*`,
 }
 
-export const genaratePath = (
+export const generatePath = (
   params: {
     orgHandle?: string;
     projectHandle?: string;

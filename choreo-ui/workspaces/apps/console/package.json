@@ -26,7 +26,8 @@
     "@open-choreo/component-listing": "workspace:*",
     "@open-choreo/project-listing": "workspace:*",
     "react-intl": "~7.1.11",
-    "dayjs": "~1.11.13"
+    "dayjs": "~1.11.13",
+    "@open-choreo/deployment": "workspace:*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "~3.3.1",

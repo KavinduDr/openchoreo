@@ -2,6 +2,7 @@ import { type ApiConfig, defaultConfig } from "./config";
 import { projectsApi, type ProjectsApi } from "../api/projects";
 import { componentsApi, type ComponentsApi } from "../api/components";
 import { organizationApi, type OrganizationApi } from "../api/organization";
+import { buildsApi } from "index";
 
 export interface ChoreoApiClient
   extends ProjectsApi,
@@ -52,4 +53,12 @@ export class ChoreoClient implements ChoreoApiClient {
   listOrganizations = () => organizationApi.listOrganizations(this.config);
   getOrganization = (orgHandle: string) =>
     organizationApi.getOrganization(orgHandle, this.config);
+  getBuild = (orgName: string, projectName: string, buildId: string) =>
+    buildsApi.getBuild(orgName, projectName, buildId, this.config);
+  getBuildPlane = (orgName: string, projectName: string, buildId: string) =>
+    buildsApi.getBuildPlane(orgName, projectName, buildId, this.config);
+  listBuildPlanes = (orgName: string, projectName: string) =>
+    buildsApi.listBuildPlanes(orgName, projectName, this.config);
+  listBuilds = (orgName: string, projectName: string) =>
+    buildsApi.listBuilds(orgName, projectName, this.config);
 }

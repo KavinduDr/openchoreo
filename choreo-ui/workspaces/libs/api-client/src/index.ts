@@ -19,6 +19,9 @@ export type { ComponentsApi } from './api/components';
 export { organizationApi } from './api/organization';
 export type { OrganizationApi } from './api/organization';
 
+export { buildsApi } from './api/build';
+export type { BuildsApi } from './api/build';
+
 // Types
 export type {
   OrganizationList,
@@ -28,6 +31,10 @@ export type {
   ProjectList,
   Component,
   ComponentList,
+  BuildList,
+  BuildPlaneList,
+  BuildListData,
+  BuildPlaneListData,
 } from './types/types';
 
 // Default export

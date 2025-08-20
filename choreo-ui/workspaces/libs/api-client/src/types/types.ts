@@ -1,4 +1,4 @@
-import { type OrganizationItem, type ProjectItem, type ComponentItem } from "@open-choreo/definitions";
+import { type OrganizationItem, type ProjectItem, type ComponentItem, BuildPlane, Build } from "@open-choreo/definitions";
 
 export interface OrganizationListData {
   items: OrganizationItem[];
@@ -50,4 +50,28 @@ export interface ComponentListData {
 export interface ComponentList {
   success: boolean;
   data: ComponentListData;
+}
+
+export interface BuildPlaneListData {
+  items: BuildPlane[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+}
+
+export interface BuildPlaneList {
+  success: boolean;
+  data: BuildPlaneListData;
+}
+
+export interface BuildListData {
+  items: Build[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+}
+
+export interface BuildList {
+  success: boolean;
+  data: BuildListData;
 }

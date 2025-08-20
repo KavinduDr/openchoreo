@@ -7,19 +7,21 @@ const levelSelectorPlugin = () => import('@open-choreo/plugin-top-level-selector
 const topRightMenuPlugin = () => import('@open-choreo/top-right-menu').then(module => module.topRightMenuPlugin);
 const projectListingPlugin = () => import('@open-choreo/project-listing').then(module => module.projectListingPlugin);
 const componentListingPlugin = () => import('@open-choreo/component-listing').then(module => module.componentListingPlugin);
+const deploymentPlugin = () => import('@open-choreo/deployment').then(module => module.deploymentPlugin);
 
 // Export the plugin registry as a function that returns promises
 export const getPluginRegistry = async (): Promise<PluginManifest[]> => {
-  const [overview, levelSelector, topRightMenu, projectListing, componentListing] = await Promise.all([
+  const [overview, levelSelector, topRightMenu, projectListing, componentListing, deployment] = await Promise.all([
     overviewPlugin(),
     levelSelectorPlugin(),
     topRightMenuPlugin(),
     projectListingPlugin(),
-    componentListingPlugin()
+    componentListingPlugin(),
+    deploymentPlugin()
   ]);
   
   return [overview, levelSelector, topRightMenu,
-     projectListing, componentListing];
+     projectListing, componentListing, deployment];
 };
 
 // For backward compatibility, export a synchronous version that loads plugins on demand

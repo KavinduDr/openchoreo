@@ -13,7 +13,7 @@ import {
   useSelectedComponent,
   useOrganizationList,
   useComponentList,
-  genaratePath,
+  generatePath,
   useComponentHandle,
   useOrgHandle,
   useProjectHandle,
@@ -48,25 +48,25 @@ const Panel: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const orgHome = genaratePath({ orgHandle });
-  const projectHome = genaratePath({ orgHandle, projectHandle });
-  const componentHome = genaratePath({
+  const orgHome = generatePath({ orgHandle });
+  const projectHome = generatePath({ orgHandle, projectHandle });
+  const componentHome = generatePath({
     orgHandle,
     projectHandle,
     componentHandle,
   });
 
   const navigateToOrg = (org: LevelItem) => {
-    navigate(genaratePath({ orgHandle: org.id }));
+    navigate(generatePath({ orgHandle: org.id }));
   };
 
   const navigateToProject = (project: LevelItem) => {
-    navigate(genaratePath({ orgHandle, projectHandle: project.id }));
+    navigate(generatePath({ orgHandle, projectHandle: project.id }));
   };
 
   const navigateToComponent = (component: LevelItem) => {
     navigate(
-      genaratePath({ orgHandle, projectHandle, componentHandle: component.id }),
+      generatePath({ orgHandle, projectHandle, componentHandle: component.id }),
     );
   };
 
