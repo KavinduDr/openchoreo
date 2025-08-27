@@ -28,11 +28,11 @@ export function ThemeProvider(props: ThemeProviderProps) {
       typography,
       zIndex: defaultTheme.zIndex,
       palette: {
-        ...defaultTheme.colorSchemes.dark.palette,
+        ...defaultTheme.darkPalette,
         ...customPalette?.dark,
         mode: 'dark',
       },
-      shadows: defaultTheme.dark.shadows as Shadows,
+      shadows: defaultTheme.custom.component.observe.shadows as unknown as Shadows,
     });
   }, [customPalette]);
 
@@ -50,11 +50,11 @@ export function ThemeProvider(props: ThemeProviderProps) {
       typography,
       zIndex: defaultTheme.zIndex,
       palette: {
-        ...defaultTheme.colorSchemes.light.palette,
+        ...defaultTheme.palette,
         ...customPalette?.light,
         mode: 'light',
       },
-      shadows: defaultTheme.light.shadows as Shadows,
+      shadows: defaultTheme.custom.component.observe.shadows as unknown as Shadows,
     });
   }, [customPalette]);
 
