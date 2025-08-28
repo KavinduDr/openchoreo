@@ -1,24 +1,22 @@
-import React from "react";
-import { AuthProvider as CoreAuthProvider } from "./AuthContext";
-import { getProvider } from "./providers";
+import React, { useEffect } from "react";
+import CoreAuthProvider, { AuthContext } from "./AuthContext";
 import { AuthProviderProps } from "./types";
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({
-  provider,
-  config,
-  children,
-}) => {
-  const ProviderImpl = getProvider(provider) as React.ComponentType<any>;
+const AuthProvider: React.FC<AuthProviderProps> = ({ provider, children }) => {
+  const authContext = React.useContext(AuthContext);
 
-  if (!ProviderImpl) {
-    throw new Error(
-      `Auth provider "${provider}" not found. Make sure it's registered in providers/index.ts`,
-    );
-  }
+  useEffect(() => {
+    // Auto login with the provided provider
+    if (authContext && !authContext.user) {
+      authContext.login(provider.id, provider.config).catch(console.error);
+    }
+  }, [authContext, provider]);
 
   return (
     <CoreAuthProvider>
-      <ProviderImpl config={config}>{children}</ProviderImpl>
+      {children}
     </CoreAuthProvider>
   );
 };
+
+export default AuthProvider;

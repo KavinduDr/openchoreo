@@ -1,16 +1,28 @@
 import React from "react";
 
 export interface AuthProvider {
-    id: string;
-    name: string;
     login: () => Promise<void>;
     logout: () => Promise<void>;
-    getUser: () => Promise<any | null>;
+    isAuthenticated: () => Promise<boolean>;
     getToken: () => Promise<string | null>;
+    getUser?: () => Promise<any>;
+    // ...other auth methods
 }
 
-export type AuthProviderProps = {
-    provider: string;
-    config: Record<string, any>;
+// Configuration for provider factories
+export interface AuthProviderConfig {
+    clientId: string;
+    baseUrl: string;
+    scopes?: string[];
+    // ...other configuration properties
+}
+
+// Props for the AuthWrapper component
+export interface AuthProviderProps {
+    provider: {
+        name: string;
+        id: string;
+        config: AuthProviderConfig;
+    };
     children: React.ReactNode;
 }
