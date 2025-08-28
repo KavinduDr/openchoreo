@@ -45,16 +45,18 @@
   "description": "",
   "dependencies": {
     "clsx": "~2.1.1",
-    "@emotion/react": "~11.14.0",
-    "@emotion/styled": "~11.14.0",
-    "@mui/material": "~7.1.0",
+    "@emotion/react": "~11.11.3",
+    "@emotion/styled": "~11.11.0",
+    "@mui/material": "~5.14.20",
     "@fontsource/roboto": "~5.2.5",
-    "@mui/icons-material": "~7.1.0",
+    "@mui/icons-material": "~5.14.19",
     "react-dom": "^19.1.0",
     "react-router": "~7.6.2",
     "react-intl": "~7.1.11",
     "@open-choreo/definitions": "workspace:*",
-    "dayjs": "~1.11.13"
+    "dayjs": "~1.11.13",
+    "@oxygen-ui/react": "~2.4.6",
+    "@mui/lab": "~5.0.0-alpha.153"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.6.13",
