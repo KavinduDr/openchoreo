@@ -1,5 +1,4 @@
 import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
-import { User } from "../types";
 
 // Configuration interface for Asgardeo
 export interface AsgardeoConfig {
@@ -10,63 +9,52 @@ export interface AsgardeoConfig {
   scope: string[];
 }
 
+// Normalized user data structure that your SDK will return
+export interface NormalizedUser {
+  name: string;
+  email: string;
+  roles: string[];
+  scopes: string[];
+  token: string;
+}
+
 export class AsgardeoProvider {
   private client: AsgardeoSPAClient;
-  private cachedUser: User | null = null;
-  private isInitialized = false;
+  private cachedUser: NormalizedUser | null = null;
 
   constructor(config: AsgardeoConfig) {
-    // Get singleton instance
+    // Initialize Asgardeo client with configuration
     this.client = AsgardeoSPAClient.getInstance();
 
-    // Initialize the client - this is crucial and must complete before any other operations
-    this.initializeClient(config);
-  }
-
-  private async initializeClient(config: AsgardeoConfig): Promise<void> {
-    try {
-      await this.client.initialize({
-        clientID: config.clientID,
-        baseUrl: config.baseUrl,
-        signInRedirectURL: config.signInRedirectURL,
-        signOutRedirectURL: config.signOutRedirectURL,
-        scope: config.scope,
-        enablePKCE: true,
-        storage: "webWorker",
-        resourceServerURLs: [config.baseUrl],
-      });
-
-      this.isInitialized = true;
-      console.log("Asgardeo client initialized successfully");
-    } catch (error) {
-      console.error("Failed to initialize Asgardeo client:", error);
-      throw error;
-    }
-  }
-
-  private async ensureInitialized(): Promise<void> {
-    if (!this.isInitialized) {
-      // Wait a bit and try again, or throw error
-      throw new Error("Asgardeo client not yet initialized");
-    }
+    // Configure the client
+    this.client.initialize({
+      clientID: config.clientID,
+      baseUrl: config.baseUrl,
+      signInRedirectURL: config.signInRedirectURL,
+      signOutRedirectURL: config.signOutRedirectURL,
+      scope: config.scope,
+      // Add other Asgardeo-specific configurations as needed
+      enablePKCE: true,
+      storage: "webWorker",
+    });
   }
 
   async login(): Promise<void> {
     try {
-      await this.ensureInitialized();
-
-      // Start the sign-in process
+      // Step 1: Call Asgardeo login
       await this.client.signIn();
 
-      // After sign-in redirect, the user should be authenticated
-      // Let's wait a moment and then get user data
-      setTimeout(async () => {
-        try {
-          await this.refreshUserData();
-        } catch (error) {
-          console.error("Failed to get user data after login:", error);
-        }
-      }, 1000);
+      // Step 2: Get user data after successful login
+      const asgardeoUser = await this.client.getBasicUserInfo();
+      const accessToken = await this.client.getAccessToken();
+      const decodedIDToken = await this.client.getDecodedIDToken();
+
+      // Step 3: Normalize the data to your standard format
+      this.cachedUser = await this.normalizeUserData(
+        asgardeoUser,
+        accessToken,
+        decodedIDToken
+      );
     } catch (error) {
       console.error("Asgardeo login failed:", error);
       throw new Error("Login failed");
@@ -75,8 +63,8 @@ export class AsgardeoProvider {
 
   async logout(): Promise<void> {
     try {
-      await this.ensureInitialized();
       await this.client.signOut();
+      // Step 4: Clear cached data
       this.cachedUser = null;
     } catch (error) {
       console.error("Asgardeo logout failed:", error);
@@ -86,8 +74,7 @@ export class AsgardeoProvider {
 
   async isAuthenticated(): Promise<boolean> {
     try {
-      await this.ensureInitialized();
-
+      // Check token validity before each scope verification
       const isAuth = await this.client.isAuthenticated();
 
       if (!isAuth) {
@@ -95,52 +82,70 @@ export class AsgardeoProvider {
         return false;
       }
 
-      // Check if we need to refresh user data
-      if (!this.cachedUser) {
+      // Check if token needs refresh
+      const accessToken = await this.client.getAccessToken();
+      if (!accessToken || this.isTokenExpired(accessToken)) {
         try {
+          // Try to refresh token
+          await this.client.refreshAccessToken();
+          // Refresh user data with new token
           await this.refreshUserData();
-        } catch (error) {
-          console.error("Failed to refresh user data:", error);
+        } catch (refreshError) {
+          this.cachedUser = null;
+          console.error("Refresh Error", refreshError);
           return false;
         }
       }
 
       return true;
     } catch (error) {
-      console.error("Error checking authentication:", error);
       this.cachedUser = null;
+      console.error("Error", error);
       return false;
     }
   }
 
   async getToken(): Promise<string | null> {
     try {
-      await this.ensureInitialized();
       return await this.client.getAccessToken();
     } catch (error) {
-      console.error("Error getting token:", error);
+      console.error("Error", error);
       return null;
     }
   }
 
-  async getUser(): Promise<User | null> {
+  async getUser(): Promise<NormalizedUser | null> {
+    // Return cached user if available
     if (this.cachedUser) {
       return this.cachedUser;
     }
 
+    // If not cached, try to get fresh data
     try {
       const isAuth = await this.isAuthenticated();
       if (!isAuth) {
         return null;
       }
 
+      // Get fresh user data
+      const asgardeoUser = await this.client.getBasicUserInfo();
+      const accessToken = await this.client.getAccessToken();
+      const decodedIDToken = await this.client.getDecodedIDToken();
+
+      this.cachedUser = await this.normalizeUserData(
+        asgardeoUser,
+        accessToken,
+        decodedIDToken
+      );
+
       return this.cachedUser;
     } catch (error) {
-      console.error("Error getting user:", error);
+      console.error("Error", error);
       return null;
     }
   }
 
+  // Check if user has specific scopes
   async hasScope(scope: string): Promise<boolean> {
     const user = await this.getUser();
     if (!user) return false;
@@ -148,6 +153,7 @@ export class AsgardeoProvider {
     return user.scopes.includes(scope);
   }
 
+  // Check if user has specific roles
   async hasRole(role: string): Promise<boolean> {
     const user = await this.getUser();
     if (!user) return false;
@@ -155,66 +161,72 @@ export class AsgardeoProvider {
     return user.roles.includes(role);
   }
 
+  // Get all user scopes
   async getScopes(): Promise<string[]> {
     const user = await this.getUser();
     return user?.scopes || [];
   }
 
+  // Get all user roles
   async getRoles(): Promise<string[]> {
     const user = await this.getUser();
     return user?.roles || [];
   }
 
-  private async refreshUserData(): Promise<void> {
-    try {
-      await this.ensureInitialized();
-
-      // Get user info and token
-      const [basicUserInfo, accessToken, decodedIDToken] = await Promise.all([
-        this.client.getBasicUserInfo(),
-        this.client.getAccessToken(),
-        this.client.getDecodedIDToken(),
-      ]);
-
-      // Normalize the data
-      this.cachedUser = await this.normalizeUserData(
-        basicUserInfo,
-        accessToken,
-        decodedIDToken
-      );
-
-      console.log("User data refreshed:", this.cachedUser);
-    } catch (error) {
-      console.error("Failed to refresh user data:", error);
-      throw error;
-    }
-  }
-
+  // Private method to normalize Asgardeo user data to your standard format
   private async normalizeUserData(
     asgardeoUser: any,
     accessToken: string,
     decodedIDToken: any
-  ): Promise<User> {
+  ): Promise<NormalizedUser> {
     return {
-      name:
-        asgardeoUser?.displayName ||
-        asgardeoUser?.username ||
-        asgardeoUser?.given_name ||
-        "Unknown",
-      email: asgardeoUser?.email || "",
+      name: asgardeoUser.displayName || asgardeoUser.username || "",
+      email: asgardeoUser.email || "",
       // Extract roles from groups or custom claims
-      roles: decodedIDToken?.groups || decodedIDToken?.roles || [],
-      // Extract scopes from token or decoded token
-      scopes: decodedIDToken?.scope?.split(" ") || [],
+      roles: decodedIDToken.groups || [],
+      // Extract scopes from token
+      scopes: decodedIDToken.scope?.split(" ") || [],
       token: accessToken,
     };
   }
 
-  // Method to manually initialize (call this if needed)
-  async initialize(): Promise<void> {
-    if (!this.isInitialized) {
-      // Re-initialize if needed
-      throw new Error("Client initialization failed");
+  // Private method to check if token is expired
+  private isTokenExpired(token: string): boolean {
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const currentTime = Math.floor(Date.now() / 1000);
+      return payload.exp < currentTime;
+    } catch {
+      return true;
+    }
+  }
+
+  // Private method to refresh user data when token is refreshed
+  private async refreshUserData(): Promise<void> {
+    try {
+      const asgardeoUser = await this.client.getBasicUserInfo();
+      const accessToken = await this.client.getAccessToken();
+      const decodedIDToken = await this.client.getDecodedIDToken();
+
+      const newUserData = await this.normalizeUserData(
+        asgardeoUser,
+        accessToken,
+        decodedIDToken
+      );
+
+      // Keep old roles if new fetch fails, as per your preference
+      if (
+        this.cachedUser &&
+        (!newUserData.roles.length || !newUserData.scopes.length)
+      ) {
+        newUserData.roles = this.cachedUser.roles;
+        newUserData.scopes = this.cachedUser.scopes;
+      }
+
+      this.cachedUser = newUserData;
+    } catch (error) {
+      console.error("Failed to refresh user data:", error);
+      // Keep existing cached user data on failure
     }
   }
 }
