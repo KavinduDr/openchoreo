@@ -55,8 +55,8 @@ export interface AuthClientConfig {
   // Auth provider config
   provider: AuthConfig["provider"];
   clientID: string;
-  signInRedirectURL?: string;
-  signOutRedirectURL?: string;
+  signInRedirectURL: string;
+  signOutRedirectURL: string;
   domain?: string;
   audience?: string;
   scope?: string | string[];

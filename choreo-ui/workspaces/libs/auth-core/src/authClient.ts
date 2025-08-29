@@ -79,8 +79,8 @@ function convertToAuthConfig(config: AuthClientConfig): AuthConfig {
     scope: Array.isArray(config.scope)
       ? config.scope
       : config.scope
-      ? [config.scope]
-      : [],
+        ? [config.scope]
+        : [],
   };
 
   switch (config.provider) {
@@ -139,8 +139,7 @@ export class AuthClient {
       this.provider = createAuthProvider(convertToAuthConfig(config));
     } catch (error) {
       throw new AuthError(
-        `Failed to initialize AuthClient: ${
-          error instanceof Error ? error.message : "Unknown error"
+        `Failed to initialize AuthClient: ${error instanceof Error ? error.message : "Unknown error"
         }`,
         "CLIENT_INIT_FAILED",
         config.provider,
