@@ -497,6 +497,10 @@
     {
       "packageName": "@open-choreo/eslint-config",
       "projectFolder": "workspaces/packages/eslint-config"
+    },
+    {
+      "packageName": "@open-choreo/auth-core",
+      "projectFolder": "workspaces/libs/auth-core"
     }
   ]
 }
