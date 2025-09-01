@@ -1726,9 +1726,15 @@ importers:
 
   ../../workspaces/plugins/top-right-menu:
     dependencies:
+      '@asgardeo/auth-react':
+        specifier: ~5.4.0
+        version: 5.4.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@fontsource/roboto':
         specifier: ~5.2.5
         version: 5.2.6
+      '@open-choreo/auth-core':
+        specifier: workspace:*
+        version: link:../../libs/auth-core
       '@open-choreo/choreo-context':
         specifier: workspace:*
         version: link:../../libs/choreo-context
@@ -1838,6 +1844,19 @@ packages:
 
   '@asamuzakjp/css-color@3.2.0':
     resolution: {integrity: sha512-K1A6z8tS3XsmCMM86xoWdn7Fkdn9m6RSVtocUrJYIwZnFVkng/PvkEoWtOWmP+Scc6saYWHWZYbndEEXxl24jw==}
+
+  '@asgardeo/auth-js@5.1.2':
+    resolution: {integrity: sha512-fGfUorhUwUSXC/sETTlRbXJ0kMwcLKvVXCieePnxg2AVeiy1lFdRqZt1zsnr4/rd0jd/woYBE96rOAS5fVGFPw==}
+
+  '@asgardeo/auth-react@5.4.0':
+    resolution: {integrity: sha512-7HCIILP8Id47KNwt2/JNIuGQjC1o+XiBiF1iCKawF3VbKen5LOqdxzEZ5hFFziMFdXfY14ZubM4DQWDnahRnsw==}
+    peerDependencies:
+      '@babel/runtime-corejs3': ^7.11.2
+      react: '>=16.8'
+      react-dom: '>=16.8'
+
+  '@asgardeo/auth-spa@3.3.0':
+    resolution: {integrity: sha512-BgLONjbQGm360f2rMjt/QIZM8UKuFRzY+vUE/MuAmEMEoqA8vMQS9m2+J7uOwiT3KE/dPsIo1XM/ssBnubQRUA==}
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -6733,6 +6752,29 @@ snapshots:
       '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-tokenizer': 3.0.4
       lru-cache: 10.4.3
+
+  '@asgardeo/auth-js@5.1.2': {}
+
+  '@asgardeo/auth-react@5.4.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)':
+    dependencies:
+      '@asgardeo/auth-spa': 3.3.0
+      react: 19.1.1
+      react-dom: 19.1.1(react@19.1.1)
+    transitivePeerDependencies:
+      - debug
+
+  '@asgardeo/auth-spa@3.3.0':
+    dependencies:
+      '@asgardeo/auth-js': 5.1.2
+      await-semaphore: 0.1.3
+      axios: 0.30.1
+      base64url: 3.0.1
+      buffer: 6.0.3
+      fast-sha256: 1.3.0
+      jose: 4.15.9
+      randombytes: 2.1.0
+    transitivePeerDependencies:
+      - debug
 
   '@babel/code-frame@7.27.1':
     dependencies:
