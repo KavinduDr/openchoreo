@@ -1704,9 +1704,15 @@ importers:
 
   ../../workspaces/plugins/top-right-menu:
     dependencies:
+      '@asgardeo/auth-react':
+        specifier: ~5.4.0
+        version: 5.4.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@fontsource/roboto':
         specifier: ~5.2.5
         version: 5.2.6
+      '@open-choreo/auth-core':
+        specifier: workspace:*
+        version: link:../../libs/auth-core
       '@open-choreo/choreo-context':
         specifier: workspace:*
         version: link:../../libs/choreo-context
@@ -1816,6 +1822,13 @@ packages:
 
   '@asgardeo/auth-js@5.1.2':
     resolution: {integrity: sha512-fGfUorhUwUSXC/sETTlRbXJ0kMwcLKvVXCieePnxg2AVeiy1lFdRqZt1zsnr4/rd0jd/woYBE96rOAS5fVGFPw==}
+
+  '@asgardeo/auth-react@5.4.0':
+    resolution: {integrity: sha512-7HCIILP8Id47KNwt2/JNIuGQjC1o+XiBiF1iCKawF3VbKen5LOqdxzEZ5hFFziMFdXfY14ZubM4DQWDnahRnsw==}
+    peerDependencies:
+      '@babel/runtime-corejs3': ^7.11.2
+      react: '>=16.8'
+      react-dom: '>=16.8'
 
   '@asgardeo/auth-spa@3.3.0':
     resolution: {integrity: sha512-BgLONjbQGm360f2rMjt/QIZM8UKuFRzY+vUE/MuAmEMEoqA8vMQS9m2+J7uOwiT3KE/dPsIo1XM/ssBnubQRUA==}
@@ -6085,6 +6098,14 @@ snapshots:
       lru-cache: 10.4.3
 
   '@asgardeo/auth-js@5.1.2': {}
+
+  '@asgardeo/auth-react@5.4.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)':
+    dependencies:
+      '@asgardeo/auth-spa': 3.3.0
+      react: 19.1.1
+      react-dom: 19.1.1(react@19.1.1)
+    transitivePeerDependencies:
+      - debug
 
   '@asgardeo/auth-spa@3.3.0':
     dependencies:

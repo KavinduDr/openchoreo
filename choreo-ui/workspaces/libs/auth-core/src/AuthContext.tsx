@@ -114,13 +114,25 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
         const authClient = await createAuthClient(authConfig);
         setClient(authClient);
 
+        // Check for OAuth callback parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("code") || urlParams.get("state")) {
+          console.log("OAuth callback detected, processing...");
+          // Small delay to ensure callback is processed
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+
         // Check if user is already authenticated
         const isAuth = await authClient.isAuthenticated();
+        console.log("Initial auth check:", isAuth);
         setIsAuthenticated(isAuth);
 
         if (isAuth) {
           const userData = await authClient.getUser();
+          console.log("Initial user data:", userData);
           setUser(userData);
+        } else {
+          console.log("User not authenticated on initialization");
         }
       } catch (err) {
         const authError =
@@ -168,7 +180,27 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
 
     try {
       setError(null);
+      console.log("Starting login process...");
       await client.login();
+      console.log("Login completed, checking auth state...");
+
+      // After login, manually refresh the auth state
+      setTimeout(async () => {
+        try {
+          const isAuth = await client.isAuthenticated();
+          console.log("Post-login auth check:", isAuth);
+
+          if (isAuth) {
+            const userData = await client.getUser();
+            console.log("Post-login user data:", userData);
+            setUser(userData);
+            setIsAuthenticated(true);
+          }
+        } catch (err) {
+          console.error("Post-login state refresh failed:", err);
+        }
+      }, 2000); // Wait 2 seconds after login
+
       // User state will be updated via onLoginSuccess event
     } catch (err) {
       const authError =

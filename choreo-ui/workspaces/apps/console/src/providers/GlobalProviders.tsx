@@ -1,5 +1,5 @@
 import { AuthContextProvider } from "@open-choreo/auth-core";
-import type { AuthClientConfig } from "@open-choreo/auth-core/dist/src/types";
+import type { AuthClientConfig } from "@open-choreo/auth-core/";
 import { ApiClientProvider } from "@open-choreo/choreo-context";
 import {
   coreExtensionPoints,
@@ -22,8 +22,8 @@ export const GlobalProviders = ({
     clientID: "a6Sf_moAUbIPX2JZ440djfunA94a",
     baseUrl: "https://api.asgardeo.io/t/starkindustriesdemo", // Required by interface
     domain: "https://api.asgardeo.io/t/starkindustriesdemo", // Used for provider config
-    signInRedirectURL: `${window.location.origin}/callback`,
-    signOutRedirectURL: window.location.origin,
+    signInRedirectURL: `http://localhost:4000/organization/default`,
+    signOutRedirectURL: "http://localhost:4000/organization/default",
     scope: ["openid", "profile", "email"],
     autoRefresh: true,
     checkInterval: 5,
