@@ -88,7 +88,7 @@ function convertToAuthConfig(config: AuthClientConfig): AuthConfig {
       return {
         ...baseConfig,
         provider: "asgardeo",
-        baseUrl: config.domain || "",
+        baseUrl: config.domain || config.baseUrl || "",
       } as AsgardeoConfig;
     case "auth0":
       return {
