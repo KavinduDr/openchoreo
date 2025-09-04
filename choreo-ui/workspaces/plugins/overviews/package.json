@@ -34,7 +34,9 @@
     "react-router": "~7.6.2",
     "react-intl": "~7.1.11",
     "dayjs": "~1.11.13",
-    "@open-choreo/resource-views": "workspace:*"
+    "@open-choreo/resource-views": "workspace:*",
+    "@mui/material": "^5.15.0",
+    "@mui/lab": "^5.0.0-alpha.170"
   },
   "devDependencies": {
     "@eslint/eslintrc": "~3.3.1",

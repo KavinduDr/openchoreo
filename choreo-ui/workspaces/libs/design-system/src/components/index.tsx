@@ -36,3 +36,7 @@ export * from './Skeleton';
 export * from './ErrorCard';
 export * from './RadioCard';
 export * from './InlineEditor';
+export * from './AvatarOxygen';
+export * from './GridOxygen';
+export * from './TableOxygen';
+export * from './SelectOxygen';
