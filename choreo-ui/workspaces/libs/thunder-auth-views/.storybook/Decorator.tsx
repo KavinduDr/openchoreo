@@ -16,12 +16,12 @@ export const withTheme: Decorator = (Story) => {
       <BrowserRouter >
         <AuthContextProvider config={{
           provider: "thunder",
-          apiKey: "AIzaSyB-4NMohSeu-BpuaDN05-ljj9H_uJRm-fE",
-          authDomain: "contact-manager-23087.firebaseapp.com",
-          projectId: "contact-manager-23087",
-          storageBucket: "contact-manager-23087.firebasestorage.app",
-          messagingSenderId: "318523868384",
-          appId: "1:318523868384:web:69c00e6b1dc7b40adf7c85",
+          apiKey: "",
+          authDomain: "",
+          projectId: "",
+          storageBucket: "",
+          messagingSenderId: "",
+          appId: "",
         }}>
           <IntlProvider locale="en">
             <Story />
