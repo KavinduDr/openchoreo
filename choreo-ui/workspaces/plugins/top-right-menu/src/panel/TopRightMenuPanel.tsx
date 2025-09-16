@@ -4,15 +4,16 @@ import { useAuth } from "@open-choreo/auth-core";
 import { useColorMode } from "@open-choreo/choreo-context";
 import {
   Box,
-  Button,
   Toggler,
   useChoreoTheme,
+  Button,
 } from "@open-choreo/design-system";
 
 const TopRightMenuPanel: React.FC = () => {
   const theme = useChoreoTheme();
   const { colorMode, setColorMode } = useColorMode();
   const { user, isAuthenticated, login, logout } = useAuth();
+  // eslint-disable-next-line no-console
   console.log(user, isAuthenticated);
   return (
     <>

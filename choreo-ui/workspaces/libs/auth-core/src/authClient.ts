@@ -9,6 +9,7 @@ import {
   AsgardeoConfig,
   Auth0Config,
   FirebaseConfig,
+  ThunderConfig,
 } from "./types";
 
 // Common interface that all auth providers must implement
@@ -16,7 +17,7 @@ interface AuthProviderType {
   /**
    * Initialize login flow
    */
-  login(): Promise<void>;
+  login(username: string, password: string): Promise<void>;
 
   /**
    * Register new user (if provider supports it)
@@ -79,8 +80,8 @@ function convertToAuthConfig(config: AuthClientConfig): AuthConfig {
     scope: Array.isArray(config.scope)
       ? config.scope
       : config.scope
-      ? [config.scope]
-      : [],
+        ? [config.scope]
+        : [],
   };
 
   switch (config.provider) {
@@ -105,6 +106,14 @@ function convertToAuthConfig(config: AuthClientConfig): AuthConfig {
         authDomain: config.domain || "",
         projectId: config.audience || "",
       } as FirebaseConfig;
+    case "thunder":
+      return {
+        ...baseConfig,
+        provider: "thunder",
+        apiKey: config.clientID, // Use clientID as apiKey for now
+        authDomain: config.domain || "",
+        projectId: config.audience || "",
+      } as ThunderConfig;
     default:
       throw new AuthError(
         `Unsupported provider: ${config.provider}`,
@@ -139,8 +148,7 @@ export class AuthClient {
       this.provider = createAuthProvider(convertToAuthConfig(config));
     } catch (error) {
       throw new AuthError(
-        `Failed to initialize AuthClient: ${
-          error instanceof Error ? error.message : "Unknown error"
+        `Failed to initialize AuthClient: ${error instanceof Error ? error.message : "Unknown error"
         }`,
         "CLIENT_INIT_FAILED",
         config.provider,
@@ -182,11 +190,11 @@ export class AuthClient {
   /**
    * Login user
    */
-  async login(): Promise<void> {
+  async login(username: string, password: string): Promise<void> {
     this.ensureInitialized();
 
     try {
-      await this.provider.login();
+      await this.provider.login(username, password);
       const user = await this.provider.getUser();
 
       if (user && this.events.onLoginSuccess) {

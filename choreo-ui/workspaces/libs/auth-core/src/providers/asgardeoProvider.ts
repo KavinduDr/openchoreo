@@ -1,4 +1,5 @@
-import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
+// import { useAuthContext } from "@asgardeo/auth-react";
+import { AsgardeoSPAClient, Hooks } from "@asgardeo/auth-spa";
 import { User } from "../types";
 
 // Configuration interface for Asgardeo
@@ -60,6 +61,10 @@ export class AsgardeoProvider {
 
       // After sign-in redirect, the user should be authenticated
       // Let's wait a moment and then get user data
+      this.client.on(Hooks.SignIn, (response) => {
+        alert("User signed in successfully");
+        console.log(response);
+      });
       setTimeout(async () => {
         try {
           await this.refreshUserData();

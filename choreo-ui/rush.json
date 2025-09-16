@@ -434,6 +434,10 @@
       "projectFolder": "workspaces/libs/resource-views"
     },
     {
+      "packageName": "@open-choreo/thunder-auth-views",
+      "projectFolder": "workspaces/libs/thunder-auth-views"
+    },
+    {
       "packageName": "@open-choreo/plugin-top-level-selector",
       "projectFolder": "workspaces/plugins/top-level-selector"
     },
