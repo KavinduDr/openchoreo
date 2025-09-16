@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference types="vitest" />
 /// <reference types="node" />
-import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
-import { peerDependencies } from './package.json';
-import type { UserConfig } from 'vite';
-import type { InlineConfig } from 'vitest';
 import path from 'path';
+import { defineConfig } from 'vite';
+// eslint-disable-next-line no-duplicate-imports
+import type { UserConfig } from 'vite';
+import dts from 'vite-plugin-dts';
+import type { InlineConfig } from 'vitest';
+import { peerDependencies } from './package.json';
 
 interface VitestConfigExport extends UserConfig {
   test: InlineConfig;

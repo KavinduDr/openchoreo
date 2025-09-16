@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useAuth } from '@open-choreo/auth-core';
 import {
+  Box,
   Button,
   ButtonContainer,
   Card,
   CardContent,
   CardHeading,
+  GridContainer,
   TextInput,
 } from '@open-choreo/design-system';
 
@@ -23,39 +25,43 @@ export function Login() {
   };
 
   return (
-    <Card testId="login">
-      <CardHeading title="Login Card" testId="login" />
-      <CardContent>
-        <TextInput
-          label="Username"
-          value={username}
-          testId="username-input"
-          onChange={function (text: string): void {
-            setUsername(text);
-          }}
-        />
-        <TextInput
-          label="Password"
-          type="password"
-          value={password}
-          testId="password-input"
-          onChange={function (text: string): void {
-            setPassword(text);
-          }}
-        />
-        <ButtonContainer testId="login-buttons" align="space-between">
-          <Button onClick={handleLogin}>Login</Button>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              setUsername('');
-              setPassword('');
+    <GridContainer>
+      <Card testId="login">
+        <CardHeading title="Login" testId="login" />
+        <CardContent>
+          <TextInput
+            label="Username"
+            value={username}
+            testId="username-input"
+            onChange={function (text: string): void {
+              setUsername(text);
             }}
-          >
-            Cancel
-          </Button>
-        </ButtonContainer>
-      </CardContent>
-    </Card>
+          />
+          <TextInput
+            label="Password"
+            type="password"
+            value={password}
+            testId="password-input"
+            onChange={function (text: string): void {
+              setPassword(text);
+            }}
+          />
+          <Box margin={8}>
+            <ButtonContainer testId="login-buttons" align="space-between">
+              <Button onClick={handleLogin}>Login</Button>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  setUsername('');
+                  setPassword('');
+                }}
+              >
+                Cancel
+              </Button>
+            </ButtonContainer>
+          </Box>
+        </CardContent>
+      </Card>
+    </GridContainer>
   );
 }

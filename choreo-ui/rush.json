@@ -484,10 +484,6 @@
     {
       "packageName": "@open-choreo/generator-occ",
       "projectFolder": "workspaces/libs/occ-generator"
-    },
-    {
-      "packageName": "@open-choreo/auth-core",
-      "projectFolder": "workspaces/libs/auth-core"
     }
   ]
 }

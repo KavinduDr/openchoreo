@@ -1,19 +1,18 @@
-import { Box } from "@open-choreo/design-system";
-import { MainLayout as BaseMainLayout } from "@open-choreo/common-views";
-import { useMemo, useCallback } from "react";
-import { matchPath, useLocation } from "react-router";
-import {
-  PanelExtensionMounter,
-  coreExtensionPoints,
-  useMainNavExtentions,
-} from "@open-choreo/plugin-core";
+import React, { useMemo, useCallback } from "react";
 import {
   useComponentHandle,
   useHomePath,
   useOrgHandle,
   useProjectHandle,
 } from "@open-choreo/choreo-context";
-import React from "react";
+import { MainLayout as BaseMainLayout } from "@open-choreo/common-views";
+import { Box } from "@open-choreo/design-system";
+import {
+  PanelExtensionMounter,
+  coreExtensionPoints,
+  useMainNavExtentions,
+} from "@open-choreo/plugin-core";
+import { matchPath, useLocation } from "react-router";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -56,15 +55,15 @@ export function MainLayout({ children }: MainLayoutProps) {
 
   const navigationEntriesProject = useMainNavExtentions(
     coreExtensionPoints.projectNavigation,
-    homePath
+    homePath,
   );
   const navigationEntriesComponent = useMainNavExtentions(
     coreExtensionPoints.componentNavigation,
-    homePath
+    homePath,
   );
   const navigationEntriesOrg = useMainNavExtentions(
     coreExtensionPoints.orgNavigation,
-    homePath
+    homePath,
   );
   const projectHandle = useProjectHandle();
   const componentHandle = useComponentHandle();
@@ -111,7 +110,7 @@ export function MainLayout({ children }: MainLayoutProps) {
     for (const entry of navigationEntries) {
       if (entry.subMenuItems?.length) {
         const matchingSubmenu = entry.subMenuItems.find((submenu) =>
-          matchPath(submenu.pathPattern, location.pathname)
+          matchPath(submenu.pathPattern, location.pathname),
         );
         if (matchingSubmenu) {
           return matchingSubmenu.id;
@@ -121,14 +120,14 @@ export function MainLayout({ children }: MainLayoutProps) {
 
     // Then check for main menu matches
     const matchingEntry = navigationEntries.find((entry) =>
-      matchPath(entry.pathPattern, location.pathname)
+      matchPath(entry.pathPattern, location.pathname),
     );
 
     return matchingEntry?.id ?? "";
   }, [location.pathname, navigationEntries]);
 
   // Memoize the menu item click handler
-  const handleMenuItemClick = useCallback((_menuId: string) => {
+  const handleMenuItemClick = useCallback(() => {
     // This function can be extended with additional logic if needed
     // For now, it's just a placeholder since the BaseMainLayout handles the selection
   }, []);
