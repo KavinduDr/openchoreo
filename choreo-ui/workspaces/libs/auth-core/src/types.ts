@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Common interfaces that all auth providers must implement
 
 // Normalized user data structure - same across all providers
@@ -105,7 +106,7 @@ export class AuthError extends Error {
     message: string,
     public code: string,
     public provider: string,
-    public originalError?: any
+    public originalError?: any,
   ) {
     super(message);
     this.name = "AuthError";

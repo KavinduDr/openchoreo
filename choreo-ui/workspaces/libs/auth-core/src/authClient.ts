@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createAuthProvider } from "./authProvider";
 import {
   AuthClientConfig,
@@ -25,7 +26,8 @@ interface AuthProviderType {
   register?(
     email: string,
     password: string,
-    userData?: Record<string, any>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userData?: Record<string, any>,
   ): Promise<void>;
 
   /**
@@ -118,7 +120,7 @@ function convertToAuthConfig(config: AuthClientConfig): AuthConfig {
       throw new AuthError(
         `Unsupported provider: ${config.provider}`,
         "UNSUPPORTED_PROVIDER",
-        config.provider
+        config.provider,
       );
   }
 }
@@ -148,11 +150,12 @@ export class AuthClient {
       this.provider = createAuthProvider(convertToAuthConfig(config));
     } catch (error) {
       throw new AuthError(
-        `Failed to initialize AuthClient: ${error instanceof Error ? error.message : "Unknown error"
+        `Failed to initialize AuthClient: ${
+          error instanceof Error ? error.message : "Unknown error"
         }`,
         "CLIENT_INIT_FAILED",
         config.provider,
-        error
+        error,
       );
     }
   }
@@ -182,7 +185,7 @@ export class AuthClient {
         "Failed to initialize AuthClient",
         "INITIALIZATION_FAILED",
         this.config.provider,
-        error
+        error,
       );
     }
   }
@@ -214,7 +217,8 @@ export class AuthClient {
   async register(
     email: string,
     password: string,
-    userData?: Record<string, any>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userData?: Record<string, any>,
   ): Promise<void> {
     this.ensureInitialized();
 
@@ -222,7 +226,7 @@ export class AuthClient {
       throw new AuthError(
         `Registration not supported by ${this.config.provider} provider`,
         "REGISTRATION_NOT_SUPPORTED",
-        this.config.provider
+        this.config.provider,
       );
     }
 
@@ -258,7 +262,7 @@ export class AuthClient {
         "Logout failed",
         "LOGOUT_FAILED",
         this.config.provider,
-        error
+        error,
       );
     }
   }
@@ -483,7 +487,7 @@ export class AuthClient {
       throw new AuthError(
         "AuthClient must be initialized before use. Call initialize() first.",
         "CLIENT_NOT_INITIALIZED",
-        this.config.provider
+        this.config.provider,
       );
     }
   }
@@ -493,7 +497,7 @@ export class AuthClient {
  * Convenience function to create and initialize AuthClient
  */
 export async function createAuthClient(
-  config: AuthClientConfig
+  config: AuthClientConfig,
 ): Promise<AuthClient> {
   const client = new AuthClient(config);
   await client.initialize();
