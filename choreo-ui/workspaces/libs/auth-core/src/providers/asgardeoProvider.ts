@@ -1,4 +1,4 @@
-// import { useAuthContext } from "@asgardeo/auth-react";
+/* eslint-disable no-console */
 import { AsgardeoSPAClient, Hooks } from "@asgardeo/auth-spa";
 import { User } from "../types";
 
@@ -185,7 +185,7 @@ export class AsgardeoProvider {
       this.cachedUser = await this.normalizeUserData(
         basicUserInfo,
         accessToken,
-        decodedIDToken
+        decodedIDToken,
       );
 
       console.log("User data refreshed:", this.cachedUser);
@@ -196,9 +196,11 @@ export class AsgardeoProvider {
   }
 
   private async normalizeUserData(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     asgardeoUser: any,
     accessToken: string,
-    decodedIDToken: any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    decodedIDToken: any,
   ): Promise<User> {
     return {
       name:

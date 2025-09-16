@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { User } from "../types";
 import { Login } from "./apis/thunderAPI";
 
@@ -19,7 +20,7 @@ export class ThunderProvider {
   async login(email?: string, password?: string): Promise<void> {
     try {
       console.log("ThunderProvider: Starting login...", email, password);
-      const userData = await Login(email || '', password || '');
+      const userData = await Login(email || "", password || "");
       console.log("Raw login response:", userData);
 
       // Check if userData is valid
@@ -29,9 +30,9 @@ export class ThunderProvider {
 
       // Map the response to your User type
       this.cachedUser = {
-        id: userData.id || userData.username || email || '',
-        username: userData.username || email || '',
-        email: userData.email || email || '',
+        id: userData.id || userData.username || email || "",
+        username: userData.username || email || "",
+        email: userData.email || email || "",
         roles: userData.roles || [],
         scopes: userData.scopes || [],
         // Add other properties as needed based on your User type
