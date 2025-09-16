@@ -63,13 +63,16 @@ export function evaluateWhenExpression(
 
   try {
     // const level = context.level || "global"; // Default to global if not set
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const component = context.component?.data || null;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const project = context.project?.data || null;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const org = context.org?.data || null;
     // console.log("component: ", context.component?.data);
     // console.log("organization: ", context.org?.data);
 
-    console.log(component, project, org);
+    // console.log(component, project, org);
 
     const result = eval(when);
 

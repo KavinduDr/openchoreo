@@ -1,4 +1,6 @@
-import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
+// import { useAuthContext } from "@asgardeo/auth-react";
+import { AsgardeoSPAClient, Hooks } from "@asgardeo/auth-spa";
+import { User } from "../types";
 
 // Configuration interface for Asgardeo
 export interface AsgardeoConfig {
@@ -44,17 +46,19 @@ export class AsgardeoProvider {
       // Step 1: Call Asgardeo login
       await this.client.signIn();
 
-      // Step 2: Get user data after successful login
-      const asgardeoUser = await this.client.getBasicUserInfo();
-      const accessToken = await this.client.getAccessToken();
-      const decodedIDToken = await this.client.getDecodedIDToken();
-
-      // Step 3: Normalize the data to your standard format
-      this.cachedUser = await this.normalizeUserData(
-        asgardeoUser,
-        accessToken,
-        decodedIDToken
-      );
+      // After sign-in redirect, the user should be authenticated
+      // Let's wait a moment and then get user data
+      this.client.on(Hooks.SignIn, (response) => {
+        alert("User signed in successfully");
+        console.log(response);
+      });
+      setTimeout(async () => {
+        try {
+          await this.refreshUserData();
+        } catch (error) {
+          console.error("Failed to get user data after login:", error);
+        }
+      }, 1000);
     } catch (error) {
       console.error("Asgardeo login failed:", error);
       throw new Error("Login failed");

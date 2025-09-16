@@ -30,15 +30,36 @@ export interface Auth0Config extends BaseAuthConfig {
   audience?: string;
 }
 
-export interface FirebaseConfig extends BaseAuthConfig {
+export interface ThunderConfig {
+  provider: "thunder";
+  apiKey: string;
+  authDomain: string;
+  projectId: string;
+  storageBucket?: string;
+  messagingSenderId?: string;
+  appId?: string;
+  scope: string[];
+}
+
+export interface FirebaseConfig {
   provider: "firebase";
   apiKey: string;
   authDomain: string;
   projectId: string;
+  storageBucket?: string;
+  messagingSenderId?: string;
+  appId?: string;
+  scope: string[];
+  signInRedirectURL?: string;
+  signOutRedirectURL?: string;
 }
 
 // Union type for all supported provider configs
-export type AuthConfig = AsgardeoConfig | Auth0Config | FirebaseConfig;
+export type AuthConfig =
+  | AsgardeoConfig
+  | Auth0Config
+  | FirebaseConfig
+  | ThunderConfig;
 
 // Auth events that providers can emit
 export interface AuthEvents {
@@ -54,13 +75,19 @@ export interface AuthEvents {
 export interface AuthClientConfig {
   // Auth provider config
   provider: AuthConfig["provider"];
-  clientID: string;
-  signInRedirectURL: string;
-  signOutRedirectURL: string;
+  clientID?: string;
+  signInRedirectURL?: string;
+  signOutRedirectURL?: string;
   domain?: string;
   audience?: string;
+  apiKey?: string;
+  authDomain?: string;
+  projectId?: string;
+  storageBucket?: string;
+  messagingSenderId?: string;
+  appId?: string;
   scope?: string | string[];
-  baseUrl: string;
+  baseUrl?: string;
   // Optional event handlers
   events?: AuthEvents;
 
@@ -120,4 +147,8 @@ export function isAuth0Config(config: AuthConfig): config is Auth0Config {
 
 export function isFirebaseConfig(config: AuthConfig): config is FirebaseConfig {
   return config.provider === "firebase";
+}
+
+export function isThunderConfig(config: AuthConfig): config is ThunderConfig {
+  return config.provider === "thunder";
 }
