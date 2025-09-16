@@ -1,5 +1,7 @@
 import { AuthContextProvider } from "@open-choreo/auth-core";
 import type { AuthClientConfig } from "@open-choreo/auth-core/";
+import { AuthContextProvider } from "@open-choreo/auth-core";
+import type { AuthClientConfig } from "@open-choreo/auth-core/";
 import { ApiClientProvider } from "@open-choreo/choreo-context";
 import {
   coreExtensionPoints,
@@ -42,6 +44,15 @@ export const GlobalProviders = ({
   return (
     <BrowserRouter basename="/">
       <ApiClientProvider basePath={window.configs?.apiServerBaseUrl || ""}>
+        <AuthContextProvider config={authConfig}>
+          <PluginProvider pluginRegistry={pluginRegistry}>
+            <WrapperExtensionMounter
+              extensionPoint={coreExtensionPoints.globalProvider}
+            >
+              <IntlProvider locale="en">{children}</IntlProvider>
+            </WrapperExtensionMounter>
+          </PluginProvider>
+        </AuthContextProvider>
         <AuthContextProvider config={authConfig}>
           <PluginProvider pluginRegistry={pluginRegistry}>
             <WrapperExtensionMounter

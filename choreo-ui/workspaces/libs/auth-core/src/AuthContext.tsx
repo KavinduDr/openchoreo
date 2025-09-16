@@ -139,11 +139,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
           err instanceof AuthError
             ? err
             : new AuthError(
-                "Failed to initialize authentication",
-                "INIT_ERROR",
-                config.provider,
-                err
-              );
+              "Failed to initialize authentication",
+              "INIT_ERROR",
+              config.provider,
+              err
+            );
         setError(authError);
       } finally {
         setIsLoading(false);
@@ -208,11 +208,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
           err instanceof AuthError
             ? err
             : new AuthError(
-                "Login failed",
-                "LOGIN_ERROR",
-                config.provider,
-                err
-              );
+              "Login failed",
+              "LOGIN_ERROR",
+              config.provider,
+              err
+            );
         setError(authError);
         throw authError;
       }
@@ -232,11 +232,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
         err instanceof AuthError
           ? err
           : new AuthError(
-              "Logout failed",
-              "LOGOUT_ERROR",
-              config.provider,
-              err
-            );
+            "Logout failed",
+            "LOGOUT_ERROR",
+            config.provider,
+            err
+          );
       setError(authError);
       throw authError;
     }
@@ -256,11 +256,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
           err instanceof AuthError
             ? err
             : new AuthError(
-                "Registration failed",
-                "REGISTER_ERROR",
-                config.provider,
-                err
-              );
+              "Registration failed",
+              "REGISTER_ERROR",
+              config.provider,
+              err
+            );
         setError(authError);
         throw authError;
       }
