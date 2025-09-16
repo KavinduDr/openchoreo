@@ -1,3 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, {
   createContext,
   useContext,
@@ -26,7 +30,8 @@ interface AuthContextState {
   register: (
     email: string,
     password: string,
-    userData?: Record<string, any>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userData?: Record<string, any>,
   ) => Promise<void>;
 
   // Permission checks
@@ -103,6 +108,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
               setIsAuthenticated(false);
               onSessionExpired?.();
             },
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             onTokenRefresh: (token: string) => {
               // Optionally refresh user data when token refreshes
               refreshUserData();
@@ -127,11 +133,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
           err instanceof AuthError
             ? err
             : new AuthError(
-              "Failed to initialize authentication",
-              "INIT_ERROR",
-              config.provider,
-              err
-            );
+                "Failed to initialize authentication",
+                "INIT_ERROR",
+                config.provider,
+                err,
+              );
         setError(authError);
       } finally {
         setIsLoading(false);
@@ -196,16 +202,16 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
           err instanceof AuthError
             ? err
             : new AuthError(
-              "Login failed",
-              "LOGIN_ERROR",
-              config.provider,
-              err
-            );
+                "Login failed",
+                "LOGIN_ERROR",
+                config.provider,
+                err,
+              );
         setError(authError);
         throw authError;
       }
     },
-    [client, config.provider]
+    [client, config.provider],
   );
 
   // Logout method
@@ -220,11 +226,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
         err instanceof AuthError
           ? err
           : new AuthError(
-            "Logout failed",
-            "LOGOUT_ERROR",
-            config.provider,
-            err
-          );
+              "Logout failed",
+              "LOGOUT_ERROR",
+              config.provider,
+              err,
+            );
       setError(authError);
       throw authError;
     }
@@ -232,6 +238,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
 
   // Register method
   const register = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async (email: string, password: string, userData?: Record<string, any>) => {
       if (!client) throw new Error("Auth client not initialized");
 
@@ -244,16 +251,16 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
           err instanceof AuthError
             ? err
             : new AuthError(
-              "Registration failed",
-              "REGISTER_ERROR",
-              config.provider,
-              err
-            );
+                "Registration failed",
+                "REGISTER_ERROR",
+                config.provider,
+                err,
+              );
         setError(authError);
         throw authError;
       }
     },
-    [client, config.provider]
+    [client, config.provider],
   );
 
   // Permission check methods
@@ -262,7 +269,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
       if (!client) return false;
       return await client.hasScope(scope);
     },
-    [client]
+    [client],
   );
 
   const hasRole = useCallback(
@@ -270,7 +277,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
       if (!client) return false;
       return await client.hasRole(role);
     },
-    [client]
+    [client],
   );
 
   const getScopes = useCallback(async (): Promise<string[]> => {
@@ -351,7 +358,7 @@ export const useAuth = (): AuthContextState => {
  */
 export function withAuth<P extends object>(
   Component: React.ComponentType<P>,
-  fallback?: ReactNode
+  fallback?: ReactNode,
 ) {
   return function AuthenticatedComponent(props: P) {
     const { isAuthenticated, isLoading } = useAuth();

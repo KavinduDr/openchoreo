@@ -1,4 +1,4 @@
-// import { useAuthContext } from "@asgardeo/auth-react";
+/* eslint-disable no-console */
 import { AsgardeoSPAClient, Hooks } from "@asgardeo/auth-spa";
 import { User } from "../types";
 
@@ -177,12 +177,38 @@ export class AsgardeoProvider {
     return user?.roles || [];
   }
 
-  // Private method to normalize Asgardeo user data to your standard format
+  private async refreshUserData(): Promise<void> {
+    try {
+      await this.ensureInitialized();
+
+      // Get user info and token
+      const [basicUserInfo, accessToken, decodedIDToken] = await Promise.all([
+        this.client.getBasicUserInfo(),
+        this.client.getAccessToken(),
+        this.client.getDecodedIDToken(),
+      ]);
+
+      // Normalize the data
+      this.cachedUser = await this.normalizeUserData(
+        basicUserInfo,
+        accessToken,
+        decodedIDToken,
+      );
+
+      console.log("User data refreshed:", this.cachedUser);
+    } catch (error) {
+      console.error("Failed to refresh user data:", error);
+      throw error;
+    }
+  }
+
   private async normalizeUserData(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     asgardeoUser: any,
     accessToken: string,
-    decodedIDToken: any
-  ): Promise<NormalizedUser> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    decodedIDToken: any,
+  ): Promise<User> {
     return {
       name: asgardeoUser.displayName || asgardeoUser.username || "",
       email: asgardeoUser.email || "",

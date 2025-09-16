@@ -1,23 +1,5 @@
-// Lightweight Thunder API client using runtime.json
-
-interface ThunderRuntimeConfig {
-  applicationID?: string;
-  flowEndpoint?: string; // e.g., https://localhost:8090/flow
-}
-
-let cachedRuntime: ThunderRuntimeConfig | null = null;
-
-async function loadRuntime(): Promise<ThunderRuntimeConfig> {
-  if (cachedRuntime) return cachedRuntime;
-  const res = await fetch("/runtime.json", { credentials: "same-origin" });
-  if (!res.ok) throw new Error(`Failed to load runtime.json: ${res.status}`);
-  cachedRuntime = await res.json();
-  if (!cachedRuntime.flowEndpoint) {
-    throw new Error("runtime.flowEndpoint is required");
-  }
-  return cachedRuntime;
-}
-
+/* eslint-disable no-console */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function Login(email: string, password: string): Promise<any> {
   try {
     console.log("login function thunderAPI", email, password);
@@ -27,8 +9,7 @@ export async function Login(email: string, password: string): Promise<any> {
       flowEndpoint: "https://localhost:8090/flow",
     } as const;
 
-    // Start/authenticate flow. Depending on your flow graph, you may
-    // need to follow-up with execute/submit calls using returned flowId.
+    // Start/authenticate flow
     const response = await fetch(`${RUNTIME.flowEndpoint}/execute`, {
       method: "POST",
       mode: "cors",
@@ -38,7 +19,7 @@ export async function Login(email: string, password: string): Promise<any> {
       body: JSON.stringify({
         applicationId: RUNTIME.applicationID,
         flowType: "AUTHENTICATION",
-        // If your flow expects credentials in first step, pass as inputs
+        // If flow expects credentials in first step, pass as inputs
         inputs: {
           username: email,
           password: password,
@@ -55,11 +36,11 @@ export async function Login(email: string, password: string): Promise<any> {
       const message =
         (data && (data.message || data.error)) || `HTTP ${response.status}`;
       throw new Error(
-        typeof message === "string" ? message : `HTTP ${response.status}`
+        typeof message === "string" ? message : `HTTP ${response.status}`,
       );
     }
 
-    console.log("Thunder API response data:", data);
+    console.log("Thunder API response data:", data); // for debug
     return data;
   } catch (err) {
     console.error("Error during login:", err);

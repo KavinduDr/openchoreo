@@ -1,4 +1,9 @@
-import { AsgardeoProvider, FirebaseProvider, ThunderProvider } from "./providers";
+/* eslint-disable no-console */
+import {
+  AsgardeoProvider,
+  FirebaseProvider,
+  ThunderProvider,
+} from "./providers";
 import {
   AuthConfig,
   ProviderType,
@@ -27,7 +32,8 @@ interface AuthProviderType {
   register?(
     email: string,
     password: string,
-    userData?: Record<string, any>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userData?: Record<string, any>,
   ): Promise<void>;
 
   /**
@@ -72,10 +78,6 @@ interface AuthProviderType {
   getRoles(): Promise<string[]>;
 }
 
-// Import provider implementations
-// import { Auth0Provider } from './providers/auth0';
-// import { FirebaseProvider } from './providers/firebase';
-
 /**
  * Factory class to create appropriate auth provider based on configuration
  */
@@ -93,7 +95,7 @@ export class ProviderFactory {
           throw new AuthError(
             "Invalid Asgardeo configuration",
             "INVALID_CONFIG",
-            "asgardeo"
+            "asgardeo",
           );
         }
         return ProviderFactory.createAsgardeoProvider(config);
@@ -103,7 +105,7 @@ export class ProviderFactory {
           throw new AuthError(
             "Invalid Auth0 configuration",
             "INVALID_CONFIG",
-            "auth0"
+            "auth0",
           );
         }
         return ProviderFactory.createAuth0Provider(config);
@@ -113,7 +115,7 @@ export class ProviderFactory {
           throw new AuthError(
             "Invalid Firebase configuration",
             "INVALID_CONFIG",
-            "firebase"
+            "firebase",
           );
         }
         return ProviderFactory.createFirebaseProvider(config);
@@ -123,16 +125,17 @@ export class ProviderFactory {
           throw new AuthError(
             "Invalid Thunder configuration",
             "INVALID_CONFIG",
-            "thunder"
+            "thunder",
           );
         }
         return ProviderFactory.createThunderProvider(config);
 
       default:
         throw new AuthError(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           `Unsupported auth provider: ${(config as any).provider}`,
           "UNSUPPORTED_PROVIDER",
-          "factory"
+          "factory",
         );
     }
   }
@@ -149,7 +152,7 @@ export class ProviderFactory {
    */
   static isProviderSupported(provider: string): provider is ProviderType {
     return ProviderFactory.getSupportedProviders().includes(
-      provider as ProviderType
+      provider as ProviderType,
     );
   }
 
@@ -170,50 +173,24 @@ export class ProviderFactory {
         throw new AuthError(
           `Missing required configuration field: ${field}`,
           "MISSING_CONFIG_FIELD",
-          config.provider || "unknown"
+          config.provider || "unknown",
         );
       }
     }
-
-    // Validate scope is an array
-    // if (!Array.isArray(config.scope) || config.scope.length === 0) {
-    //   throw new AuthError(
-    //     "scope must be a non-empty array",
-    //     "INVALID_SCOPE",
-    //     config.provider
-    //   );
-    // }
-
-    // Validate URLs
-    // if (!ProviderFactory.isValidURL(config.signInRedirectURL)) {
-    //   throw new AuthError(
-    //     "Invalid signInRedirectURL",
-    //     "INVALID_URL",
-    //     config.provider
-    //   );
-    // }
-
-    // if (!ProviderFactory.isValidURL(config.signOutRedirectURL)) {
-    //   throw new AuthError(
-    //     "Invalid signOutRedirectURL",
-    //     "INVALID_URL",
-    //     config.provider
-    //   );
-    // }
   }
 
   /**
    * Create Asgardeo provider instance
    */
   private static createAsgardeoProvider(
-    config: AsgardeoConfig
+    config: AsgardeoConfig,
   ): AuthProviderType {
     // Validate Asgardeo-specific fields
     if (!config.baseUrl) {
       throw new AuthError(
         "Missing required field: baseUrl",
         "MISSING_CONFIG_FIELD",
-        "asgardeo"
+        "asgardeo",
       );
     }
 
@@ -234,7 +211,7 @@ export class ProviderFactory {
         "Failed to create Asgardeo provider",
         "PROVIDER_INIT_FAILED",
         "asgardeo",
-        error
+        error,
       );
     }
   }
@@ -248,7 +225,7 @@ export class ProviderFactory {
     throw new AuthError(
       "Auth0 provider not yet implemented",
       "PROVIDER_NOT_IMPLEMENTED",
-      "auth0"
+      "auth0",
     );
 
     // Future implementation:
@@ -273,7 +250,7 @@ export class ProviderFactory {
         "Failed to create Thunder provider",
         "PROVIDER_INIT_FAILED",
         "thunder",
-        error
+        error,
       );
     }
   }
@@ -281,7 +258,7 @@ export class ProviderFactory {
   /**
    * Create Firebase provider instance (placeholder for future implementation)
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   private static createFirebaseProvider(
     config: FirebaseConfig,
   ): AuthProviderType {
@@ -304,14 +281,14 @@ export class ProviderFactory {
           "Failed to create Firebase provider",
           "PROVIDER_INIT_FAILED",
           "firebase",
-          error
+          error,
         );
       }
     } else {
       throw new AuthError(
         "Missing required Firebase configuration fields",
         "MISSING_CONFIG_FIELD",
-        "firebase"
+        "firebase",
       );
     }
     // Future implementation:
@@ -350,6 +327,7 @@ export function createAuthProvider(config: AuthConfig): AuthProviderType {
 /**
  * Helper function to validate configuration before creating provider
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function validateAuthConfig(config: any): config is AuthConfig {
   try {
     // Check if it has required base properties
