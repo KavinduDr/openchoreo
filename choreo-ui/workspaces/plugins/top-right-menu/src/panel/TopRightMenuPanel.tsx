@@ -32,8 +32,7 @@ const TopRightMenuPanel: React.FC = () => {
           }}
           checked={colorMode === "light"}
           color="primary"
-          size="small"
-        />
+          size="small" />
       </Box>
       {!user && <Button onClick={() => login()}>Sign In</Button>}
       {user && <Button onClick={() => logout()}>Sign Out</Button>}
