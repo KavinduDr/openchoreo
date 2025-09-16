@@ -1,4 +1,4 @@
-import { AsgardeoProvider } from "./providers";
+import { AsgardeoProvider, FirebaseProvider, ThunderProvider } from "./providers";
 import {
   AuthConfig,
   ProviderType,
@@ -10,6 +10,8 @@ import {
   isFirebaseConfig,
   AuthError,
   User,
+  ThunderConfig,
+  isThunderConfig,
 } from "./types";
 
 // Common interface that all auth providers must implement
@@ -17,7 +19,7 @@ interface AuthProviderType {
   /**
    * Initialize login flow
    */
-  login(): Promise<void>;
+  login(email?: string, password?: string): Promise<void>;
 
   /**
    * Register new user (if provider supports it)
@@ -116,6 +118,16 @@ export class ProviderFactory {
         }
         return ProviderFactory.createFirebaseProvider(config);
 
+      case "thunder":
+        if (!isThunderConfig(config)) {
+          throw new AuthError(
+            "Invalid Thunder configuration",
+            "INVALID_CONFIG",
+            "thunder"
+          );
+        }
+        return ProviderFactory.createThunderProvider(config);
+
       default:
         throw new AuthError(
           `Unsupported auth provider: ${(config as any).provider}`,
@@ -147,10 +159,10 @@ export class ProviderFactory {
   private static validateBaseConfig(config: AuthConfig): void {
     const requiredFields = [
       "provider",
-      "clientID",
-      "signInRedirectURL",
-      "signOutRedirectURL",
-      "scope",
+      // "clientID",
+      // "signInRedirectURL",
+      // "signOutRedirectURL",
+      // "scope",
     ];
 
     for (const field of requiredFields) {
@@ -164,30 +176,30 @@ export class ProviderFactory {
     }
 
     // Validate scope is an array
-    if (!Array.isArray(config.scope) || config.scope.length === 0) {
-      throw new AuthError(
-        "scope must be a non-empty array",
-        "INVALID_SCOPE",
-        config.provider
-      );
-    }
+    // if (!Array.isArray(config.scope) || config.scope.length === 0) {
+    //   throw new AuthError(
+    //     "scope must be a non-empty array",
+    //     "INVALID_SCOPE",
+    //     config.provider
+    //   );
+    // }
 
     // Validate URLs
-    if (!ProviderFactory.isValidURL(config.signInRedirectURL)) {
-      throw new AuthError(
-        "Invalid signInRedirectURL",
-        "INVALID_URL",
-        config.provider
-      );
-    }
+    // if (!ProviderFactory.isValidURL(config.signInRedirectURL)) {
+    //   throw new AuthError(
+    //     "Invalid signInRedirectURL",
+    //     "INVALID_URL",
+    //     config.provider
+    //   );
+    // }
 
-    if (!ProviderFactory.isValidURL(config.signOutRedirectURL)) {
-      throw new AuthError(
-        "Invalid signOutRedirectURL",
-        "INVALID_URL",
-        config.provider
-      );
-    }
+    // if (!ProviderFactory.isValidURL(config.signOutRedirectURL)) {
+    //   throw new AuthError(
+    //     "Invalid signOutRedirectURL",
+    //     "INVALID_URL",
+    //     config.provider
+    //   );
+    // }
   }
 
   /**
@@ -250,20 +262,58 @@ export class ProviderFactory {
     // });
   }
 
+  private static createThunderProvider(
+    config: ThunderConfig,
+  ): AuthProviderType {
+    console.log(config);
+    try {
+      return new ThunderProvider();
+    } catch (error) {
+      throw new AuthError(
+        "Failed to create Thunder provider",
+        "PROVIDER_INIT_FAILED",
+        "thunder",
+        error
+      );
+    }
+  }
+
   /**
    * Create Firebase provider instance (placeholder for future implementation)
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private static createFirebaseProvider(
-    config: FirebaseConfig
+    config: FirebaseConfig,
   ): AuthProviderType {
     // TODO: Implement Firebase provider
-    throw new AuthError(
-      "Firebase provider not yet implemented",
-      "PROVIDER_NOT_IMPLEMENTED",
-      "firebase"
-    );
 
+    if (config.apiKey && config.authDomain && config.projectId) {
+      // Minimal validation passed
+      try {
+        return new FirebaseProvider({
+          apiKey: config.apiKey,
+          authDomain: config.authDomain,
+          projectId: config.projectId,
+          storageBucket: config.storageBucket,
+          messagingSenderId: config.messagingSenderId,
+          appId: config.appId,
+          scope: config.scope,
+        });
+      } catch (error) {
+        throw new AuthError(
+          "Failed to create Firebase provider",
+          "PROVIDER_INIT_FAILED",
+          "firebase",
+          error
+        );
+      }
+    } else {
+      throw new AuthError(
+        "Missing required Firebase configuration fields",
+        "MISSING_CONFIG_FIELD",
+        "firebase"
+      );
+    }
     // Future implementation:
     // return new FirebaseProvider({
     //   clientID: config.clientID,

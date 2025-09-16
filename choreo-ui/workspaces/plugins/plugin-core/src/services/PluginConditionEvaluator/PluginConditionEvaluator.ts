@@ -94,7 +94,9 @@ export function evaluateWhenExpression(
 
   try {
     const component = context.component?.data || null;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const project = context.project?.data || null;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const org = context.org?.data || null;
 
     const result = eval(when);

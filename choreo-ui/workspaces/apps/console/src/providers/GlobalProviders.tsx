@@ -21,13 +21,23 @@ export const GlobalProviders = ({
     provider: "asgardeo",
     clientID: "a6Sf_moAUbIPX2JZ440djfunA94a",
     baseUrl: "https://api.asgardeo.io/t/starkindustriesdemo", // Required by interface
-    domain: "https://api.asgardeo.io/t/starkindustriesdemo", // Used for provider config
-    signInRedirectURL: `${window.location.origin}/callback`,
-    signOutRedirectURL: window.location.origin,
+    // domain: "https://api.asgardeo.io/t/starkindustriesdemo", // Used for provider config
+    signInRedirectURL: `http://localhost:4000/sign-in`,
+    signOutRedirectURL: "http://localhost:4000/organization/default",
     scope: ["openid", "profile", "email"],
     autoRefresh: true,
     checkInterval: 5,
   };
+
+  // const firebaseConfig: AuthClientConfig = {
+  //   provider: "firebase",
+  //   apiKey: "AIzaSyB-4NMohSeu-BpuaDN05-ljj9H_uJRm-fE",
+  //   authDomain: "contact-manager-23087.firebaseapp.com",
+  //   projectId: "contact-manager-23087",
+  //   storageBucket: "contact-manager-23087.firebasestorage.app",
+  //   messagingSenderId: "318523868384",
+  //   appId: "1:318523868384:web:69c00e6b1dc7b40adf7c85",
+  // };
 
   return (
     <BrowserRouter basename="/">

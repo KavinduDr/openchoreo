@@ -1,5 +1,5 @@
 {
-  "name": "@open-choreo/common-views",
+  "name": "@open-choreo/thunder-auth-views",
   "version": "1.0.0",
   "type": "module",
   "import": "./dist/index.js",

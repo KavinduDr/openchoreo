@@ -21,7 +21,7 @@ interface AuthContextState {
   error: AuthError | null;
 
   // Auth methods
-  login: () => Promise<void>;
+  login: (email?: string, password?: string) => Promise<void>;
   logout: () => Promise<void>;
   register: (
     email: string,
@@ -163,22 +163,50 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
   }, [client]);
 
   // Login method
-  const login = useCallback(async () => {
-    if (!client) throw new Error("Auth client not initialized");
+  const login = useCallback(
+    async (email?: string, password?: string) => {
+      if (!client) throw new Error("Auth client not initialized");
 
-    try {
-      setError(null);
-      await client.login();
-      // User state will be updated via onLoginSuccess event
-    } catch (err) {
-      const authError =
-        err instanceof AuthError
-          ? err
-          : new AuthError("Login failed", "LOGIN_ERROR", config.provider, err);
-      setError(authError);
-      throw authError;
-    }
-  }, [client, config.provider]);
+      try {
+        setError(null);
+        console.log("Starting login process...", { email, password });
+        await client.login(email || "", password || "");
+        console.log("Login completed, checking auth state...");
+
+        // After login, manually refresh the auth state
+        setTimeout(async () => {
+          try {
+            const isAuth = await client.isAuthenticated();
+            console.log("Post-login auth check:", isAuth);
+
+            if (isAuth) {
+              const userData = await client.getUser();
+              console.log("Post-login user data:", userData);
+              setUser(userData);
+              setIsAuthenticated(true);
+            }
+          } catch (err) {
+            console.error("Post-login state refresh failed:", err);
+          }
+        }, 2000); // Wait 2 seconds after login
+
+        // User state will be updated via onLoginSuccess event
+      } catch (err) {
+        const authError =
+          err instanceof AuthError
+            ? err
+            : new AuthError(
+              "Login failed",
+              "LOGIN_ERROR",
+              config.provider,
+              err
+            );
+        setError(authError);
+        throw authError;
+      }
+    },
+    [client, config.provider]
+  );
 
   // Logout method
   const logout = useCallback(async () => {
