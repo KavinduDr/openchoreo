@@ -179,26 +179,30 @@ export class AsgardeoProvider {
 
   private async refreshUserData(): Promise<void> {
     try {
-      await this.ensureInitialized();
+      const asgardeoUser = await this.client.getBasicUserInfo();
+      const accessToken = await this.client.getAccessToken();
+      const decodedIDToken = await this.client.getDecodedIDToken();
 
-      // Get user info and token
-      const [basicUserInfo, accessToken, decodedIDToken] = await Promise.all([
-        this.client.getBasicUserInfo(),
-        this.client.getAccessToken(),
-        this.client.getDecodedIDToken(),
-      ]);
-
-      // Normalize the data
-      this.cachedUser = await this.normalizeUserData(
-        basicUserInfo,
+      const newUserData = await this.normalizeUserData(
+        asgardeoUser,
         accessToken,
-        decodedIDToken,
+        decodedIDToken
       );
 
+      // Keep old roles if new fetch fails, as per your preference
+      if (
+        this.cachedUser &&
+        (!newUserData.roles.length || !newUserData.scopes.length)
+      ) {
+        newUserData.roles = this.cachedUser.roles;
+        newUserData.scopes = this.cachedUser.scopes;
+      }
+
+      this.cachedUser = newUserData;
       console.log("User data refreshed:", this.cachedUser);
     } catch (error) {
       console.error("Failed to refresh user data:", error);
-      throw error;
+      // Keep existing cached user data on failure
     }
   }
 
@@ -227,36 +231,7 @@ export class AsgardeoProvider {
       const currentTime = Math.floor(Date.now() / 1000);
       return payload.exp < currentTime;
     } catch {
-      return true;
     }
-  }
-
-  // Private method to refresh user data when token is refreshed
-  private async refreshUserData(): Promise<void> {
-    try {
-      const asgardeoUser = await this.client.getBasicUserInfo();
-      const accessToken = await this.client.getAccessToken();
-      const decodedIDToken = await this.client.getDecodedIDToken();
-
-      const newUserData = await this.normalizeUserData(
-        asgardeoUser,
-        accessToken,
-        decodedIDToken
-      );
-
-      // Keep old roles if new fetch fails, as per your preference
-      if (
-        this.cachedUser &&
-        (!newUserData.roles.length || !newUserData.scopes.length)
-      ) {
-        newUserData.roles = this.cachedUser.roles;
-        newUserData.scopes = this.cachedUser.scopes;
-      }
-
-      this.cachedUser = newUserData;
-    } catch (error) {
-      console.error("Failed to refresh user data:", error);
-      // Keep existing cached user data on failure
-    }
+    // Keep existing cached user data on failure
   }
 }
