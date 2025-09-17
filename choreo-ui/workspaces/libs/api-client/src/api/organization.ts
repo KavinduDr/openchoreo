@@ -1,9 +1,9 @@
 import { apiRequest, type ApiConfig } from "../core/config";
-import { type OrganizationList, type Organization } from "../types/types";
+import { type OrganizationList, type OrganizationResponse } from "../types/types";
 
 export interface OrganizationApi {
   listOrganizations(config?: ApiConfig): Promise<OrganizationList>;
-  getOrganization(orgHandle: string, config?: ApiConfig): Promise<Organization>;
+  getOrganization(orgHandle: string, config?: ApiConfig): Promise<OrganizationResponse>;
 }
 
 export const organizationApi: OrganizationApi = {
@@ -18,8 +18,8 @@ export const organizationApi: OrganizationApi = {
   async getOrganization(
     orgHandle: string,
     config?: ApiConfig,
-  ): Promise<Organization> {
-    return apiRequest<Organization>(
+  ): Promise<OrganizationResponse> {
+    return apiRequest<OrganizationResponse>(
       `/api/v1/orgs/${orgHandle}`,
       { method: "GET" },
       config,

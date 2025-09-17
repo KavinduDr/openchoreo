@@ -1,6 +1,6 @@
 import { CreateProjectRequest } from "@open-choreo/definitions";
 import { apiRequest, type ApiConfig } from "../core/config";
-import { type Project, type ProjectList } from "../types/types";
+import { type ProjectResponse, type ProjectList } from "../types/types";
 
 export interface ProjectsApi {
   listProjects(orgName: string, config?: ApiConfig): Promise<ProjectList>;
@@ -8,12 +8,12 @@ export interface ProjectsApi {
     orgName: string,
     projectName: string,
     config?: ApiConfig,
-  ): Promise<Project>;
+  ): Promise<ProjectResponse>;
   createProject(
     orgName: string,
     data: CreateProjectRequest,
     config?: ApiConfig,
-  ): Promise<Project>;
+  ): Promise<ProjectResponse>;
 }
 
 export const projectsApi: ProjectsApi = {
@@ -40,16 +40,16 @@ export const projectsApi: ProjectsApi = {
    * @param orgName - Name of the organization
    * @param projectName - Name of the project
    * @param config - Optional API configuration
-   * @returns Promise<Project> - Project details
+   * @returns Promise<ProjectResponse> - Project details
    */
   async getProject(
     orgName: string,
     projectName: string,
     config?: ApiConfig,
-  ): Promise<Project> {
+  ): Promise<ProjectResponse> {
     const encodedProjectName = encodeURIComponent(projectName);
     const encodedOrgName = encodeURIComponent(orgName);
-    return apiRequest<Project>(
+    return apiRequest<ProjectResponse>(
       `/api/v1/orgs/${encodedOrgName}/projects/${encodedProjectName}`,
       { method: "GET" },
       config,
@@ -63,9 +63,9 @@ export const projectsApi: ProjectsApi = {
     orgName: string,
     data: CreateProjectRequest,
     config?: ApiConfig,
-  ): Promise<Project> {
+  ): Promise<ProjectResponse> {
     const encodedOrgName = encodeURIComponent(orgName);
-    return apiRequest<Project>(
+    return apiRequest<ProjectResponse>(
       `/api/v1/orgs/${encodedOrgName}/projects`,
       {
         method: "POST",

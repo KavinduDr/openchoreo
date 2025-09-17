@@ -4,9 +4,9 @@ import {
   usePathMatchProject,
   usePathMatchOrg,
   useUrlParams,
-  useComponent,
-  useProject,
-  useOrganization,
+  useSelectedProject,
+  useSelectedOrganization,
+  useSelectedComponent,
 } from "@open-choreo/choreo-context";
 import { usePluginRegistry } from "../../Providers";
 
@@ -24,16 +24,11 @@ export function GetCurrentContext() {
 
 // Build context object for evaluation
 export function BuildContextObject() {
-  const { orgHandle, projectHandle, componentHandle } = useUrlParams();
-
+  const { orgHandle } = useUrlParams();
   // Fetch objects using hooks
-  const { data: componentObj } = useComponent(
-    orgHandle || "",
-    projectHandle || "",
-    componentHandle || "",
-  );
-  const { data: projectObj } = useProject(orgHandle || "", projectHandle || "");
-  const { data: orgObj } = useOrganization(orgHandle || "");
+  const { data: componentObj } = useSelectedComponent();
+  const { data: projectObj } = useSelectedProject();
+  const { data: orgObj } = useSelectedOrganization();
   // You may need a useOrg hook if you want org details, otherwise just use orgHandle
 
   const componentType = componentObj?.data?.type || "";

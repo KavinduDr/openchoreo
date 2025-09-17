@@ -1,12 +1,12 @@
 import {
-  type OrganizationItem,
-  type ProjectItem,
-  type ComponentItem,
+  type Organization as OrganizationDef,
+  type Project as ProjectDef,
+  type Component as ComponentDef,
   BuildPlane,
   Build,
-  ComponentBinding,
+  Binding,
   DeploymentPipeline,
-  Workload,
+  WorkloadSpec,
   Environment,
   DataPlane,
   ComponentObserver,
@@ -15,7 +15,7 @@ import {
 } from "@open-choreo/definitions";
 
 export interface OrganizationListData {
-  items: OrganizationItem[];
+  items: OrganizationDef[];
   totalCount: number;
   page: number;
   pageSize: number;
@@ -26,13 +26,13 @@ export interface OrganizationList {
   data: OrganizationListData;
 }
 
-export interface Organization {
+export interface OrganizationResponse {
   success: boolean;
-  data: OrganizationItem;
+  data: OrganizationDef;
 }
 
 export interface ProjectListData {
-  items: ProjectItem[];
+  items: ProjectDef[];
   totalCount: number;
   page: number;
   pageSize: number;
@@ -43,18 +43,18 @@ export interface ProjectList {
   data: ProjectListData;
 }
 
-export interface Project {
+export interface ProjectResponse {
   success: boolean;
-  data: ProjectItem;
+  data: ProjectDef;
 }
 
-export interface Component {
+export interface ComponentResponse {
   success: boolean;
-  data: ComponentItem;
+  data: ComponentDef;
 }
 
 export interface ComponentListData {
-  items: ComponentItem[];
+  items: ComponentDef[];
   totalCount: number;
   page: number;
   pageSize: number;
@@ -90,7 +90,7 @@ export interface BuildList {
 }
 
 export interface ComponentBindingListData {
-  items: ComponentBinding[];
+  items: Binding[];
   totalCount: number;
   page: number;
   pageSize: number;
@@ -103,7 +103,7 @@ export interface ComponentBindingList {
 
 export interface ComponentBindingResponse {
   success: boolean;
-  data: ComponentBinding;
+  data: Binding;
 }
 
 export interface DeploymentPipelineResponse {
@@ -112,7 +112,7 @@ export interface DeploymentPipelineResponse {
 }
 
 export interface WorkloadListData {
-  items: Workload[];
+  items: WorkloadSpec[];
   totalCount: number;
   page: number;
   pageSize: number;
@@ -125,7 +125,7 @@ export interface WorkloadList {
 
 export interface WorkloadResponse {
   success: boolean;
-  data: Workload;
+  data: WorkloadSpec;
 }
 
 export interface EnvironmentListData {
@@ -175,4 +175,10 @@ export interface ApplyResponse {
 export interface DeleteResponse {
   success: boolean;
   data: DeleteResourceResponse;
+}
+
+// Promote Component Response - returns list of created bindings
+export interface PromoteComponentResponse {
+  success: boolean;
+  data: ComponentBindingListData;
 }

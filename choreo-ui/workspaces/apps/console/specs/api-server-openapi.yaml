@@ -1,676 +1,1455 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
-  title: Choreo API Server
+  title: OpenChoreo API
   version: 1.0.0
-  description: API specification for Choreo API Server
-
+  description: HTTP API for managing organizations, projects, components, environments, dataplanes, builds, and workloads in OpenChoreo.
 servers:
-  - url: http://localhost:3001
-    description: Local development server
-
+  - url: http://localhost:8080
 paths:
-  /:
+  /health:
     get:
-      summary: List available endpoints
-      description: Returns a list of all available API endpoints
+      summary: Health check
       responses:
         '200':
-          description: List of available endpoints
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: OK
+  /ready:
+    get:
+      summary: Readiness check
+      responses:
+        '200':
+          description: Ready
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Ready
+  /api/v1/apply:
+    post:
+      summary: Apply a resource (server-side apply)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Resource applied
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  paths:
-                    type: array
-                    items:
-                      type: string
-              example:
-                paths:
-                  - "/api/v1/projects"
-                  - "/api/v1/projects/{project-name}"
-                  - "/api/v1/projects/{project-name}/components"
-                  - "/api/v1/projects/{project-name}/components/{component-name}/deployments"
-                  - "/api/v1/projects/{project-name}/components/{component-name}/deployments/{deployment-name}"
-
-  /api/v1/projects:
+                $ref: '#/components/schemas/APIResponseApply'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/delete:
+    delete:
+      summary: Delete a resource
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Resource deletion status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseDelete'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/get/{kind}:
     get:
-      summary: List all projects
-      description: Returns a list of all projects
+      summary: List resources by kind
+      parameters:
+        - name: kind
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Resource kind (organization, project, component, etc.)
+        - name: orgName
+          in: query
+          schema:
+            type: string
+          description: Organization name (required for namespaced resources)
+      responses:
+        '200':
+          description: List of resources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseAny'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/get/{kind}/{name}:
+    get:
+      summary: Get resource by kind and name
+      parameters:
+        - name: kind
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Resource kind (organization, project, component, etc.)
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Resource name
+        - name: orgName
+          in: query
+          schema:
+            type: string
+          description: Organization name (required for namespaced resources)
+      responses:
+        '200':
+          description: Resource details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseAny'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs:
+    get:
+      summary: List organizations
+      responses:
+        '200':
+          description: List of organizations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseListOrganization'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}:
+    get:
+      summary: Get organization
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+      responses:
+        '200':
+          description: Organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseOrganization'
+        '404':
+          $ref: '#/components/responses/NotFoundOrganization'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/dataplanes:
+    get:
+      summary: List dataplanes
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+      responses:
+        '200':
+          description: List of dataplanes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseListDataPlane'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      summary: Create dataplane
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDataPlaneRequest'
+      responses:
+        '201':
+          description: Created dataplane
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseDataPlane'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/ConflictDataPlaneExists'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/dataplanes/{dpName}:
+    get:
+      summary: Get dataplane
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - name: dpName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dataplane
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseDataPlane'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFoundDataPlane'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/environments:
+    get:
+      summary: List environments
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+      responses:
+        '200':
+          description: List of environments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseListEnvironment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      summary: Create environment
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEnvironmentRequest'
+      responses:
+        '201':
+          description: Created environment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseEnvironment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/ConflictEnvironmentExists'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/environments/{envName}:
+    get:
+      summary: Get environment
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - name: envName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Environment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseEnvironment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/buildplanes:
+    get:
+      summary: List build planes
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+      responses:
+        '200':
+          description: Build planes (returns single or empty for org)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseBuildPlane'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/build-templates:
+    get:
+      summary: List build templates
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+      responses:
+        '200':
+          description: List of build templates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseListBuildTemplate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects:
+    get:
+      summary: List projects
+      parameters:
+        - $ref: '#/components/parameters/orgName'
       responses:
         '200':
           description: List of projects
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectList'
-              example:
-                apiVersion: "core.choreo.dev/v1"
-                kind: "ProjectList"
-                items:
-                  - apiVersion: "core.choreo.dev/v1"
-                    kind: "Project"
-                    metadata:
-                      annotations:
-                        core.choreo.dev/description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                        core.choreo.dev/display-name: "E-commerce Platform"
-                      name: "ecommerce-platform"
-                      namespace: "default"
-                      labels:
-                        core.choreo.dev/name: "ecommerce-platform"
-                        core.choreo.dev/organization: "acme-corp"
-                    spec:
-                      deploymentPipelineRef: "pipeline-ecommerce-v1"
-                    status:
-                      conditions:
-                        - lastTransitionTime: "2024-01-15T10:30:00Z"
-                          message: "Project is ready"
-                          observedGeneration: 1
-                          reason: "Ready"
-                          status: "True"
-                          type: "Ready"
-                  - apiVersion: "core.choreo.dev/v1"
-                    kind: "Project"
-                    metadata:
-                      annotations:
-                        core.choreo.dev/description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-                        core.choreo.dev/display-name: "Mobile App Backend"
-                      name: "mobile-backend"
-                      namespace: "default"
-                      labels:
-                        core.choreo.dev/name: "mobile-backend"
-                        core.choreo.dev/organization: "acme-corp"
-                    spec:
-                      deploymentPipelineRef: "pipeline-mobile-v2"
-                    status:
-                      conditions:
-                        - lastTransitionTime: "2024-01-14T15:45:00Z"
-                          message: "Project is ready"
-                          observedGeneration: 1
-                          reason: "Ready"
-                          status: "True"
-                          type: "Ready"
-                metadata:
-                  continue: ""
-                  resourceVersion: "12345"
-
-  /api/v1/projects/{project-name}:
-    get:
-      summary: Get project details
-      description: Returns details of a specific project
+                $ref: '#/components/schemas/APIResponseListProject'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      summary: Create project
       parameters:
-        - name: project-name
-          in: path
-          required: true
-          schema:
-            type: string
-          example: "ecommerce-platform"
+        - $ref: '#/components/parameters/orgName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
       responses:
-        '200':
-          description: Project details
+        '201':
+          description: Created project
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
-              example:
-                apiVersion: "core.choreo.dev/v1"
-                kind: "Project"
-                metadata:
-                  annotations:
-                    core.choreo.dev/description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-                    core.choreo.dev/display-name: "E-commerce Platform"
-                  name: "ecommerce-platform"
-                  namespace: "default"
-                  labels:
-                    core.choreo.dev/name: "ecommerce-platform"
-                    core.choreo.dev/organization: "acme-corp"
-                spec:
-                  deploymentPipelineRef: "pipeline-ecommerce-v1"
-                status:
-                  conditions:
-                    - lastTransitionTime: "2024-01-15T10:30:00Z"
-                      message: "Project is ready and all components are deployed successfully"
-                      observedGeneration: 1
-                      reason: "Ready"
-                      status: "True"
-                      type: "Ready"
-
-  /api/v1/projects/{project-name}/components:
+                $ref: '#/components/schemas/APIResponseProject'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/ConflictProjectExists'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects/{projectName}:
     get:
-      summary: List project components
-      description: Returns a list of components in a project
+      summary: Get project
       parameters:
-        - name: project-name
-          in: path
-          required: true
-          schema:
-            type: string
-          example: "ecommerce-platform"
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+      responses:
+        '200':
+          description: Project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseProject'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFoundProject'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects/{projectName}/deployment-pipeline:
+    get:
+      summary: Get deployment pipeline for project
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+      responses:
+        '200':
+          description: Deployment pipeline
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseDeploymentPipeline'
+        '404':
+          $ref: '#/components/responses/NotFoundDeploymentPipeline'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects/{projectName}/components:
+    get:
+      summary: List components
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
       responses:
         '200':
           description: List of components
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ComponentList'
-              example:
-                apiVersion: "core.choreo.dev/v1"
-                kind: "ComponentList"
-                items:
-                  - apiVersion: "core.choreo.dev/v1"
-                    kind: "Component"
-                    metadata:
-                      annotations:
-                        core.choreo.dev/description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-                        core.choreo.dev/display-name: "User Service"
-                      name: "user-service"
-                      namespace: "default"
-                      labels:
-                        core.choreo.dev/name: "user-service"
-                        core.choreo.dev/organization: "acme-corp"
-                        core.choreo.dev/project: "ecommerce-platform"
-                    spec:
-                      source:
-                        gitRepository:
-                          url: "https://github.com/acme-corp/user-service.git"
-                        containerRegistry:
-                          imageName: "acme-corp/user-service:latest"
-                      type: "service"
-                    status:
-                      conditions:
-                        - lastTransitionTime: "2024-01-15T11:00:00Z"
-                          message: "Component is ready"
-                          observedGeneration: 1
-                          reason: "Ready"
-                          status: "True"
-                          type: "Ready"
-                  - apiVersion: "core.choreo.dev/v1"
-                    kind: "Component"
-                    metadata:
-                      annotations:
-                        core.choreo.dev/description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                        core.choreo.dev/display-name: "Payment Gateway"
-                      name: "payment-gateway"
-                      namespace: "default"
-                      labels:
-                        core.choreo.dev/name: "payment-gateway"
-                        core.choreo.dev/organization: "acme-corp"
-                        core.choreo.dev/project: "ecommerce-platform"
-                    spec:
-                      source:
-                        gitRepository:
-                          url: "https://github.com/acme-corp/payment-gateway.git"
-                        containerRegistry:
-                          imageName: "acme-corp/payment-gateway:latest"
-                      type: "service"
-                    status:
-                      conditions:
-                        - lastTransitionTime: "2024-01-15T11:15:00Z"
-                          message: "Component is ready"
-                          observedGeneration: 1
-                          reason: "Ready"
-                          status: "True"
-                          type: "Ready"
-                metadata:
-                  continue: ""
-                  resourceVersion: "12346"
-  /api/v1/projects/{project-name}/components/{component-name}:
-    get:
-      summary: Get component details
-      description: Returns details of a specific component
+                $ref: '#/components/schemas/APIResponseListComponent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFoundProject'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      summary: Create component
       parameters:
-        - name: project-name
-          in: path
-          required: true
-          schema:
-            type: string
-          example: "ecommerce-platform"
-        - name: component-name
-          in: path
-          required: true
-          schema:
-            type: string
-          example: "user-service"
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateComponentRequest'
       responses:
-        '200':
-          description: Component details
+        '201':
+          description: Created component
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Component'
-              example:
-                apiVersion: "core.choreo.dev/v1"
-                kind: "Component"
-                metadata:
-                  annotations:
-                    core.choreo.dev/description: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-                    core.choreo.dev/display-name: "User Service"
-                  name: "user-service"
-                  namespace: "default"
-                  labels:
-                    core.choreo.dev/name: "user-service"
-                    core.choreo.dev/organization: "acme-corp"
-                    core.choreo.dev/project: "ecommerce-platform"
-                spec:
-                  source:
-                    gitRepository:
-                      url: "https://github.com/acme-corp/user-service.git"
-                    containerRegistry:
-                      imageName: "acme-corp/user-service:latest"
-                      imageTag: "latest"
-                      imagePullPolicy: "Always"
-                      imagePullSecret: "acme-corp-registry-secret"
-                      imagePullSecretName: "acme-corp-registry-secret"
-                      imagePullSecretNamespace: "default"
-                      imagePullSecretServiceAccount: "default"
-                      imagePullSecretServiceAccountNamespace: "default"
-                      imagePullSecretServiceAccountName: "default"
-                      imagePullSecretServiceAccountNamespace: "default"
-                      imagePullSecretServiceAccountName: "default"
-
-  /api/v1/projects/{project-name}/components/{component-name}/deployments:
+                $ref: '#/components/schemas/APIResponseComponent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFoundProject'
+        '409':
+          $ref: '#/components/responses/ConflictComponentExists'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects/{projectName}/components/{componentName}:
     get:
-      summary: List component deployments
-      description: Returns a list of deployments for a component
+      summary: Get component
       parameters:
-        - name: project-name
-          in: path
-          required: true
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+        - $ref: '#/components/parameters/componentName'
+        - name: include
+          in: query
+          description: Comma-separated additional resources to include
           schema:
             type: string
-          example: "ecommerce-platform"
-        - name: component-name
-          in: path
-          required: true
-          schema:
-            type: string
-          example: "user-service"
       responses:
         '200':
-          description: List of deployments
+          description: Component
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeploymentList'
-              example:
-                apiVersion: "core.choreo.dev/v1"
-                kind: "DeploymentList"
-                items:
-                  - apiVersion: "core.choreo.dev/v1"
-                    kind: "Deployment"
-                    metadata:
-                      annotations:
-                        core.choreo.dev/display-name: "User Service Production"
-                      name: "user-service-prod"
-                      namespace: "default"
-                      labels:
-                        core.choreo.dev/component: "user-service"
-                        core.choreo.dev/deployment-track: "production"
-                        core.choreo.dev/environment: "production"
-                        core.choreo.dev/name: "user-service-prod"
-                        core.choreo.dev/organization: "acme-corp"
-                        core.choreo.dev/project: "ecommerce-platform"
-                    spec:
-                      deploymentArtifactRef: "artifact-user-service-v1.2.0"
-                    status:
-                      conditions:
-                        - lastTransitionTime: "2024-01-15T12:00:00Z"
-                          message: "Deployment is running successfully"
-                          observedGeneration: 1
-                          reason: "Running"
-                          status: "True"
-                          type: "Ready"
-                  - apiVersion: "core.choreo.dev/v1"
-                    kind: "Deployment"
-                    metadata:
-                      annotations:
-                        core.choreo.dev/display-name: "User Service Staging"
-                      name: "user-service-staging"
-                      namespace: "default"
-                      labels:
-                        core.choreo.dev/component: "user-service"
-                        core.choreo.dev/deployment-track: "staging"
-                        core.choreo.dev/environment: "staging"
-                        core.choreo.dev/name: "user-service-staging"
-                        core.choreo.dev/organization: "acme-corp"
-                        core.choreo.dev/project: "ecommerce-platform"
-                    spec:
-                      deploymentArtifactRef: "artifact-user-service-v1.3.0-beta"
-                    status:
-                      conditions:
-                        - lastTransitionTime: "2024-01-15T13:30:00Z"
-                          message: "Deployment is running successfully"
-                          observedGeneration: 1
-                          reason: "Running"
-                          status: "True"
-                          type: "Ready"
-                metadata:
-                  continue: ""
-                  resourceVersion: "12347"
-
-  /api/v1/projects/{project-name}/components/{component-name}/deployments/{deployment-name}:
+                $ref: '#/components/schemas/APIResponseComponent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFoundComponentOrProject'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects/{projectName}/components/{componentName}/bindings:
     get:
-      summary: Get deployment details
-      description: Returns details of a specific deployment
+      summary: Get component bindings
       parameters:
-        - name: project-name
-          in: path
-          required: true
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+        - $ref: '#/components/parameters/componentName'
+        - name: environment
+          in: query
+          description: Optional environment filters (repeatable)
           schema:
-            type: string
-          example: "ecommerce-platform"
-        - name: component-name
-          in: path
-          required: true
-          schema:
-            type: string
-          example: "user-service"
-        - name: deployment-name
-          in: path
-          required: true
-          schema:
-            type: string
-          example: "user-service-prod"
+            type: array
+            items:
+              type: string
+            style: form
+            explode: true
       responses:
         '200':
-          description: Deployment details
+          description: List of bindings
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Deployment'
-              example:
-                apiVersion: "core.choreo.dev/v1"
-                kind: "Deployment"
-                metadata:
-                  annotations:
-                    core.choreo.dev/display-name: "User Service Production"
-                  name: "user-service-prod"
-                  namespace: "default"
-                  labels:
-                    core.choreo.dev/component: "user-service"
-                    core.choreo.dev/deployment-track: "production"
-                    core.choreo.dev/environment: "production"
-                    core.choreo.dev/name: "user-service-prod"
-                    core.choreo.dev/organization: "acme-corp"
-                    core.choreo.dev/project: "ecommerce-platform"
-                spec:
-                  deploymentArtifactRef: "artifact-user-service-v1.2.0"
-                status:
-                  conditions:
-                    - lastTransitionTime: "2024-01-15T12:00:00Z"
-                      message: "Deployment is running successfully with 3 replicas"
-                      observedGeneration: 1
-                      reason: "Running"
-                      status: "True"
-                      type: "Ready"
-
+                $ref: '#/components/schemas/APIResponseListBinding'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFoundComponentOrProject'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects/{projectName}/components/{componentName}/bindings/{bindingName}:
+    patch:
+      summary: Update component binding
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+        - $ref: '#/components/parameters/componentName'
+        - name: bindingName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBindingRequest'
+      responses:
+        '200':
+          description: Updated binding
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseBinding'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFoundBindingOrComponentOrProject'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects/{projectName}/components/{componentName}/promote:
+    post:
+      summary: Promote component to next environment
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+        - $ref: '#/components/parameters/componentName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PromoteComponentRequest'
+      responses:
+        '200':
+          description: Created bindings for target environment(s)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseListBinding'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFoundPromotionPrereq'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects/{projectName}/components/{componentName}/builds:
+    post:
+      summary: Trigger build
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+        - $ref: '#/components/parameters/componentName'
+        - name: commit
+          in: query
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Build triggered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseBuild'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    get:
+      summary: List builds
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+        - $ref: '#/components/parameters/componentName'
+      responses:
+        '200':
+          description: List of builds
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseListBuild'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects/{projectName}/components/{componentName}/environments/{environmentName}/observer-url:
+    get:
+      summary: Get runtime observer URL for component
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+        - $ref: '#/components/parameters/componentName'
+        - name: environmentName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Observer URL info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseComponentObserver'
+        '404':
+          $ref: '#/components/responses/NotFoundObserverPrereq'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects/{projectName}/components/{componentName}/observer-url:
+    get:
+      summary: Get build observer URL for component
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+        - $ref: '#/components/parameters/componentName'
+      responses:
+        '200':
+          description: Observer URL info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseComponentObserver'
+        '404':
+          $ref: '#/components/responses/NotFoundComponentOrProject'
+        '500':
+          $ref: '#/components/responses/InternalError'
+  /api/v1/orgs/{orgName}/projects/{projectName}/components/{componentName}/workloads:
+    get:
+      summary: Get workloads for component
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+        - $ref: '#/components/parameters/componentName'
+      responses:
+        '200':
+          description: Workloads
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseAny'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
+    post:
+      summary: Create or update workload for component
+      parameters:
+        - $ref: '#/components/parameters/orgName'
+        - $ref: '#/components/parameters/projectName'
+        - $ref: '#/components/parameters/componentName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkloadSpec'
+      responses:
+        '201':
+          description: Created workload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseAny'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalError'
 components:
+  parameters:
+    orgName:
+      name: orgName
+      in: path
+      required: true
+      schema:
+        type: string
+    projectName:
+      name: projectName
+      in: path
+      required: true
+      schema:
+        type: string
+    componentName:
+      name: componentName
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    NotFoundOrganization:
+      description: Organization not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    NotFoundProject:
+      description: Project not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    NotFoundComponentOrProject:
+      description: Component or project not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    NotFoundBindingOrComponentOrProject:
+      description: Binding, component or project not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    NotFoundDataPlane:
+      description: DataPlane not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    NotFoundDeploymentPipeline:
+      description: Deployment pipeline not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    NotFoundObserverPrereq:
+      description: Component/environment/dataplane not found or observer not configured
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    ConflictProjectExists:
+      description: Project already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    ConflictComponentExists:
+      description: Component already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    ConflictEnvironmentExists:
+      description: Environment already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
+    ConflictDataPlaneExists:
+      description: DataPlane already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/APIResponseError'
   schemas:
-    Project:
+    APIResponseBase:
       type: object
       properties:
-        apiVersion:
+        success:
+          type: boolean
+        code:
           type: string
-          example: core.choreo.dev/v1
-        kind:
+        error:
           type: string
-          example: Project
-        metadata:
-          type: object
-          properties:
-            annotations:
-              type: object
-              properties:
-                core.choreo.dev/description:
-                  type: string
-                  example: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                core.choreo.dev/display-name:
-                  type: string
-                  example: "E-commerce Platform"
-            name:
-              type: string
-              example: "ecommerce-platform"
-            namespace:
-              type: string
-              example: "default"
-            labels:
-              type: object
-              properties:
-                core.choreo.dev/name:
-                  type: string
-                  example: "ecommerce-platform"
-                core.choreo.dev/organization:
-                  type: string
-                  example: "acme-corp"
-        spec:
-          type: object
-          properties:
-            deploymentPipelineRef:
-              type: string
-              example: "pipeline-ecommerce-v1"
+    APIResponseError:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: false
+        error:
+          example: some error message
+        code:
+          example: INTERNAL_ERROR
+    APIResponseAny:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          description: Arbitrary JSON payload
+          nullable: true
+    APIResponseListOrganization:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/ListOrganization'
+    APIResponseOrganization:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/Organization'
+    APIResponseListProject:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/ListProject'
+    APIResponseProject:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/Project'
+    APIResponseListComponent:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/ListComponent'
+    APIResponseComponent:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/Component'
+    APIResponseListBinding:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/ListBinding'
+    APIResponseBinding:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/Binding'
+    APIResponseListEnvironment:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/ListEnvironment'
+    APIResponseEnvironment:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/Environment'
+    APIResponseListDataPlane:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/ListDataPlane'
+    APIResponseDataPlane:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/DataPlane'
+    APIResponseDeploymentPipeline:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/DeploymentPipeline'
+    APIResponseListBuild:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/ListBuild'
+    APIResponseBuild:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/Build'
+    APIResponseComponentObserver:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/ComponentObserver'
+    APIResponseBuildPlane:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/BuildPlane'
+    APIResponseListBuildTemplate:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success:
+          example: true
+        data:
+          $ref: '#/components/schemas/ListBuildTemplate'
+    APIResponseApply:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success: { example: true }
+        data:
+          $ref: '#/components/schemas/ApplyResourceResponse'
+    APIResponseDelete:
+      allOf:
+        - $ref: '#/components/schemas/APIResponseBase'
+      properties:
+        success: { example: true }
+        data:
+          $ref: '#/components/schemas/DeleteResourceResponse'
+    ListOrganization:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Organization'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        namespace:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
         status:
-          type: object
-          properties:
-            conditions:
-              type: array
-              items:
-                $ref: '#/components/schemas/Condition'
-
-    ProjectList:
+          type: string
+    ListProject:
       type: object
       properties:
-        apiVersion:
-          type: string
-          example: core.choreo.dev/v1
-        kind:
-          type: string
-          example: ProjectList
         items:
           type: array
           items:
             $ref: '#/components/schemas/Project'
-        metadata:
-          type: object
-          properties:
-            continue:
-              type: string
-              example: ""
-            resourceVersion:
-              type: string
-              example: "12345"
-
-    Component:
+        totalCount: { type: integer }
+        page: { type: integer }
+        pageSize: { type: integer }
+    Project:
       type: object
       properties:
-        apiVersion:
-          type: string
-          example: core.choreo.dev/v1
-        kind:
-          type: string
-          example: Component
-        metadata:
-          type: object
-          properties:
-            annotations:
-              type: object
-              properties:
-                core.choreo.dev/description:
-                  type: string
-                  example: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-                core.choreo.dev/display-name:
-                  type: string
-                  example: "User Service"
-            name:
-              type: string
-              example: "user-service"
-            namespace:
-              type: string
-              example: "default"
-            labels:
-              type: object
-              properties:
-                core.choreo.dev/name:
-                  type: string
-                  example: "user-service"
-                core.choreo.dev/organization:
-                  type: string
-                  example: "acme-corp"
-                core.choreo.dev/project:
-                  type: string
-                  example: "ecommerce-platform"
-        spec:
-          type: object
-          properties:
-            source:
-              type: object
-              properties:
-                gitRepository:
-                  type: object
-                  properties:
-                    url:
-                      type: string
-                      example: "https://github.com/acme-corp/user-service.git"
-                containerRegistry:
-                  type: object
-                  properties:
-                    imageName:
-                      type: string
-                      example: "acme-corp/user-service:latest"
-            type:
-              type: string
-              example: "service"
-        status:
-          type: object
-          properties:
-            conditions:
-              type: array
-              items:
-                $ref: '#/components/schemas/Condition'
-
-    ComponentList:
+        name: { type: string }
+        orgName: { type: string }
+        displayName: { type: string }
+        description: { type: string }
+        deploymentPipeline: { type: string }
+        createdAt: { type: string, format: date-time }
+        status: { type: string }
+    ListComponent:
       type: object
       properties:
-        apiVersion:
-          type: string
-          example: core.choreo.dev/v1
-        kind:
-          type: string
-          example: ComponentList
         items:
           type: array
           items:
             $ref: '#/components/schemas/Component'
-        metadata:
-          type: object
-          properties:
-            continue:
-              type: string
-              example: ""
-            resourceVersion:
-              type: string
-              example: "12346"
-
-    Deployment:
+        totalCount: { type: integer }
+        page: { type: integer }
+        pageSize: { type: integer }
+    Component:
       type: object
       properties:
-        apiVersion:
-          type: string
-          example: core.choreo.dev/v1
-        kind:
-          type: string
-          example: Deployment
-        metadata:
+        name: { type: string }
+        displayName: { type: string }
+        description: { type: string }
+        type: { type: string }
+        projectName: { type: string }
+        orgName: { type: string }
+        createdAt: { type: string, format: date-time }
+        status: { type: string }
+        buildConfig:
+          $ref: '#/components/schemas/BuildConfig'
+        service:
           type: object
-          properties:
-            annotations:
-              type: object
-              properties:
-                core.choreo.dev/display-name:
-                  type: string
-                  example: "User Service Production"
-            name:
-              type: string
-              example: "user-service-prod"
-            namespace:
-              type: string
-              example: "default"
-            labels:
-              type: object
-              properties:
-                core.choreo.dev/component:
-                  type: string
-                  example: "user-service"
-                core.choreo.dev/deployment-track:
-                  type: string
-                  example: "production"
-                core.choreo.dev/environment:
-                  type: string
-                  example: "production"
-                core.choreo.dev/name:
-                  type: string
-                  example: "user-service-prod"
-                core.choreo.dev/organization:
-                  type: string
-                  example: "acme-corp"
-                core.choreo.dev/project:
-                  type: string
-                  example: "ecommerce-platform"
-        spec:
+          description: ServiceSpec from CRD
+          additionalProperties: true
+        webApplication:
           type: object
-          properties:
-            deploymentArtifactRef:
-              type: string
-              example: "artifact-user-service-v1.2.0"
-        status:
+          description: WebApplicationSpec from CRD
+          additionalProperties: true
+        scheduledTask:
           type: object
-          properties:
-            conditions:
-              type: array
-              items:
-                $ref: '#/components/schemas/Condition'
-
-    DeploymentList:
+          description: ScheduledTaskSpec from CRD
+          additionalProperties: true
+        api:
+          type: object
+          description: APISpec from CRD
+          additionalProperties: true
+        workload:
+          $ref: '#/components/schemas/WorkloadSpec'
+    BuildConfig:
       type: object
       properties:
-        apiVersion:
-          type: string
-          example: core.choreo.dev/v1
-        kind:
-          type: string
-          example: DeploymentList
+        repoUrl: { type: string }
+        repoBranch: { type: string }
+        componentPath: { type: string }
+        buildTemplateRef: { type: string }
+        buildTemplateParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateParameter'
+    TemplateParameter:
+      type: object
+      properties:
+        name: { type: string }
+        value: { type: string }
+    ListBinding:
+      type: object
+      properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/Deployment'
-        metadata:
-          type: object
-          properties:
-            continue:
-              type: string
-              example: ""
-            resourceVersion:
-              type: string
-              example: "12347"
-
-    Condition:
+            $ref: '#/components/schemas/Binding'
+        totalCount: { type: integer }
+        page: { type: integer }
+        pageSize: { type: integer }
+    Binding:
       type: object
       properties:
-        lastTransitionTime:
-          type: string
-          format: date-time
-          example: "2024-01-15T12:00:00Z"
-        message:
-          type: string
-          example: "Deployment is running successfully"
-        observedGeneration:
-          type: integer
-          example: 1
-        reason:
-          type: string
-          example: "Running"
+        name: { type: string }
+        type: { type: string }
+        componentName: { type: string }
+        projectName: { type: string }
+        orgName: { type: string }
+        environment: { type: string }
+        status:
+          $ref: '#/components/schemas/BindingStatus'
+        serviceBinding:
+          $ref: '#/components/schemas/ServiceBinding'
+        webApplicationBinding:
+          $ref: '#/components/schemas/WebApplicationBinding'
+        scheduledTaskBinding:
+          $ref: '#/components/schemas/ScheduledTaskBinding'
+    BindingStatus:
+      type: object
+      properties:
+        reason: { type: string }
+        message: { type: string }
         status:
           type: string
-          example: "True"
+          enum: [InProgress, Active, Failed, Suspended, NotYetDeployed]
+        lastTransitioned: { type: string, format: date-time }
+    ServiceBinding:
+      type: object
+      properties:
+        endpoints:
+          type: array
+          items: { $ref: '#/components/schemas/EndpointStatus' }
+        image: { type: string }
+        releaseState: { type: string }
+    WebApplicationBinding:
+      type: object
+      properties:
+        endpoints:
+          type: array
+          items: { $ref: '#/components/schemas/EndpointStatus' }
+        image: { type: string }
+        releaseState: { type: string }
+    ScheduledTaskBinding:
+      type: object
+      properties:
+        image: { type: string }
+        releaseState: { type: string }
+    EndpointStatus:
+      type: object
+      properties:
+        name: { type: string }
+        type: { type: string }
+        project: { $ref: '#/components/schemas/ExposedEndpoint' }
+        organization: { $ref: '#/components/schemas/ExposedEndpoint' }
+        public: { $ref: '#/components/schemas/ExposedEndpoint' }
+    ExposedEndpoint:
+      type: object
+      properties:
+        host: { type: string }
+        port: { type: integer }
+        scheme: { type: string }
+        basePath: { type: string }
+        uri: { type: string }
+    ListEnvironment:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Environment'
+        totalCount: { type: integer }
+        page: { type: integer }
+        pageSize: { type: integer }
+    Environment:
+      type: object
+      properties:
+        name: { type: string }
+        namespace: { type: string }
+        displayName: { type: string }
+        description: { type: string }
+        dataPlaneRef: { type: string }
+        isProduction: { type: boolean }
+        dnsPrefix: { type: string }
+        createdAt: { type: string, format: date-time }
+        status: { type: string }
+    ListDataPlane:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataPlane'
+        totalCount: { type: integer }
+        page: { type: integer }
+        pageSize: { type: integer }
+    DataPlane:
+      type: object
+      properties:
+        name: { type: string }
+        namespace: { type: string }
+        displayName: { type: string }
+        description: { type: string }
+        registryPrefix: { type: string }
+        registrySecretRef: { type: string }
+        kubernetesClusterName: { type: string }
+        apiServerURL: { type: string }
+        publicVirtualHost: { type: string }
+        organizationVirtualHost: { type: string }
+        observerURL: { type: string }
+        observerUsername: { type: string }
+        createdAt: { type: string, format: date-time }
+        status: { type: string }
+    DeploymentPipeline:
+      type: object
+      properties:
+        name: { type: string }
+        displayName: { type: string }
+        description: { type: string }
+        orgName: { type: string }
+        createdAt: { type: string, format: date-time }
+        status: { type: string }
+        promotionPaths:
+          type: array
+          items:
+            $ref: '#/components/schemas/PromotionPath'
+    PromotionPath:
+      type: object
+      properties:
+        sourceEnvironmentRef: { type: string }
+        targetEnvironmentRefs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetEnvironmentRef'
+    TargetEnvironmentRef:
+      type: object
+      properties:
+        name: { type: string }
+        requiresApproval: { type: boolean }
+        isManualApprovalRequired: { type: boolean }
+    ListBuild:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Build'
+        totalCount: { type: integer }
+        page: { type: integer }
+        pageSize: { type: integer }
+    Build:
+      type: object
+      properties:
+        name: { type: string }
+        uuid: { type: string }
+        componentName: { type: string }
+        projectName: { type: string }
+        orgName: { type: string }
+        commit: { type: string }
+        status: { type: string }
+        createdAt: { type: string, format: date-time }
+        image: { type: string }
+    ComponentObserver:
+      type: object
+      properties:
+        observerUrl: { type: string }
+        connectionMethod:
+          $ref: '#/components/schemas/ObserverConnectionMethod'
+        message: { type: string }
+    ObserverConnectionMethod:
+      type: object
+      properties:
+        type: { type: string }
+        username: { type: string }
+        password: { type: string }
+        bearerToken: { type: string }
+    BuildPlane:
+      type: object
+      properties:
+        name: { type: string }
+        namespace: { type: string }
+        displayName: { type: string }
+        description: { type: string }
+        kubernetesClusterName: { type: string }
+        apiServerURL: { type: string }
+        observerURL: { type: string }
+        observerUsername: { type: string }
+        createdAt: { type: string, format: date-time }
+        status: { type: string }
+    ListBuildTemplate:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuildTemplate'
+        totalCount: { type: integer }
+        page: { type: integer }
+        pageSize: { type: integer }
+    BuildTemplate:
+      type: object
+      properties:
+        name: { type: string }
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/BuildTemplateParameter'
+        createdAt: { type: string, format: date-time }
+    BuildTemplateParameter:
+      type: object
+      properties:
+        name: { type: string }
+        default: { type: string }
+    CreateProjectRequest:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string }
+        displayName: { type: string }
+        description: { type: string }
+        deploymentPipeline: { type: string }
+    CreateComponentRequest:
+      type: object
+      required: [name, type]
+      properties:
+        name: { type: string }
+        displayName: { type: string }
+        description: { type: string }
+        type: { type: string }
+        buildConfig:
+          $ref: '#/components/schemas/BuildConfig'
+    PromoteComponentRequest:
+      type: object
+      required: [sourceEnv, targetEnv]
+      properties:
+        sourceEnv: { type: string }
+        targetEnv: { type: string }
+    UpdateBindingRequest:
+      type: object
+      required: [releaseState]
+      properties:
+        releaseState:
+          type: string
+          enum: [Active, Suspend, Undeploy]
+    CreateEnvironmentRequest:
+      type: object
+      required: [name, isProduction]
+      properties:
+        name: { type: string }
+        displayName: { type: string }
+        description: { type: string }
+        dataPlaneRef: { type: string }
+        isProduction: { type: boolean }
+        dnsPrefix: { type: string }
+    CreateDataPlaneRequest:
+      type: object
+      required: [name, registryPrefix, kubernetesClusterName, apiServerURL, caCert, clientCert, clientKey, publicVirtualHost, organizationVirtualHost]
+      properties:
+        name: { type: string }
+        displayName: { type: string }
+        description: { type: string }
+        registryPrefix: { type: string }
+        registrySecretRef: { type: string }
+        kubernetesClusterName: { type: string }
+        apiServerURL: { type: string }
+        caCert: { type: string }
+        clientCert: { type: string }
+        clientKey: { type: string }
+        publicVirtualHost: { type: string }
+        organizationVirtualHost: { type: string }
+        observerURL: { type: string }
+        observerUsername: { type: string }
+        observerPassword: { type: string }
+    WorkloadSpec:
+      description: WorkloadSpec CRD schema
+      type: object
+      required: [owner]
+      properties:
+        owner:
+          $ref: '#/components/schemas/WorkloadOwner'
+        containers:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Container'
+          description: Container specifications keyed by container name
+        endpoints:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/WorkloadEndpoint'
+          description: Network endpoints keyed by endpoint name
+        connections:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/WorkloadConnection'
+          description: Resource connections keyed by connection name
+    WorkloadOwner:
+      type: object
+      required: [projectName, componentName]
+      properties:
+        projectName: { type: string }
+        componentName: { type: string }
+    Container:
+      type: object
+      required: [image]
+      properties:
+        image: { type: string }
+        command:
+          type: array
+          items: { type: string }
+        args:
+          type: array
+          items: { type: string }
+        env:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvVar'
+    EnvVar:
+      type: object
+      required: [name, value]
+      properties:
+        name: { type: string }
+        value: { type: string }
+    WorkloadEndpoint:
+      type: object
+      required: [type, port]
+      properties:
         type:
           type: string
-          example: "Ready" 
+          enum: [HTTP, REST, gRPC, GraphQL, Websocket, TCP, UDP]
+        port:
+          type: integer
+          minimum: 1
+          maximum: 65535
+        schema:
+          $ref: '#/components/schemas/Schema'
+    Schema:
+      type: object
+      properties:
+        type: { type: string }
+        content: { type: string }
+    WorkloadConnection:
+      type: object
+      required: [type, inject]
+      properties:
+        type:
+          type: string
+          enum: [api]
+        params:
+          type: object
+          additionalProperties: { type: string }
+        inject:
+          $ref: '#/components/schemas/WorkloadConnectionInject'
+    WorkloadConnectionInject:
+      type: object
+      required: [env]
+      properties:
+        env:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkloadConnectionEnvVar'
+    WorkloadConnectionEnvVar:
+      type: object
+      required: [name, value]
+      properties:
+        name: { type: string }
+        value: { type: string }
+    ApplyResourceResponse:
+      type: object
+      properties:
+        apiVersion: { type: string }
+        kind: { type: string }
+        name: { type: string }
+        namespace: { type: string }
+        operation:
+          type: string
+          enum: [created, updated, unchanged]
+    DeleteResourceResponse:
+      type: object
+      properties:
+        apiVersion: { type: string }
+        kind: { type: string }
+        name: { type: string }
+        namespace: { type: string }
+        operation:
+          type: string
+          enum: [deleted, not_found]

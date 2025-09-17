@@ -15,8 +15,10 @@ import {
   useOrgHandle,
   useProjectHandle,
 } from "@open-choreo/plugin-core";
-import { EnvCardBase, EnvDeploymentContent } from "@open-choreo/resource-views";
+import { EnvCardBase } from "@open-choreo/resource-views";
 import { getEnvCardStateMachine } from "@open-choreo/state-machine";
+import { EnrichedEnvironment } from "../types/types";
+import EnvCard from "./EnvCard";
 
 const stateMachine = getEnvCardStateMachine();
 console.log("###", stateMachine.id);
@@ -44,16 +46,33 @@ export default function Deployment() {
   );
   const { environments } = useEnvironments(orgHandle);
 
-  const enrichedEnvironments = useMemo(
+  const enrichedEnvironments: EnrichedEnvironment[] = useMemo(
     () =>
       environments?.map((env) => ({
         ...env,
         binding: bindings?.data?.items?.find(
           (binding) => binding.environment === env.name,
         ),
+        targetEnvironments: deploymentPipeline?.promotionPaths?.find(
+          (path) => path.sourceEnvironmentRef === env.name,
+        )?.targetEnvironmentRefs,
       })),
-    [environments, bindings],
+    [environments, bindings?.data?.items, deploymentPipeline?.promotionPaths],
   );
+
+  const sortedEnrichedEnvironments = useMemo(() => {
+    const scoreBoard = new Map<string, number>();
+    const updateScoreBoard = (env: EnrichedEnvironment) => {
+      scoreBoard.set(env.name, (scoreBoard.get(env.name) || 0) + 1);
+      env.targetEnvironments?.forEach((te) => {
+        updateScoreBoard(enrichedEnvironments?.find((e) => e.name === te.name));
+      });
+    };
+    enrichedEnvironments?.forEach(updateScoreBoard);
+    return enrichedEnvironments?.sort((b, a) => {
+      return (scoreBoard.get(b.name) || 0) - (scoreBoard.get(a.name) || 0);
+    });
+  }, [enrichedEnvironments]);
 
   console.log("###", {
     enrichedEnvironments,
@@ -87,14 +106,8 @@ export default function Deployment() {
           Create Workload
         </Button>
       </EnvCardBase>
-      {enrichedEnvironments?.map((env) => (
-        <EnvCardBase
-          key={env.name}
-          envName={env.displayName}
-          status={env.binding?.status.status}
-        >
-          <EnvDeploymentContent binding={env.binding} />
-        </EnvCardBase>
+      {sortedEnrichedEnvironments?.map((env) => (
+        <EnvCard key={env.name} env={env} />
       ))}
     </PageLayout>
   );

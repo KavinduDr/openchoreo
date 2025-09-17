@@ -1,9 +1,17 @@
+export enum Operation {
+  CREATED = "created",
+  UPDATED = "updated",
+  UNCHANGED = "unchanged",
+  DELETED = "deleted",
+  NOT_FOUND = "not_found",
+}
+
 export interface ApplyResourceResponse {
   apiVersion?: string;
   kind?: string;
   name?: string;
   namespace?: string;
-  operation?: "created" | "updated" | "unchanged";
+  operation?: Operation;
 }
 
 export interface DeleteResourceResponse {
@@ -11,5 +19,5 @@ export interface DeleteResourceResponse {
   kind?: string;
   name?: string;
   namespace?: string;
-  operation?: "deleted" | "not_found";
+  operation?: Operation;
 }

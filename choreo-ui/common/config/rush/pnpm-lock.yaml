@@ -1211,6 +1211,9 @@ importers:
       '@open-choreo/common-views':
         specifier: workspace:*
         version: link:../../libs/common-views
+      '@open-choreo/definitions':
+        specifier: workspace:*
+        version: link:../../libs/definitions
       '@open-choreo/design-system':
         specifier: workspace:*
         version: link:../../libs/design-system

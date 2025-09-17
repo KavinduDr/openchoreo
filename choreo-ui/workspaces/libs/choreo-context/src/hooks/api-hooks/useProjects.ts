@@ -1,4 +1,4 @@
-import { Project } from "@open-choreo/api-client";
+import { ProjectResponse } from "@open-choreo/api-client";
 import { CreateProjectRequest } from "@open-choreo/definitions";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useClient } from "../useClients";
@@ -60,7 +60,7 @@ export const useCreateProject = (orgName: string) => {
   const queryClient = useQueryClient();
 
   const { data, error, isPending, mutate } = useMutation<
-    Project,
+    ProjectResponse,
     Error,
     CreateProjectRequest
   >({

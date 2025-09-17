@@ -1,5 +1,5 @@
 import { WorkloadList, WorkloadResponse } from "@open-choreo/api-client";
-import { CreateWorkloadRequest } from "@open-choreo/definitions";
+import { WorkloadSpec } from "@open-choreo/definitions";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useClient } from "../useClients";
 
@@ -35,7 +35,7 @@ export const useCreateWorkload = (
   const { data, error, isPending, mutate } = useMutation<
     WorkloadResponse,
     Error,
-    CreateWorkloadRequest
+    WorkloadSpec
   >({
     mutationFn: (workloadData) =>
       client.createWorkload(

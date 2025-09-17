@@ -1,3 +1,5 @@
+import { sleep } from "@open-choreo/definitions";
+
 export interface ApiConfig {
   baseUrl: string;
   headers?: Record<string, string>;
@@ -35,9 +37,8 @@ export async function apiRequest<T>(
       ...options.headers,
     },
   };
-
   const response = await fetch(fullUrl, fetchOptions);
-
+  await sleep(250);
   if (!response.ok) {
     let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
     let responseData;

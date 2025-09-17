@@ -24,6 +24,7 @@
     "@open-choreo/common-views": "workspace:*",
     "@open-choreo/plugin-core": "workspace:*",
     "@open-choreo/resource-views": "workspace:*",
+    "@open-choreo/definitions": "workspace:*",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "@eslint/eslintrc": "~3.3.1",

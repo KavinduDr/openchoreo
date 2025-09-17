@@ -1,4 +1,4 @@
-import { CreateWorkloadRequest } from "@open-choreo/definitions";
+import { WorkloadSpec } from "@open-choreo/definitions";
 import { apiRequest, type ApiConfig } from "../core/config";
 import type { WorkloadList, WorkloadResponse } from "../types/types";
 
@@ -13,7 +13,7 @@ export interface WorkloadsApi {
     orgName: string,
     projectName: string,
     componentName: string,
-    data: CreateWorkloadRequest,
+    data: WorkloadSpec,
     config?: ApiConfig,
   ): Promise<WorkloadResponse>;
 }
@@ -56,7 +56,7 @@ export const workloadsApi: WorkloadsApi = {
     orgName: string,
     projectName: string,
     componentName: string,
-    data: CreateWorkloadRequest,
+    data: WorkloadSpec,
     config?: ApiConfig,
   ): Promise<WorkloadResponse> {
     const encodedOrgName = encodeURIComponent(orgName);
