@@ -1,5 +1,4 @@
 import { AuthContextProvider } from "@open-choreo/auth-core";
-// import type { AuthClientConfig } from "@open-choreo/auth-core/";s
 import type { ThunderConfig } from "@open-choreo/auth-core/dist/src/types";
 import { ApiClientProvider } from "@open-choreo/choreo-context";
 import {
@@ -20,9 +19,9 @@ export const GlobalProviders = ({
 }) => {
   // const authConfig: AuthClientConfig = {
   //   provider: "asgardeo",
-  //   clientID: "a6Sf_moAUbIPX2JZ440djfunA94a",
-  //   baseUrl: "https://api.asgardeo.io/t/starkindustriesdemo", // Required by interface
-  //   // domain: "https://api.asgardeo.io/t/starkindustriesdemo", // Used for provider config
+  //   clientID: "your asgardeo client id",
+  //   baseUrl: "your asgardeo base url",
+  //   // domain: "your asgardeo domain",
   //   signInRedirectURL: `http://localhost:4000/sign-in`,
   //   signOutRedirectURL: "http://localhost:4000/organization/default",
   //   scope: ["openid", "profile", "email"],
@@ -32,12 +31,12 @@ export const GlobalProviders = ({
 
   // const firebaseConfig: AuthClientConfig = {
   //   provider: "firebase",
-  //   apiKey: "AIzaSyB-4NMohSeu-BpuaDN05-ljj9H_uJRm-fE",
-  //   authDomain: "contact-manager-23087.firebaseapp.com",
-  //   projectId: "contact-manager-23087",
-  //   storageBucket: "contact-manager-23087.firebasestorage.app",
-  //   messagingSenderId: "318523868384",
-  //   appId: "1:318523868384:web:69c00e6b1dc7b40adf7c85",
+  //   apiKey: "your firebase api key",
+  //   authDomain: "your firebase auth domain",
+  //   projectId: "your firebase project id",
+  //   storageBucket: "your firebase storage bucket",
+  //   messagingSenderId: "your firebase messaging sender id",
+  //   appId: "your firebase app id",
   // };
 
   const thunderProviderConfig: ThunderConfig = {
