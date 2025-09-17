@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { Suspense, useEffect } from "react";
 import { useAuth } from "@open-choreo/auth-core";
 import { useColorMode, PathsPatterns } from "@open-choreo/choreo-context";
