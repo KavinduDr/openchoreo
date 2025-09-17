@@ -14,7 +14,7 @@ async function initializeApp() {
           <App />
         </GlobalProviders>
       </Suspense>
-    </StrictMode>
+    </StrictMode>,
   );
 }
 
