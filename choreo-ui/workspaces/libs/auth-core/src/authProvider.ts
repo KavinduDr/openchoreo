@@ -144,7 +144,7 @@ export class ProviderFactory {
    * Get list of supported providers
    */
   static getSupportedProviders(): ProviderType[] {
-    return ["asgardeo", "auth0", "firebase"];
+    return ["asgardeo", "auth0", "firebase", "thunder"];
   }
 
   /**
