@@ -139,7 +139,7 @@ export class AsgardeoProvider {
       this.cachedUser = await this.normalizeUserData(
         asgardeoUser,
         accessToken,
-        decodedIDToken
+        decodedIDToken,
       );
 
       return this.cachedUser;
@@ -186,7 +186,7 @@ export class AsgardeoProvider {
       const newUserData = await this.normalizeUserData(
         asgardeoUser,
         accessToken,
-        decodedIDToken
+        decodedIDToken,
       );
 
       // Keep old roles if new fetch fails, as per your preference
@@ -231,7 +231,7 @@ export class AsgardeoProvider {
       const currentTime = Math.floor(Date.now() / 1000);
       return payload.exp < currentTime;
     } catch {
+      // Keep existing cached user data on failure
     }
-    // Keep existing cached user data on failure
   }
 }
