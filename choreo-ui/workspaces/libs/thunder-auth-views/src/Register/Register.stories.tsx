@@ -12,7 +12,7 @@ type Story = StoryObj<typeof Register>;
 
 export const Default: Story = {
   args: {
-    children: 'Register Content',
+    // no children props
   },
   render: () => {
     return <Register />;
