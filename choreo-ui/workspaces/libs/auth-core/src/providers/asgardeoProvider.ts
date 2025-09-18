@@ -231,7 +231,8 @@ export class AsgardeoProvider {
       const currentTime = Math.floor(Date.now() / 1000);
       return payload.exp < currentTime;
     } catch {
-      // Keep existing cached user data on failure
+      console.error("Failed to check if token is expired");
+      return true;
     }
   }
 }
