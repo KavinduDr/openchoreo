@@ -12,7 +12,7 @@ type Story = StoryObj<typeof Login>;
 
 export const Default: Story = {
   args: {
-    children: 'Login Content',
+    // no children props
   },
   render: () => {
     return <Login />;
