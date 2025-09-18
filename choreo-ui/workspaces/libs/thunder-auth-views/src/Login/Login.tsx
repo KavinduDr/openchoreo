@@ -18,7 +18,7 @@ export function Login() {
 
   const handleLogin = () => {
     console.log('Logging in with', { username, password });
-    // Pass username as email parameter since the interface expects email
+    // Pass username as password parameter since the interface expects password
     login(username, password).catch((err) => {
       console.error('Login failed:', err);
     });

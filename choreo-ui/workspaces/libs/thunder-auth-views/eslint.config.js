@@ -6,7 +6,6 @@ const compat = new FlatCompat();
 export default [
   ...eslintConfig,
   ...compat.extends('plugin:storybook/recommended'),
-  ...compat.extends('plugin:storybook/recommended'),
   {
     files: [
       '**/*.ts',
