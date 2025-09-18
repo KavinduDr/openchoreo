@@ -180,21 +180,19 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
         console.log("Login completed, checking auth state...");
 
         // After login, manually refresh the auth state
-        setTimeout(async () => {
-          try {
-            const isAuth = await client.isAuthenticated();
-            console.log("Post-login auth check:", isAuth);
+        try {
+          const isAuth = await client.isAuthenticated();
+          console.log("Post-login auth check:", isAuth);
 
-            if (isAuth) {
-              const userData = await client.getUser();
-              console.log("Post-login user data:", userData);
-              setUser(userData);
-              setIsAuthenticated(true);
-            }
-          } catch (err) {
-            console.error("Post-login state refresh failed:", err);
+          if (isAuth) {
+            const userData = await client.getUser();
+            console.log("Post-login user data:", userData);
+            setUser(userData);
+            setIsAuthenticated(true);
           }
-        }, 2000); // Wait 2 seconds after login
+        } catch (err) {
+          console.error("Post-login state refresh failed:", err);
+        }
 
         // User state will be updated via onLoginSuccess event
       } catch (err) {
