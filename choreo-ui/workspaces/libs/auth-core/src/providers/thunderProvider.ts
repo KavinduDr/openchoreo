@@ -30,8 +30,7 @@ export class ThunderProvider {
 
       // Map the response to your User type
       this.cachedUser = {
-        id: userData.id || userData.username || email || "",
-        username: userData.username || email || "",
+        name: userData.username || email || "",
         email: userData.email || email || "",
         roles: userData.roles || [],
         scopes: userData.scopes || [],

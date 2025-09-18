@@ -16,7 +16,7 @@ interface VitestConfigExport extends UserConfig {
 export default defineConfig({
   resolve: {
     alias: {
-      '@open-choreo/resource-views': path.resolve(__dirname, './src'),
+      '@open-choreo/thunder-auth-views': path.resolve(__dirname, './src'),
     },
   },
   build: {
