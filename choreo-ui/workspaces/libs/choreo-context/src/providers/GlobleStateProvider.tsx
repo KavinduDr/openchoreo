@@ -18,7 +18,9 @@ export interface GlobalState {
 
 export const GlobalStateContext = createContext<GlobalState>({
   appState: initialState,
-  dispatch: () => {},
+  dispatch: () => {
+    /* default empty function */
+  },
 });
 
 export function GlobalStateProvider({
@@ -30,15 +32,20 @@ export function GlobalStateProvider({
   const [appState, dispatch] = useReducer(appStateReducer, initialState);
   const orgHandle = useOrgHandle();
   const { data: organizationList } = useOrganizationList();
+  const isLoggedIn = false; // TODO: Replace with actual auth state
+
   useEffect(() => {
-    if (!orgHandle && organizationList?.data?.items.length > 0) {
+    if (!orgHandle && organizationList?.data?.items.length > 0 && isLoggedIn) {
       navigate(
         generatePath({
           orgHandle: getResourceName(organizationList?.data?.items[0]),
         }),
       );
+    } else {
+      const navigateUrl = "/auth"; // Single route that handles both login and register
+      navigate(navigateUrl);
     }
-  }, [orgHandle, organizationList]);
+  }, [isLoggedIn, navigate, orgHandle, organizationList]);
   return (
     <GlobalStateContext.Provider
       value={{
