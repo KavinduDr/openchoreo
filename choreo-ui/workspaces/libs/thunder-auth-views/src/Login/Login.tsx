@@ -26,42 +26,51 @@ export function Login() {
 
   return (
     <GridContainer>
-      <Card testId="login">
-        <CardHeading title="Login" testId="login" />
-        <CardContent>
-          <TextInput
-            label="Username"
-            value={username}
-            testId="username-input"
-            onChange={function (text: string): void {
-              setUsername(text);
-            }}
-          />
-          <TextInput
-            label="Password"
-            type="password"
-            value={password}
-            testId="password-input"
-            onChange={function (text: string): void {
-              setPassword(text);
-            }}
-          />
-          <Box margin={8}>
-            <ButtonContainer testId="login-buttons" align="space-between">
-              <Button onClick={handleLogin}>Login</Button>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  setUsername('');
-                  setPassword('');
+      <Box padding={16} width="100%" display="flex">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          width="100%"
+        >
+          <Card testId="login">
+            <CardHeading title="Login" testId="login" />
+            <CardContent>
+              <TextInput
+                label="Username"
+                value={username}
+                testId="username-input"
+                onChange={function (text: string): void {
+                  setUsername(text);
                 }}
-              >
-                Cancel
-              </Button>
-            </ButtonContainer>
-          </Box>
-        </CardContent>
-      </Card>
+              />
+              <TextInput
+                label="Password"
+                type="password"
+                value={password}
+                testId="password-input"
+                onChange={function (text: string): void {
+                  setPassword(text);
+                }}
+              />
+              <Box margin={8}>
+                <ButtonContainer testId="login-buttons" align="space-between">
+                  <Button onClick={handleLogin}>Login</Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      setUsername('');
+                      setPassword('');
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </ButtonContainer>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      </Box>
     </GridContainer>
   );
 }

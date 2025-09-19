@@ -1,4 +1,10 @@
-import { createContext, Dispatch, useEffect, useReducer } from "react";
+import {
+  createContext,
+  Dispatch,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import { getResourceName } from "@open-choreo/definitions";
 import { useNavigate } from "react-router";
 import { useOrganizationList } from "../hooks";
@@ -32,19 +38,44 @@ export function GlobalStateProvider({
   const [appState, dispatch] = useReducer(appStateReducer, initialState);
   const orgHandle = useOrgHandle();
   const { data: organizationList } = useOrganizationList();
-  const isLoggedIn = false; // TODO: Replace with actual auth state
+  const [isLoggedIn] = useState(true); // TODO: Replace with actual auth state
+  const [, setIsSignUp] = useState(false); // TODO: Replace with actual auth state
 
   useEffect(() => {
-    if (!orgHandle && organizationList?.data?.items.length > 0 && isLoggedIn) {
-      navigate(
-        generatePath({
-          orgHandle: getResourceName(organizationList?.data?.items[0]),
-        }),
-      );
+    let navUrl = "/"; // default to home
+    if (!isLoggedIn) {
+      navUrl = "/auth/login";
+      if (window.location.pathname === "/auth/register") {
+        navUrl = "/auth/register";
+        setIsSignUp(true);
+      } else if (window.location.pathname === "/auth/login") {
+        navUrl = "/auth/login";
+        setIsSignUp(false);
+      }
+
+      navigate(navUrl);
     } else {
-      const navigateUrl = "/auth"; // Single route that handles both login and register
-      navigate(navigateUrl);
+      if (
+        !orgHandle &&
+        organizationList?.data?.items.length > 0 &&
+        isLoggedIn
+      ) {
+        navigate(
+          generatePath({
+            orgHandle: getResourceName(organizationList?.data?.items[0]),
+          }),
+        );
+      }
     }
+    // if (!orgHandle && organizationList?.data?.items.length > 0 && isLoggedIn) {
+    //   navigate(
+    //     generatePath({
+    //       orgHandle: getResourceName(organizationList?.data?.items[0]),
+    //     }),
+    //   );
+    // } else {
+    //   navigate(navUrl);
+    // }
   }, [isLoggedIn, navigate, orgHandle, organizationList]);
   return (
     <GlobalStateContext.Provider

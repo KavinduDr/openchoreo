@@ -50,8 +50,8 @@ export default function App() {
       <Box width="100vw" height="100vh">
         <Suspense fallback={<FullPageLoader />}>
           <Routes>
-            <Route path={"/login"} element={<Login />} />
-            <Route path={"/register"} element={<Register />} />
+            <Route path={"/auth/login"} element={<Login />} />
+            <Route path={"/auth/register"} element={<Register />} />
             <Route
               path="/*"
               element={
