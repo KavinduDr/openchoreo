@@ -67,15 +67,6 @@ export function GlobalStateProvider({
         );
       }
     }
-    // if (!orgHandle && organizationList?.data?.items.length > 0 && isLoggedIn) {
-    //   navigate(
-    //     generatePath({
-    //       orgHandle: getResourceName(organizationList?.data?.items[0]),
-    //     }),
-    //   );
-    // } else {
-    //   navigate(navUrl);
-    // }
   }, [isLoggedIn, navigate, orgHandle, organizationList]);
   return (
     <GlobalStateContext.Provider
