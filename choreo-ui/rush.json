@@ -434,6 +434,10 @@
       "projectFolder": "workspaces/libs/resource-views"
     },
     {
+      "packageName": "@open-choreo/logging",
+      "projectFolder": "workspaces/libs/logging"
+    },
+    {
       "packageName": "@open-choreo/thunder-auth-views",
       "projectFolder": "workspaces/libs/thunder-auth-views"
     },

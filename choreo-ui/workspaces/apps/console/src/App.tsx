@@ -4,6 +4,7 @@ import { useAuth } from "@open-choreo/auth-core";
 import { useColorMode, PathsPatterns } from "@open-choreo/choreo-context";
 import { PresetErrorPage, FullPageLoader } from "@open-choreo/common-views";
 import { ThemeProvider, Box } from "@open-choreo/design-system";
+import { logger } from "@open-choreo/logging";
 import {
   RouteExtensionMounter,
   coreExtensionPoints,
@@ -23,6 +24,9 @@ export default function App() {
   const { colorMode } = useColorMode();
 
   const { refresh } = useAuth();
+  logger.log("App rendered");
+  logger.error("App rendered error");
+  logger.warn("App rendered warn");
 
   useEffect(() => {
     // Handle OAuth callback
