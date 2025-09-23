@@ -20,7 +20,8 @@
     "test": "echo \"No tests configured\" && exit 0"
   },
   "dependencies": {
-    "yeoman-generator": "~5.10.0"
+    "yeoman-generator": "~5.10.0",
+    "@open-choreo/logging": "workspace:*"
   },
   "devDependencies": {
     "@open-choreo/eslint-config": "workspace:*",

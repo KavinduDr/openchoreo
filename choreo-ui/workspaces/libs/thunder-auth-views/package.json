@@ -46,7 +46,8 @@
     "react-intl": "~7.1.11",
     "@open-choreo/definitions": "workspace:*",
     "dayjs": "~1.11.13",
-    "@open-choreo/auth-core": "workspace:*"
+    "@open-choreo/auth-core": "workspace:*",
+    "@open-choreo/logging": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^8.6.13",

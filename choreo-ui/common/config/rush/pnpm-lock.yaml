@@ -157,6 +157,9 @@ importers:
       '@open-choreo/definitions':
         specifier: workspace:*
         version: link:../definitions
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../logging
       '@tanstack/react-query':
         specifier: ~5.81.5
         version: 5.81.5(react@19.1.1)
@@ -245,6 +248,9 @@ importers:
       '@open-choreo/definitions':
         specifier: workspace:*
         version: link:../definitions
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../logging
       '@tanstack/react-query':
         specifier: ~5.81.5
         version: 5.81.5(react@19.1.1)
@@ -342,6 +348,9 @@ importers:
       '@open-choreo/design-system':
         specifier: workspace:*
         version: link:../design-system
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../logging
       '@tanstack/react-query':
         specifier: ~5.81.5
         version: 5.81.5(react@19.1.1)
@@ -445,6 +454,9 @@ importers:
       '@open-choreo/design-system':
         specifier: workspace:*
         version: link:../design-system
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../logging
       clsx:
         specifier: ~2.1.1
         version: 2.1.1
@@ -617,6 +629,9 @@ importers:
       '@eslint/eslintrc':
         specifier: ~3.3.1
         version: 3.3.1
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../logging
       '@types/lodash':
         specifier: ~4.17.17
         version: 4.17.20
@@ -705,6 +720,9 @@ importers:
       '@open-choreo/definitions':
         specifier: workspace:*
         version: link:../definitions
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../logging
       clsx:
         specifier: ~2.1.1
         version: 2.1.1
@@ -889,15 +907,6 @@ importers:
       '@fontsource/roboto':
         specifier: ~5.2.5
         version: 5.2.6
-      '@open-choreo/auth-core':
-        specifier: workspace:*
-        version: link:../auth-core
-      '@open-choreo/definitions':
-        specifier: workspace:*
-        version: link:../definitions
-      '@open-choreo/design-system':
-        specifier: workspace:*
-        version: link:../design-system
       clsx:
         specifier: ~2.1.1
         version: 2.1.1
@@ -1067,6 +1076,9 @@ importers:
 
   ../../workspaces/libs/occ-generator:
     dependencies:
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../logging
       yeoman-generator:
         specifier: ~5.10.0
         version: 5.10.0(encoding@0.1.13)
@@ -1092,6 +1104,9 @@ importers:
       '@open-choreo/design-system':
         specifier: workspace:*
         version: link:../design-system
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../logging
       clsx:
         specifier: ~2.1.1
         version: 2.1.1
@@ -1261,6 +1276,9 @@ importers:
 
   ../../workspaces/libs/state-machine:
     dependencies:
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../logging
       react:
         specifier: ^19.1.0
         version: 19.1.1
@@ -1340,6 +1358,9 @@ importers:
       '@open-choreo/design-system':
         specifier: workspace:*
         version: link:../design-system
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../logging
       clsx:
         specifier: ~2.1.1
         version: 2.1.1

@@ -22,7 +22,8 @@
   "dependencies": {
     "xstate": "^5.21.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "@open-choreo/logging": "workspace:*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "~3.3.1",
