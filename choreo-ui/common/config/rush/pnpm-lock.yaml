@@ -1709,6 +1709,9 @@ importers:
       '@open-choreo/design-system':
         specifier: workspace:*
         version: link:../../libs/design-system
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../../libs/logging
       '@open-choreo/plugin-core':
         specifier: workspace:*
         version: link:../plugin-core
@@ -1912,6 +1915,9 @@ importers:
       '@open-choreo/design-system':
         specifier: workspace:*
         version: link:../../libs/design-system
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../../libs/logging
       '@open-choreo/state-machine':
         specifier: workspace:*
         version: link:../../libs/state-machine
@@ -2236,6 +2242,9 @@ importers:
       '@open-choreo/design-system':
         specifier: workspace:*
         version: link:../../libs/design-system
+      '@open-choreo/logging':
+        specifier: workspace:*
+        version: link:../../libs/logging
       '@open-choreo/plugin-core':
         specifier: workspace:*
         version: link:../plugin-core

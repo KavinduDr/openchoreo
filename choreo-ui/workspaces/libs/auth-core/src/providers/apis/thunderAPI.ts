@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
+import { logger } from "@open-choreo/logging";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function Login(email: string, password: string): Promise<any> {
   try {
-    console.log("login function thunderAPI", email, password);
+    logger.log("login function thunderAPI", email, password);
 
     const RUNTIME = {
       applicationID: "47ace49a-e5c0-49b4-9fce-0ef91a5a465e",
@@ -40,10 +41,10 @@ export async function Login(email: string, password: string): Promise<any> {
       );
     }
 
-    console.log("Thunder API response data:", data); // for debug
+    logger.log("Thunder API response data:", data); // for debug
     return data;
   } catch (err) {
-    console.error("Error during login:", err);
+    logger.error("Error during login:", err);
     throw err;
   }
 }

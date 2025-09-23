@@ -8,6 +8,7 @@ import {
   useSelectedOrganization,
   useSelectedComponent,
 } from "@open-choreo/choreo-context";
+import { logger } from "@open-choreo/logging";
 import { usePluginRegistry } from "../../Providers";
 
 // Helper to get current context
@@ -78,7 +79,7 @@ export function evaluateWhenExpression(
 
     return result;
   } catch (error) {
-    console.error("Error evaluating when expression:", when, error);
+    logger.error("Error evaluating when expression:", when, error);
     return false;
   }
 }

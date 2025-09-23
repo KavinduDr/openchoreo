@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { logger } from "@open-choreo/logging";
 import { User } from "../types";
 import { Login } from "./apis/thunderAPI";
 
@@ -19,9 +20,9 @@ export class ThunderProvider {
 
   async login(email?: string, password?: string): Promise<void> {
     try {
-      console.log("ThunderProvider: Starting login...", email, password);
+      logger.log("ThunderProvider: Starting login...", email, password);
       const userData = await Login(email || "", password || "");
-      console.log("Raw login response:", userData);
+      logger.log("Raw login response:", userData);
 
       // Check if userData is valid
       if (!userData) {
@@ -37,9 +38,9 @@ export class ThunderProvider {
         // Add other properties as needed based on your User type
       } as unknown as User;
 
-      console.log("Mapped user data:", this.cachedUser);
+      logger.log("Mapped user data:", this.cachedUser);
     } catch (error) {
-      console.error("Login failed:", error);
+      logger.error("Login failed:", error);
       throw error;
     }
   }

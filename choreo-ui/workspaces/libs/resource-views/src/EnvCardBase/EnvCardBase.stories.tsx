@@ -1,3 +1,4 @@
+import { logger } from '@open-choreo/logging';
 import type { Meta, StoryObj } from '@storybook/react';
 import { EnvCardBase } from './EnvCardBase';
 
@@ -39,9 +40,9 @@ export const Default: Story = {
 export const WithActions: Story = {
   args: {
     envName: 'Development',
-    onRefresh: () => console.log('Refresh clicked'),
-    onRedeploy: () => console.log('Redeploy clicked'),
-    onStop: () => console.log('Stop clicked'),
+    onRefresh: () => logger.log('Refresh clicked'),
+    onRedeploy: () => logger.log('Redeploy clicked'),
+    onStop: () => logger.log('Stop clicked'),
   },
 };
 

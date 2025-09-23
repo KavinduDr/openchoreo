@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { logger } from "@open-choreo/logging";
 import { initializeApp } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
@@ -39,24 +40,24 @@ export class FirebaseProvider {
     }
     // Implement Firebase registration logic here
     const auth = getAuth(this.app);
-    console.log("Firebase register called");
+    logger.log("Firebase register called");
 
     try {
       await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Registered
           const user = userCredential.user;
-          console.log("User registered:", user);
+          logger.log("User registered:", user);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.error("Error registering:", errorCode, errorMessage);
+          logger.error("Error registering:", errorCode, errorMessage);
           throw error;
         });
-      console.log("User registered successfully");
+      logger.log("User registered successfully");
     } catch (error) {
-      console.error("Firebase registration error:", error);
+      logger.error("Firebase registration error:", error);
       throw error;
     }
   }
@@ -67,24 +68,24 @@ export class FirebaseProvider {
     }
     // Implement Firebase login logic here
     const auth = getAuth(this.app);
-    console.log("Firebase login called");
+    logger.log("Firebase login called");
 
     try {
       await signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log("User signed in:", user);
+          logger.log("User signed in:", user);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.error("Error signing in:", errorCode, errorMessage);
+          logger.error("Error signing in:", errorCode, errorMessage);
           throw error;
         });
-      console.log("User signed in successfully");
+      logger.log("User signed in successfully");
     } catch (error) {
-      console.error("Firebase login error:", error);
+      logger.error("Firebase login error:", error);
       throw error;
     }
   }
@@ -96,7 +97,7 @@ export class FirebaseProvider {
     // Implement Firebase logout logic here
     const auth = getAuth(this.app);
     await signOut(auth);
-    console.log("Firebase logout called");
+    logger.log("Firebase logout called");
   }
 
   async getUser(): Promise<any> {
@@ -107,14 +108,14 @@ export class FirebaseProvider {
     const auth = getAuth(this.app);
     const user = auth.currentUser;
     if (user) {
-      console.log("Get Firebase user called", user);
+      logger.log("Get Firebase user called", user);
       return {
         id: user.uid,
         email: user.email,
         // Add other user properties as needed
       };
     } else {
-      console.log("Get Firebase user called");
+      logger.log("Get Firebase user called");
       return null; // Replace with actual user object
     }
   }
@@ -128,10 +129,10 @@ export class FirebaseProvider {
     const user = auth.currentUser;
     if (user) {
       const token = await user.getIdToken();
-      console.log("Get Firebase token called");
+      logger.log("Get Firebase token called");
       return token;
     } else {
-      console.log("Get Firebase token called");
+      logger.log("Get Firebase token called");
       return null; // Replace with actual token
     }
   }
@@ -143,31 +144,31 @@ export class FirebaseProvider {
     // Implement logic to check if user is authenticated in Firebase
     const auth = getAuth(this.app);
     const user = auth.currentUser;
-    console.log("Is Firebase authenticated called");
+    logger.log("Is Firebase authenticated called");
     return !!user; // Return true if user is logged in, false otherwise
   }
 
   async hasScope(scope: string): Promise<boolean> {
     // Implement logic to check if user has specific scope
-    console.log("Firebase hasScope called for scope:", scope);
+    logger.log("Firebase hasScope called for scope:", scope);
     return true; // Replace with actual scope check
   }
 
   async hasRole(role: string): Promise<boolean> {
     // Implement logic to check if user has specific role
-    console.log("Firebase hasRole called for role:", role);
+    logger.log("Firebase hasRole called for role:", role);
     return true; // Replace with actual role check
   }
 
   async getScopes(): Promise<string[]> {
     // Implement logic to get all user scopes
-    console.log("Firebase getScopes called");
+    logger.log("Firebase getScopes called");
     return []; // Replace with actual scopes
   }
 
   async getRoles(): Promise<string[]> {
     // Implement logic to get all user roles
-    console.log("Firebase getRoles called");
+    logger.log("Firebase getRoles called");
     return []; // Replace with actual roles
   }
 }

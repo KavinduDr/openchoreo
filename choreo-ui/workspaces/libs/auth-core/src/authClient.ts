@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+import { logger } from "@open-choreo/logging";
 import { createAuthProvider } from "./authProvider";
 import {
   AuthClientConfig,
@@ -277,7 +277,7 @@ export class AuthClient {
     try {
       return await this.provider.isAuthenticated();
     } catch (error) {
-      console.error("Error", error);
+      logger.error("Error", error);
       return false;
     }
   }
@@ -291,7 +291,7 @@ export class AuthClient {
     try {
       return await this.provider.getToken();
     } catch (error) {
-      console.error("Error", error);
+      logger.error("Error", error);
       return null;
     }
   }
@@ -305,7 +305,7 @@ export class AuthClient {
     try {
       return await this.provider.getUser();
     } catch (error) {
-      console.error("Error ", error);
+      logger.error("Error ", error);
       return null;
     }
   }
@@ -326,7 +326,7 @@ export class AuthClient {
 
       return await this.provider.hasScope(scope);
     } catch (error) {
-      console.error("Error", error);
+      logger.error("Error", error);
       return false;
     }
   }
@@ -346,7 +346,7 @@ export class AuthClient {
 
       return await this.provider.hasRole(role);
     } catch (error) {
-      console.error("Error", error);
+      logger.error("Error", error);
       return false;
     }
   }
@@ -365,7 +365,7 @@ export class AuthClient {
 
       return await this.provider.getScopes();
     } catch (error) {
-      console.error("Error", error);
+      logger.error("Error", error);
       return [];
     }
   }
@@ -384,7 +384,7 @@ export class AuthClient {
 
       return await this.provider.getRoles();
     } catch (error) {
-      console.error("Error", error);
+      logger.error("Error", error);
       return [];
     }
   }

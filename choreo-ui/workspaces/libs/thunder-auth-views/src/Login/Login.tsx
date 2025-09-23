@@ -10,6 +10,7 @@ import {
   GridContainer,
   TextInput,
 } from '@open-choreo/design-system';
+import { logger } from '@open-choreo/logging';
 
 export function Login() {
   const [username, setUsername] = useState('');
@@ -17,10 +18,10 @@ export function Login() {
   const { login } = useAuth();
 
   const handleLogin = () => {
-    console.log('Logging in with', { username, password });
+    logger.log('Logging in with', { username, password });
     // Pass username as password parameter since the interface expects password
     login(username, password).catch((err) => {
-      console.error('Login failed:', err);
+      logger.error('Login failed:', err);
     });
   };
 

@@ -40,7 +40,8 @@
     "@fontsource/roboto": "~5.2.5",
     "react-router": "~7.6.2",
     "@open-choreo/choreo-context": "workspace:*",
-    "@open-choreo/state-machine": "workspace:*"
+    "@open-choreo/state-machine": "workspace:*",
+    "@open-choreo/logging": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "~9.28.0",

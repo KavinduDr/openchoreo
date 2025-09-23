@@ -10,6 +10,7 @@ import {
 } from "@open-choreo/choreo-context";
 import { PageLayout } from "@open-choreo/common-views";
 import { Button } from "@open-choreo/design-system";
+import { logger } from "@open-choreo/logging";
 import {
   useComponentHandle,
   useOrgHandle,
@@ -21,7 +22,7 @@ import { EnrichedEnvironment } from "../types/types";
 import EnvCard from "./EnvCard";
 
 const stateMachine = getEnvCardStateMachine();
-console.log("###", stateMachine.id);
+logger.log("###", stateMachine.id);
 
 export default function Deployment() {
   const orgHandle = useOrgHandle();
@@ -74,7 +75,7 @@ export default function Deployment() {
     });
   }, [enrichedEnvironments]);
 
-  console.log("###", {
+  logger.log("###", {
     enrichedEnvironments,
     deploymentPipeline,
     environments,

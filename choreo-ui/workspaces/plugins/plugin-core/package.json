@@ -31,7 +31,8 @@
     "dayjs": "~1.11.13",
     "@open-choreo/choreo-context": "workspace:*",
     "@open-choreo/state-machine": "workspace:*",
-    "@open-choreo/api-client": "workspace:*"
+    "@open-choreo/api-client": "workspace:*",
+    "@open-choreo/logging": "workspace:*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "~3.3.1",

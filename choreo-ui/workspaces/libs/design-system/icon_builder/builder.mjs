@@ -7,6 +7,7 @@ import Mustache from 'mustache';
 import { glob } from 'glob';
 import { optimize } from 'svgo';
 import Queue from './Queue.mjs';
+import { logger } from '@open-choreo/logging';
 
 // ES modules don't have __dirname, so we need to create it
 const __filename = fileURLToPath(import.meta.url);
@@ -190,7 +191,7 @@ async function worker({ svgPath, options, renameFilter, template }) {
   const exists2 = await fse.exists(outputFileDir);
 
   if (!exists2) {
-    console.log(`Making dir: ${outputFileDir}`);
+    logger.log(`Making dir: ${outputFileDir}`);
     fse.mkdirpSync(outputFileDir);
   }
 
@@ -265,7 +266,7 @@ async function main(options) {
       process.stdout.write = originalWrite;
     }
   } catch (err) {
-    console.log(err);
+    logger.error(err);
   }
 }
 
@@ -287,7 +288,7 @@ if (isMainModule) {
     .command(
       '$0',
       'Build SVG icons',
-      () => {},
+      () => { },
       (argv) => {
         main(argv);
       }

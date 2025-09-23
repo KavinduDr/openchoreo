@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { logger } from "@open-choreo/logging";
 import {
   AsgardeoProvider,
   FirebaseProvider,
@@ -242,7 +243,7 @@ export class ProviderFactory {
   private static createThunderProvider(
     config: ThunderConfig,
   ): AuthProviderType {
-    console.log(config);
+    logger.log(config);
     try {
       return new ThunderProvider();
     } catch (error) {

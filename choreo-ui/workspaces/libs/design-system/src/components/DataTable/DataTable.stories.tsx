@@ -6,6 +6,7 @@ import { Tooltip } from '../Tooltip';
 import { Card, CardContent } from '../Card';
 import { SearchBar } from '../SearchBar';
 import { useState } from 'react';
+import { logger } from '@open-choreo/logging';
 
 const meta: Meta<typeof DataTable> = {
   title: 'Components/Table/DataTable',
@@ -109,11 +110,11 @@ export const Default: Story = {
     ];
 
     const onDeleteMember = (idpId: string, displayName: string) => {
-      console.log('Delete member', idpId, displayName);
+      logger.log('Delete member', idpId, displayName);
     };
 
     const onRowClick = (rowData: IUser) => {
-      console.log('Row clicked', rowData);
+      logger.log('Row clicked', rowData);
     };
 
     const DeleteBtn = ({ onClick }: any) => (

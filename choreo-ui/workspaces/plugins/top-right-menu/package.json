@@ -34,7 +34,8 @@
     "@open-choreo/choreo-context": "workspace:*",
     "dayjs": "~1.11.13",
     "@open-choreo/auth-core": "workspace:*",
-    "@asgardeo/auth-react": "~5.4.0"
+    "@asgardeo/auth-react": "~5.4.0",
+    "@open-choreo/logging": "workspace:*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "~3.3.1",

@@ -6,6 +6,7 @@ import React, {
   useReducer,
 } from "react";
 import { ChoreoClient } from "@open-choreo/api-client";
+import { logger } from "@open-choreo/logging";
 import {
   QueryClientProvider,
   QueryClient,
@@ -57,12 +58,12 @@ export const ApiClientProvider: React.FC<ApiClientProviderProps> = (
       new QueryClient({
         mutationCache: new MutationCache({
           onError: (error) => {
-            console.error(error);
+            logger.error(error);
           },
         }),
         queryCache: new QueryCache({
           onError: (error) => {
-            console.error(error);
+            logger.error(error);
           },
         }),
         defaultOptions: {

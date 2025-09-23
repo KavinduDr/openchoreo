@@ -1,3 +1,4 @@
+import { logger } from '@open-choreo/logging';
 import type { Meta, StoryObj } from '@storybook/react';
 import { BuildCard } from './BuildCard';
 
@@ -41,7 +42,7 @@ type Story = StoryObj<typeof BuildCard>;
 export const Default: Story = {
   args: {
     build: mockBuild,
-    onClick: () => console.log('Build card clicked'),
+    onClick: () => logger.log('Build card clicked'),
     isSelected: false,
   },
 };
@@ -49,7 +50,7 @@ export const Default: Story = {
 export const Selected: Story = {
   args: {
     build: mockBuild,
-    onClick: () => console.log('Build card clicked'),
+    onClick: () => logger.log('Build card clicked'),
     isSelected: true,
   },
 };
@@ -62,7 +63,7 @@ export const PendingBuild: Story = {
       status: 'pending' as const,
       uuid: 'build-pending-123',
     },
-    onClick: () => console.log('Pending build clicked'),
+    onClick: () => logger.log('Pending build clicked'),
     isSelected: false,
   },
 };
@@ -75,7 +76,7 @@ export const FailedBuild: Story = {
       status: 'failed' as const,
       uuid: 'build-failed-456',
     },
-    onClick: () => console.log('Failed build clicked'),
+    onClick: () => logger.log('Failed build clicked'),
     isSelected: false,
   },
 };

@@ -8,6 +8,7 @@ import {
   GridContainer,
   TextInput,
 } from '@open-choreo/design-system';
+import { logger } from '@open-choreo/logging';
 
 export function Register() {
   return (
@@ -30,7 +31,7 @@ export function Register() {
                   testId="register-username"
                   value=""
                   onChange={function (text: string): void {
-                    console.log(text);
+                    logger.log(text);
                   }}
                 />
                 <TextInput
@@ -40,7 +41,7 @@ export function Register() {
                   testId="register-first-name"
                   value=""
                   onChange={function (text: string): void {
-                    console.log(text);
+                    logger.log(text);
                   }}
                 />
                 <TextInput
@@ -50,7 +51,7 @@ export function Register() {
                   testId="register-last-name"
                   value=""
                   onChange={function (text: string): void {
-                    console.log(text);
+                    logger.log(text);
                   }}
                 />
                 <TextInput
@@ -60,7 +61,7 @@ export function Register() {
                   testId="register-email"
                   value=""
                   onChange={function (text: string): void {
-                    console.log(text);
+                    logger.log(text);
                   }}
                 />
                 <TextInput
@@ -70,7 +71,7 @@ export function Register() {
                   testId="register-password"
                   value=""
                   onChange={function (text: string): void {
-                    console.log(text);
+                    logger.log(text);
                   }}
                 />
                 <Box margin={8}>
@@ -81,7 +82,7 @@ export function Register() {
                     <Button
                       variant="contained"
                       onClick={() => {
-                        console.log('Register button clicked');
+                        logger.log('Register button clicked');
                       }}
                     >
                       Register
@@ -89,7 +90,7 @@ export function Register() {
                     <Button
                       variant="outlined"
                       onClick={() => {
-                        console.log('Cancel button clicked');
+                        logger.log('Cancel button clicked');
                       }}
                     >
                       Cancel

@@ -5,6 +5,7 @@ import {
 } from "@open-choreo/choreo-context";
 import { ReleaseState, TargetEnvironmentRef } from "@open-choreo/definitions";
 import { Button, PromoteIcon } from "@open-choreo/design-system";
+import { logger } from "@open-choreo/logging";
 import {
   useOrgHandle,
   useProjectHandle,
@@ -39,13 +40,13 @@ export function PromoteButton({ fromEnv, toEnv }: PromoteButtonProps) {
         targetEnv: toEnv.name,
       });
     } catch (error) {
-      console.error("Failed to promote component:", error);
+      logger.error("Failed to promote component:", error);
       // Fallback to the old method
       updateTargetBinding({ releaseState: ReleaseState.ACTIVE });
     }
   };
 
-  console.log("PC", data);
+  logger.log("PC", data);
   return (
     <Button
       testId="promote-button"

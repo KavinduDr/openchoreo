@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { AsgardeoSPAClient, Hooks } from "@asgardeo/auth-spa";
+import { logger } from "@open-choreo/logging";
 import { User } from "../types";
 
 // Configuration interface for Asgardeo
@@ -50,17 +51,17 @@ export class AsgardeoProvider {
       // Let's wait a moment and then get user data
       this.client.on(Hooks.SignIn, (response) => {
         alert("User signed in successfully");
-        console.log(response);
+        logger.log(response);
       });
       setTimeout(async () => {
         try {
           await this.refreshUserData();
         } catch (error) {
-          console.error("Failed to get user data after login:", error);
+          logger.error("Failed to get user data after login:", error);
         }
       }, 1000);
     } catch (error) {
-      console.error("Asgardeo login failed:", error);
+      logger.error("Asgardeo login failed:", error);
       throw new Error("Login failed");
     }
   }
@@ -71,7 +72,7 @@ export class AsgardeoProvider {
       // Step 4: Clear cached data
       this.cachedUser = null;
     } catch (error) {
-      console.error("Asgardeo logout failed:", error);
+      logger.error("Asgardeo logout failed:", error);
       throw new Error("Logout failed");
     }
   }
@@ -96,7 +97,7 @@ export class AsgardeoProvider {
           await this.refreshUserData();
         } catch (refreshError) {
           this.cachedUser = null;
-          console.error("Refresh Error", refreshError);
+          logger.error("Refresh Error", refreshError);
           return false;
         }
       }
@@ -104,7 +105,7 @@ export class AsgardeoProvider {
       return true;
     } catch (error) {
       this.cachedUser = null;
-      console.error("Error", error);
+      logger.error("Error", error);
       return false;
     }
   }
@@ -113,7 +114,7 @@ export class AsgardeoProvider {
     try {
       return await this.client.getAccessToken();
     } catch (error) {
-      console.error("Error", error);
+      logger.error("Error", error);
       return null;
     }
   }
@@ -144,7 +145,7 @@ export class AsgardeoProvider {
 
       return this.cachedUser;
     } catch (error) {
-      console.error("Error", error);
+      logger.error("Error", error);
       return null;
     }
   }
@@ -199,9 +200,9 @@ export class AsgardeoProvider {
       }
 
       this.cachedUser = newUserData;
-      console.log("User data refreshed:", this.cachedUser);
+      logger.log("User data refreshed:", this.cachedUser);
     } catch (error) {
-      console.error("Failed to refresh user data:", error);
+      logger.error("Failed to refresh user data:", error);
       // Keep existing cached user data on failure
     }
   }
@@ -231,7 +232,7 @@ export class AsgardeoProvider {
       const currentTime = Math.floor(Date.now() / 1000);
       return payload.exp < currentTime;
     } catch {
-      console.error("Failed to check if token is expired");
+      logger.error("Failed to check if token is expired");
       return true;
     }
   }
