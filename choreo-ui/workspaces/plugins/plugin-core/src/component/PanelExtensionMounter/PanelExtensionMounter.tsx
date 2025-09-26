@@ -11,7 +11,7 @@ export function PanelExtensionMounter(props: PanelExtensionMounterCommonProps) {
   const extentions = useExtentions(extensionPoint);
   return (
     <Box testId={`extention-mounter-${extensionPoint.id}`}>
-      {extentions.map((entry) => (
+      {extentions.extensions.map((entry) => (
         <entry.component key={entry.key} />
       ))}
     </Box>

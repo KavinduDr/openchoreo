@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMemo } from "react";
 import {
   usePathMatchComponent,
@@ -23,87 +24,88 @@ export function GetCurrentContext() {
 }
 
 // Build context object for evaluation
-export function BuildContextObject() {
+export function BuildContextObject(): {
+  isLoading: boolean;
+  level: string;
+  component: any;
+  project: any;
+  org: any;
+  global: boolean;
+  type: string;
+} {
   const { orgHandle } = useUrlParams();
   // Fetch objects using hooks
-  const { data: componentObj } = useSelectedComponent();
-  const { data: projectObj } = useSelectedProject();
-  const { data: orgObj } = useSelectedOrganization();
+  // const { data: componentObj } = useSelectedComponent();
+  // const { data: projectObj } = useSelectedProject();
+  // const { data: orgObj } = useSelectedOrganization();
+  const componentResult = useSelectedComponent();
+  const projectResult = useSelectedProject();
+  const orgResult = useSelectedOrganization();
   // You may need a useOrg hook if you want org details, otherwise just use orgHandle
 
-  const componentType = componentObj?.data?.type || "";
+  // console.log("componentObj: ", componentResult.isLoading);
+  // console.log("projectObj: ", projectResult);
+  // console.log("orgObj: ", orgResult);
+  const componentType = componentResult?.data?.data.type || "";
 
   return {
-    level: componentObj
+    isLoading:
+      componentResult.isLoading ||
+      projectResult.isLoading ||
+      orgResult.isLoading,
+    // FIX: Check .data property instead of the whole result object
+    level: componentResult.data
       ? "component"
-      : projectObj
+      : projectResult.data
         ? "project"
         : orgHandle
           ? "org"
           : "global",
-    component: componentObj || null,
-    project: projectObj || null,
-    org: orgObj || null, // Replace with org object if you have a hook for it
-    global: !componentObj && !projectObj && !orgHandle,
+    component: componentResult.data || null,
+    project: projectResult.data || null,
+    org: orgResult.data || null,
+    global: !componentResult.data && !projectResult.data && !orgHandle,
     type: componentType,
-    // "web-app": componentType === "WebApplication",
-    // "web-service": componentType === "WebService",
-    // api: componentType === "API",
-    // frontend: componentType === "Frontend",
-    // backend: componentType === "Backend",
   };
+}
+
+enum States {
+  isLoading = "loading",
+  isReady = "ready",
+  isError = "error",
+  // ... other states
+  true = "true", // This is the "truthy" state
+  false = "false", // This is the "falsy" state
 }
 
 // Evaluate complex when expressions
 export function evaluateWhenExpression(
   when: string | undefined,
   context: Record<string, any>,
-): boolean {
-  if (!when) return true; // If no when condition, always render
+): States {
+  if (!when) return States.true;
+
+  console.log("Evaluating when expression:", when);
+  console.log("With context:", context);
+
+  // checking if context is loading
+  if (context.isLoading) return States.isLoading;
 
   try {
-    // const level = context.level || "global"; // Default to global if not set
     const component = context.component?.data || null;
     const project = context.project?.data || null;
     const org = context.org?.data || null;
-    // console.log("component: ", context.component?.data);
-    // console.log("organization: ", context.org?.data);
-
-    console.log(component, project, org);
 
     const result = eval(when);
+    console.log("When expression result:", result);
 
-    return result;
+    // FIX: Convert boolean to States enum
+    return result ? States.true : States.false;
   } catch (error) {
     console.error("Error evaluating when expression:", when, error);
-    return false;
+    return States.false;
   }
 }
-
-// Evaluate a single condition
-// function evaluateSingleCondition(
-//   condition: string,
-//   context: Record<string, any>
-// ): boolean {
-//   // Handle equality comparisons like "type === 'web-app'"
-//   const equalityMatch = condition.match(/^(\w+)\s*===\s*['"]([^'"]+)['"]$/);
-//   if (equalityMatch) {
-//     const [, key, value] = equalityMatch;
-//     return context[key] === value;
-//   }
-
-//   // Handle simple boolean checks like "component", "web-app"
-//   if (condition in context) {
-//     return !!context[condition];
-//   }
-
-//   // Handle string values that should be compared to type
-//   if (context.type && context.type === condition) {
-//     return true;
-//   }
-
-//   return false;
-// }
 
 // Hook to get filtered extensions based on when conditions
 export function useFilteredExtensions(extensionPoint: any) {
@@ -111,18 +113,68 @@ export function useFilteredExtensions(extensionPoint: any) {
   const context = BuildContextObject();
 
   return useMemo(() => {
-    return pluginRegistry.flatMap((plugin) =>
+    // If context is loading, return loading state immediately
+    if (context.isLoading) {
+      console.log("Context is loading, returning loading state");
+      return {
+        extensions: [],
+        isLoading: true,
+        hasData: false,
+      };
+    }
+
+    const extensions = pluginRegistry.flatMap((plugin) =>
       plugin.extensions.filter((entry) => {
-        // First check if extension point matches
         const extensionPointMatches =
           entry.extensionPoint.id === extensionPoint.id &&
           entry.extensionPoint.type === extensionPoint.type;
 
         if (!extensionPointMatches) return false;
 
-        // Then evaluate when condition
-        return evaluateWhenExpression(entry.when, context);
+        // console.log("Evaluating extension:", entry);
+        // console.log("context for evaluation:", context);
+        const evaluationResult = evaluateWhenExpression(entry.when, context);
+        // console.log(evaluationResult);
+        console.log("Extension:", entry.extensionPoint);
+        console.log("Evaluation result:", evaluationResult);
+        console.log(
+          "Will include:",
+          evaluationResult === States.true ||
+            evaluationResult === States.isReady,
+        );
+        return (
+          evaluationResult === States.true ||
+          evaluationResult === States.isReady
+        ); // here should return true or false. since we returning States.true or States.isReady we need to
+        // check that when rendering.
       }),
     );
+
+    // Check if any extension returned loading state
+    const hasLoadingExtensions = pluginRegistry.some((plugin) =>
+      plugin.extensions.some((entry) => {
+        const extensionPointMatches =
+          entry.extensionPoint.id === extensionPoint.id &&
+          entry.extensionPoint.type === extensionPoint.type;
+
+        if (!extensionPointMatches) return false;
+
+        const evaluationResult = evaluateWhenExpression(entry.when, context);
+        console.log(evaluationResult);
+        return evaluationResult === States.isLoading;
+      }),
+    );
+
+    // console.log("extensions: ", extensions);
+    // console.log("hasLoadingExtensions: ", hasLoadingExtensions);
+    // console.log("hasLoadingExtensions: ", States.isLoading);
+    // console.log("has data: ", extensions.length > 0);
+    // console.log(extensionPoint);
+
+    return {
+      extensions,
+      isLoading: hasLoadingExtensions,
+      hasData: extensions.length > 0,
+    };
   }, [pluginRegistry, extensionPoint, context]);
 }
