@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMemo } from "react";
 import {
@@ -43,7 +44,7 @@ export function BuildContextObject(): {
   const orgResult = useSelectedOrganization();
   // You may need a useOrg hook if you want org details, otherwise just use orgHandle
 
-  // console.log("componentObj: ", componentResult.isLoading);
+  // console.log("componentObj: ", componentResult);
   // console.log("projectObj: ", projectResult);
   // console.log("orgObj: ", orgResult);
   const componentType = componentResult?.data?.data.type || "";
@@ -85,8 +86,8 @@ export function evaluateWhenExpression(
 ): States {
   if (!when) return States.true;
 
-  console.log("Evaluating when expression:", when);
-  console.log("With context:", context);
+  // console.log("Evaluating when expression:", when);
+  // console.log("With context:", context);
 
   // checking if context is loading
   if (context.isLoading) return States.isLoading;
@@ -97,12 +98,12 @@ export function evaluateWhenExpression(
     const org = context.org?.data || null;
 
     const result = eval(when);
-    console.log("When expression result:", result);
+    // console.log("When expression result:", result);
 
     // FIX: Convert boolean to States enum
     return result ? States.true : States.false;
   } catch (error) {
-    console.error("Error evaluating when expression:", when, error);
+    // console.error("Error evaluating when expression:", when, error);
     return States.false;
   }
 }
@@ -115,7 +116,7 @@ export function useFilteredExtensions(extensionPoint: any) {
   return useMemo(() => {
     // If context is loading, return loading state immediately
     if (context.isLoading) {
-      console.log("Context is loading, returning loading state");
+      // console.log("Context is loading, returning loading state");
       return {
         extensions: [],
         isLoading: true,
@@ -135,13 +136,13 @@ export function useFilteredExtensions(extensionPoint: any) {
         // console.log("context for evaluation:", context);
         const evaluationResult = evaluateWhenExpression(entry.when, context);
         // console.log(evaluationResult);
-        console.log("Extension:", entry.extensionPoint);
-        console.log("Evaluation result:", evaluationResult);
-        console.log(
-          "Will include:",
-          evaluationResult === States.true ||
-            evaluationResult === States.isReady,
-        );
+        // console.log("Extension:", entry.extensionPoint);
+        // console.log("Evaluation result:", evaluationResult);
+        // console.log(
+        //   "Will include:",
+        //   evaluationResult === States.true ||
+        //   evaluationResult === States.isReady,
+        // );
         return (
           evaluationResult === States.true ||
           evaluationResult === States.isReady
@@ -160,7 +161,7 @@ export function useFilteredExtensions(extensionPoint: any) {
         if (!extensionPointMatches) return false;
 
         const evaluationResult = evaluateWhenExpression(entry.when, context);
-        console.log(evaluationResult);
+        // console.log(evaluationResult);
         return evaluationResult === States.isLoading;
       }),
     );

@@ -16,7 +16,7 @@ export function useMainNavExtentions(
   rootPath: string,
 ) {
   const filteredExtensions = useFilteredExtensions(extensionPoint);
-  console.log(filteredExtensions); // isLoading is coming
+  // console.log(filteredExtensions); // isLoading is coming
   const navigationEntries: NavItemExpandableSubMenu[] = useMemo(
     () =>
       (filteredExtensions.extensions as PluginExtensionNavigation[]).map(

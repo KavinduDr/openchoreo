@@ -8,10 +8,10 @@ interface RouteExtensionMounterProps {
 }
 
 export function RouteExtensionMounter(props: RouteExtensionMounterProps) {
-  console.log("props: ", props);
+  // console.log("props: ", props);
   const { extensionPoint } = props;
   const pageEntriesOrgLevel = useExtentions(extensionPoint);
-  console.log("pageEntriesOrgLevel: ", pageEntriesOrgLevel);
+  // console.log("pageEntriesOrgLevel: ", pageEntriesOrgLevel);
   return (
     <Routes>
       {pageEntriesOrgLevel.extensions
