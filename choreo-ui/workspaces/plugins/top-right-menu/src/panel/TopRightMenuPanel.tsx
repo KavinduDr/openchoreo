@@ -8,11 +8,13 @@ import {
   useChoreoTheme,
   Button,
 } from "@open-choreo/design-system";
+import { useNavigate } from "react-router";
 
 const TopRightMenuPanel: React.FC = () => {
   const theme = useChoreoTheme();
   const { colorMode, setColorMode } = useColorMode();
   const { user, isAuthenticated, login, logout } = useAuth();
+  const navigate = useNavigate();
   // eslint-disable-next-line no-console
   console.log(user, isAuthenticated);
   return (
@@ -35,8 +37,26 @@ const TopRightMenuPanel: React.FC = () => {
           size="small"
         />
       </Box>
-      {!user && <Button onClick={() => login()}>Sign In</Button>}
-      {user && <Button onClick={() => logout()}>Sign Out</Button>}
+      {!user && (
+        <Button
+          onClick={() => {
+            navigate("/auth/login");
+            login();
+          }}
+        >
+          Sign In
+        </Button>
+      )}
+      {user && (
+        <Button
+          onClick={() => {
+            navigate("/");
+            logout();
+          }}
+        >
+          Sign Out
+        </Button>
+      )}
     </>
   );
 };

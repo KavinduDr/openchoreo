@@ -16,11 +16,12 @@ export interface ThunderConfig {
 export class ThunderProvider {
   private cachedUser: User | null = null;
   private isInitialized = false;
+  private authenticated = false;
 
-  async login(email?: string, password?: string): Promise<void> {
+  async login(username?: string, password?: string): Promise<void> {
     try {
-      console.log("ThunderProvider: Starting login...", email, password);
-      const userData = await Login(email || "", password || "");
+      console.log("ThunderProvider: Starting login...", username, password);
+      const userData = await Login(username || "", password || "");
       console.log("Raw login response:", userData);
 
       // Check if userData is valid
@@ -30,14 +31,15 @@ export class ThunderProvider {
 
       // Map the response to your User type
       this.cachedUser = {
-        name: userData.username || email || "",
-        email: userData.email || email || "",
+        name: userData.username || username || "",
+        email: userData.email || username || "",
         roles: userData.roles || [],
         scopes: userData.scopes || [],
         // Add other properties as needed based on your User type
       } as unknown as User;
 
       console.log("Mapped user data:", this.cachedUser);
+      this.authenticated = true;
     } catch (error) {
       console.error("Login failed:", error);
       throw error;
@@ -46,6 +48,7 @@ export class ThunderProvider {
 
   async logout(): Promise<void> {
     this.cachedUser = null;
+    this.authenticated = false;
   }
 
   async isAuthenticated(): Promise<boolean> {
