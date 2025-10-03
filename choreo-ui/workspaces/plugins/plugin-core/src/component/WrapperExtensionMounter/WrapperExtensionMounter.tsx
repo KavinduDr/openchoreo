@@ -12,7 +12,7 @@ export function WrapperExtensionMounter(props: WrapperExtensionMounterProps) {
   const extentions = useExtentions(extensionPoint);
   // Create nested providers by reducing the extensions array
   const nestedProviders = useCallback(() => {
-    return extentions.reduceRight((acc, extension) => {
+    return extentions.extensions.reduceRight((acc, extension) => {
       const ProviderComponent = extension.component as React.ComponentType<{
         children: React.ReactNode;
       }>;

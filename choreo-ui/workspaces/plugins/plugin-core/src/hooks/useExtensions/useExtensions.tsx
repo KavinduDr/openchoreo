@@ -16,9 +16,10 @@ export function useMainNavExtentions(
   rootPath: string,
 ) {
   const filteredExtensions = useFilteredExtensions(extensionPoint);
+  // console.log(filteredExtensions); // isLoading is coming
   const navigationEntries: NavItemExpandableSubMenu[] = useMemo(
     () =>
-      (filteredExtensions as PluginExtensionNavigation[]).map(
+      (filteredExtensions.extensions as PluginExtensionNavigation[]).map(
         (entry) =>
           ({
             title: entry.name,
@@ -45,17 +46,29 @@ export function useMainNavExtentions(
 
 function PanelExtentions(extensionPoint: PluginExtensionPoint) {
   const filteredExtensions = useFilteredExtensions(extensionPoint);
-  return filteredExtensions as PluginExtensionPanel[];
+  return {
+    extensions: filteredExtensions.extensions as PluginExtensionPanel[],
+    isLoading: filteredExtensions.isLoading,
+    hasData: filteredExtensions.hasData,
+  };
 }
 
 function ProviderExtentions(extensionPoint: PluginExtensionPoint) {
   const filteredExtensions = useFilteredExtensions(extensionPoint);
-  return filteredExtensions as PluginExtensionProvider[];
+  return {
+    extensions: filteredExtensions.extensions as PluginExtensionProvider[],
+    isLoading: filteredExtensions.isLoading,
+    hasData: filteredExtensions.hasData,
+  };
 }
 
 function RouteExtentions(extensionPoint: PluginExtensionPoint) {
   const filteredExtensions = useFilteredExtensions(extensionPoint);
-  return filteredExtensions as PluginExtensionRoute[];
+  return {
+    extensions: filteredExtensions.extensions as PluginExtensionRoute[],
+    isLoading: filteredExtensions.isLoading,
+    hasData: filteredExtensions.hasData,
+  };
 }
 
 export function useUrlParams() {
