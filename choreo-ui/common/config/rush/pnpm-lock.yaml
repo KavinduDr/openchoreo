@@ -330,6 +330,9 @@ importers:
       '@open-choreo/api-client':
         specifier: workspace:*
         version: link:../api-client
+      '@open-choreo/auth-core':
+        specifier: workspace:*
+        version: link:../auth-core
       '@open-choreo/common-views':
         specifier: workspace:*
         version: link:../common-views

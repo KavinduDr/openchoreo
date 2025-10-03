@@ -187,8 +187,10 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
           if (isAuth) {
             const userData = await client.getUser();
             console.log("Post-login user data:", userData);
+            localStorage.setItem("thunder_user", JSON.stringify(userData));
             setUser(userData);
             setIsAuthenticated(true);
+            // window.location.reload();
           }
         } catch (err) {
           console.error("Post-login state refresh failed:", err);

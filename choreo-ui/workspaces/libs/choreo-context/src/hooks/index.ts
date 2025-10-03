@@ -14,3 +14,4 @@ export * from "./api-hooks/useEnvironments";
 export * from "./api-hooks/useDataPlanes";
 export * from "./api-hooks/useObserver";
 export * from "./api-hooks/useResourceOps";
+export * from "./useLocalStorageState";
