@@ -221,6 +221,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({
     try {
       await client.logout();
       // State will be cleared via onLogout event
+      localStorage.removeItem("thunder_user");
     } catch (err) {
       const authError =
         err instanceof AuthError
