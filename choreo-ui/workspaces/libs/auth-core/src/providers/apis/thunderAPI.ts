@@ -6,7 +6,7 @@ export async function Login(email: string, password: string): Promise<any> {
 
     const RUNTIME = {
       applicationID: "47ace49a-e5c0-49b4-9fce-0ef91a5a465e",
-      flowEndpoint: "https://localhost:8090/flow",
+      flowEndpoint: "/thunder-api/flow",
     } as const;
 
     // STEP 1: Initialize the authentication flow
