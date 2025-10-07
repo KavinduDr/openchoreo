@@ -13,10 +13,50 @@ export interface ThunderConfig {
   scope: string[];
 }
 
+interface JWTPayload {
+  aud: string;
+  exp: number;
+  iat: number;
+  iss: string;
+  jti: string;
+  nbf: number;
+  sub: string;
+}
+
 export class ThunderProvider {
   private cachedUser: User | null = null;
+  private accessToken: string | null = null;
   private isInitialized = false;
   private authenticated = false;
+
+  private decodeJWT(token: string): JWTPayload | null {
+    try {
+      // Split the JWT into parts
+      const parts = token.split(".");
+      if (parts.length !== 3) {
+        throw new Error("Invalid JWT format");
+      }
+
+      // Decode the payload (second part)
+      const payload = parts[1];
+
+      // Add padding if necessary
+      const paddedPayload =
+        payload + "=".repeat((4 - (payload.length % 4)) % 4);
+
+      // Decode base64
+      const decodedPayload = atob(paddedPayload);
+
+      // Parse JSON
+      const parsedPayload: JWTPayload = JSON.parse(decodedPayload);
+
+      console.log("Decoded JWT payload:", parsedPayload);
+      return parsedPayload;
+    } catch (error) {
+      console.error("Failed to decode JWT:", error);
+      return null;
+    }
+  }
 
   async login(username?: string, password?: string): Promise<void> {
     try {
@@ -29,16 +69,33 @@ export class ThunderProvider {
         throw new Error("Login response is empty or undefined");
       }
 
+      const { assertion } = userData;
+
+      if (!assertion) {
+        throw new Error("No assertion token received from login response");
+      }
+
+      this.accessToken = assertion;
+
+      const decodedJwtPayload = this.decodeJWT(this.accessToken);
+      if (!decodedJwtPayload) {
+        throw new Error("Failed to decode JWT token");
+      }
+
+      console.log("Decoded JWT Payload:", decodedJwtPayload);
+
       // Map the response to your User type
       this.cachedUser = {
         name: userData.username || username || "",
-        email: userData.email || username || "",
-        roles: userData.roles || [],
-        scopes: userData.scopes || [],
+        // email: decodedJwtPayload.email || username || "",
+        // roles: decodedJwtPayload.roles || [],
+        // scopes: decodedJwtPayload.scopes || [],
+        id: decodedJwtPayload.sub || "",
         // Add other properties as needed based on your User type
       } as unknown as User;
 
       console.log("Mapped user data:", this.cachedUser);
+      console.log("Access Token:", this.accessToken);
       this.authenticated = true;
     } catch (error) {
       console.error("Login failed:", error);
