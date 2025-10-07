@@ -120,7 +120,6 @@ export class ThunderProvider {
   }
 
   async getUser(): Promise<User | null> {
-
     if (this.isAuthenticated()) {
       const user = await fetchUserProfile(this.accessToken!);
       console.log("Fetched user profile:", user);
