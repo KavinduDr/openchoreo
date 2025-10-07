@@ -3,8 +3,21 @@
 
 // Normalized user data structure - same across all providers
 export interface User {
-  name: string;
-  email: string;
+  id: string;
+  organizationUnit: string;
+  type: string;
+  attributes: {
+    abilities?: string[];
+    address?: {
+      city?: string;
+      zip?: string;
+    };
+    age?: number;
+    email: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+  };
   roles: string[];
   scopes: string[];
   token: string;

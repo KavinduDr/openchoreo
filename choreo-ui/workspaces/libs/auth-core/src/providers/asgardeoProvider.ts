@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { AsgardeoSPAClient, Hooks } from "@asgardeo/auth-spa";
-import { User } from "../types";
+// import { User } from "../types";
 
 // Configuration interface for Asgardeo
 export interface AsgardeoConfig {
@@ -212,7 +212,7 @@ export class AsgardeoProvider {
     accessToken: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     decodedIDToken: any,
-  ): Promise<User> {
+  ): Promise<NormalizedUser> {
     return {
       name: asgardeoUser.displayName || asgardeoUser.username || "",
       email: asgardeoUser.email || "",

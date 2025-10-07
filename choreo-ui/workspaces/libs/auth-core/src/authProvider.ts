@@ -205,7 +205,7 @@ export class ProviderFactory {
         signInRedirectURL: config.signInRedirectURL,
         signOutRedirectURL: config.signOutRedirectURL,
         scope: config.scope,
-      });
+      }) as unknown as AuthProviderType;
     } catch (error) {
       throw new AuthError(
         "Failed to create Asgardeo provider",

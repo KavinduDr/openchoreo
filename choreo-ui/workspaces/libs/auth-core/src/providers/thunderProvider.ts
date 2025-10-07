@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { User } from "../types";
-import { Login } from "./apis/thunderAPI";
+import { fetchUserProfile, Login } from "./apis/thunderAPI";
 
 // Configuration interface for Thunder
 export interface ThunderConfig {
@@ -84,6 +84,9 @@ export class ThunderProvider {
 
       console.log("Decoded JWT Payload:", decodedJwtPayload);
 
+      const user = await this.getUser();
+      console.log("Current user before mapping:", user);
+
       // Map the response to your User type
       this.cachedUser = {
         name: userData.username || username || "",
@@ -113,10 +116,34 @@ export class ThunderProvider {
   }
 
   async getToken(): Promise<string | null> {
-    return null;
+    return this.accessToken;
   }
 
   async getUser(): Promise<User | null> {
+
+    if (this.isAuthenticated()) {
+      const user = await fetchUserProfile(this.accessToken!);
+      console.log("Fetched user profile:", user);
+      this.cachedUser = {
+        id: user.id,
+        organizationUnit: user.organizationUnit || "",
+        type: user.type || "",
+        attributes: {
+          abilities: user.attributes?.abilities || [],
+          address: user.attributes?.address || {},
+          age: user.attributes?.age || 0,
+          email: user.attributes?.email || "",
+          firstName: user.attributes?.firstName || "",
+          lastName: user.attributes?.lastName || "",
+          username: user.attributes?.username || "",
+        },
+        roles: user.roles || [],
+        scopes: user.scopes || [],
+        token: this.accessToken!,
+      };
+      console.log("Updated cached user:", this.cachedUser);
+    }
+
     return this.cachedUser;
   }
 

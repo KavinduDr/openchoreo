@@ -12,6 +12,7 @@ export default defineConfig({
         target: "http://localhost:8080",
         changeOrigin: true,
       },
+      // Comprehensive Thunder API proxy
       "/thunder-api": {
         target: "https://localhost:8090",
         changeOrigin: true,

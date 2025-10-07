@@ -83,4 +83,80 @@ export async function Login(email: string, password: string): Promise<any> {
   }
 }
 
-export default { Login };
+interface JWTPayload {
+  aud: string;
+  exp: number;
+  iat: number;
+  iss: string;
+  jti: string;
+  nbf: number;
+  sub: string;
+}
+
+function decodeJWT(token: string): JWTPayload | null {
+  try {
+    // Split the JWT into parts
+    const parts = token.split(".");
+    if (parts.length !== 3) {
+      throw new Error("Invalid JWT format");
+    }
+
+    // Decode the payload (second part)
+    const payload = parts[1];
+
+    // Add padding if necessary
+    const paddedPayload = payload + "=".repeat((4 - (payload.length % 4)) % 4);
+
+    // Decode base64
+    const decodedPayload = atob(paddedPayload);
+
+    // Parse JSON
+    const parsedPayload: JWTPayload = JSON.parse(decodedPayload);
+
+    console.log("Decoded JWT payload:", parsedPayload);
+    return parsedPayload;
+  } catch (error) {
+    console.error("Failed to decode JWT:", error);
+    return null;
+  }
+}
+
+export async function fetchUserProfile(token: string): Promise<any> {
+  try {
+    console.log("Fetching user profile with token:", token);
+
+    const decoded = decodeJWT(token);
+    console.log("Decoded token payload:", decoded);
+
+    if (!decoded) {
+      throw new Error("Invalid token. Cannot decode.");
+    }
+
+    // Use the thunder-api proxy path
+    const profileResponse = await fetch(`/thunder-api/users/${decoded.sub}`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log("profile response status:", profileResponse.status);
+
+    if (!profileResponse.ok) {
+      throw new Error(
+        `Failed to fetch user profile: HTTP ${profileResponse.status}`,
+      );
+    }
+
+    const profileData = await profileResponse.json();
+    console.log("User profile data:", profileData);
+    return profileData;
+  } catch (err) {
+    console.error("Error fetching user profile:", err);
+    throw err;
+  }
+}
+
+export default { Login, fetchUserProfile };
