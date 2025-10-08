@@ -5,7 +5,8 @@ export async function Login(email: string, password: string): Promise<any> {
     console.log("login function thunderAPI", email, password);
 
     const RUNTIME = {
-      applicationID: "47ace49a-e5c0-49b4-9fce-0ef91a5a465e",
+      // applicationID: "47ace49a-e5c0-49b4-9fce-0ef91a5a465e", // for thunder v0.7.0
+      applicationID: "838c653b-7946-46c8-b9ba-ea0a09903468", // for thunder v0.8.0
       flowEndpoint: "/thunder-api/flow",
     } as const;
 
