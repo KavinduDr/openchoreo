@@ -24,6 +24,7 @@ interface CardHeadingProps {
   onClose?: () => void;
   testId: string;
   size?: 'small' | 'medium' | 'large';
+  isForm?: boolean;
 }
 
 export function CardHeading(props: CardHeadingProps) {

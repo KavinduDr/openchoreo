@@ -1,10 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CardForm } from './CardForm';
 import { Box } from '@mui/material';
-import { Button, Card, CardContent, TextInput } from '../index copy';
+// import { Button, Card, CardContent, TextInput } from '../index copy';
 import { ButtonContainer } from '../ButtonContainer';
 import { CardHeading } from '../Card/SubComponents/CardHeading';
 import { useState } from 'react';
+import { Card } from '../Card/Card';
+import { CardContent } from '../Card/SubComponents/CardContent';
+import { Button } from '../Button';
+import { TextInput } from '../TextInput';
 
 const meta: Meta<typeof CardForm> = {
   title: 'Components/Card/CardForm',
@@ -40,7 +44,7 @@ const CardFormStory = (_args: any) => {
         <CardHeading
           testId="card-form-heading"
           title="Create API Proxy"
-          onClose={() => {}}
+          onClose={() => { }}
           isForm={true}
         />
         <CardContent>
@@ -68,13 +72,13 @@ const CardFormStory = (_args: any) => {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => {}}
+              onClick={() => { }}
               testId="btn-create"
             >
               Create
             </Button>
             <Button
-              onClick={() => {}}
+              onClick={() => { }}
               variant="contained"
               color="secondary"
               testId="btn-back"

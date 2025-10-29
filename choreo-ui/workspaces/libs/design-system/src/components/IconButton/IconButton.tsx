@@ -1,8 +1,13 @@
 import React from 'react';
-import { StyledIconButton } from './IconButton.styled';
 import { useTheme } from '@mui/material/styles';
+import { StyledIconButton } from './IconButton.styled';
 
-export type iconButtonVariant = 'circular' | 'rounded' | 'square' | 'subtle'; // not anymore in mui v7
+export type iconButtonVariant =
+  | 'circular'
+  | 'rounded'
+  | 'square'
+  | 'subtle'
+  | iconButtonTextVariant; // not anymore in mui v7
 export type iconButtonColorVariant =
   | 'primary'
   | 'secondary'

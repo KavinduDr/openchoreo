@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CardDropdown } from './CardDropdown';
 import { Box, Grid, Typography } from '@mui/material';
-import { Card, CardContent } from '../index copy';
+import { Card } from '../Card/Card';
 import Bitbucket from '@design-system/Images/generated/Bitbucket';
 import { CardDropdownMenuItemCreate } from './CardDropdownMenuItemCreate/CardDropdownMenuItemCreate';
 import CardDropdownMenuItem from './CardDropdownMenuItem';
 import { useState } from 'react';
 import { NoDataMessage } from '../NoDataMessage';
+import { CardContent } from '../Card/SubComponents/CardContent';
 
 const meta: Meta<typeof CardDropdown> = {
   title: 'Components/Card/CardDropdown',
@@ -33,7 +34,7 @@ export const Default: Story = {
   },
   render: function RenderCardDropdown(args) {
     const [selectedItem, setSelectedItem] = useState(0);
-    const handleCreate = () => {};
+    const handleCreate = () => { };
 
     const handleClick = (selectedNo: number) => {
       setSelectedItem(selectedNo);
