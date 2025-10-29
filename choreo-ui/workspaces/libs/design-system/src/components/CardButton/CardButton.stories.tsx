@@ -2,10 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { CardButton } from './CardButton';
 import { useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
-import { Card, CardContent } from '../index copy';
+import { Card } from '../Card/Card';
 import ChevronRight from '@design-system/Icons/generated/ChevronRight';
 import Github from '@design-system/Images/generated/Github';
 import Bitbucket from '@design-system/Images/generated/Bitbucket';
+import { CardContent } from '../Card/SubComponents/CardContent';
 
 const meta: Meta<typeof CardButton> = {
   title: 'Components/Card/CardButton',
