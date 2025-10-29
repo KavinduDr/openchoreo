@@ -29,7 +29,7 @@ spec:
         - -c
         - |
           echo "Waiting for OpenSearch to be ready..."
-          OPENSEARCH_URL="http://opensearch:{{ .Values.opensearch.service.httpPort }}"
+          OPENSEARCH_URL="http://opensearch:9200"
           echo "Checking OpenSearch at: $OPENSEARCH_URL"
           until curl -s "$OPENSEARCH_URL/_cluster/health" | grep -q '"status":"green\|yellow"'; do
             echo "OpenSearch not ready, waiting 10 seconds..."
@@ -45,7 +45,7 @@ spec:
             - ALL
       containers:
       - name: observer
-        image: "{{ if .Values.observer.image }}{{ .Values.observer.image.repository | default "ghcr.io/openchoreo/observer" }}:{{ .Values.observer.image.tag | default "latest-dev" }}{{ else }}ghcr.io/openchoreo/observer:latest-dev{{ end }}"
+        image: "{{ if .Values.observer.image }}{{ .Values.observer.image.repository | default "ghcr.io/openchoreo/observer" }}:{{ .Values.observer.image.tag | default .Chart.AppVersion }}{{ else }}ghcr.io/openchoreo/observer:{{ .Chart.AppVersion }}{{ end }}"
         imagePullPolicy: {{ if .Values.observer.image }}{{ .Values.observer.image.pullPolicy | default "IfNotPresent" }}{{ else }}IfNotPresent{{ end }}
         ports:
         - name: http
@@ -57,7 +57,7 @@ spec:
         - name: LOG_LEVEL
           value: {{ if .Values.observer }}{{ .Values.observer.logLevel | default "info" | quote }}{{ else }}"info"{{ end }}
         - name: OPENSEARCH_ADDRESS
-          value: "http://opensearch:{{ .Values.opensearch.service.httpPort }}"
+          value: "http://opensearch:9200"
         - name: OPENSEARCH_USERNAME
           valueFrom:
             secretKeyRef:

@@ -16,13 +16,13 @@ spec:
         app: redis
     spec:
       containers:
-      - image: redis:6.0.6
-        imagePullPolicy: IfNotPresent
-        name: redis
-        resources:
-          limits:
-            cpu: 100m
-            memory: 256Mi
-          requests:
-            cpu: 50m
-            memory: 128Mi
+        - image: redis:6.0.6
+          imagePullPolicy: IfNotPresent
+          name: redis
+          resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi

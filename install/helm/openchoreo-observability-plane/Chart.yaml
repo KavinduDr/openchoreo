@@ -8,7 +8,7 @@ version: 0.0.0-latest-dev
 appVersion: "latest-dev"
 
 home: https://github.com/openchoreo/openchoreo
-icon: https://openchoreo.dev/img/openchoreo_logo.svg
+icon: https://openchoreo.dev/img/openchoreo-logo.svg
 sources:
   - https://github.com/openchoreo/openchoreo
 keywords:
@@ -26,3 +26,25 @@ keywords:
 maintainers:
   - name: OpenChoreo Team
     url: https://github.com/openchoreo/openchoreo
+
+dependencies:
+  - name: fluent-bit
+    alias: fluentBit
+    repository: https://fluent.github.io/helm-charts
+    version: 0.54.0
+    condition: fluentBit.enabled
+  - name: kube-prometheus-stack
+    alias: prometheus
+    repository: https://prometheus-community.github.io/helm-charts
+    version: 78.3.0
+    condition: prometheus.enabled
+  - name: opensearch
+    alias: openSearch
+    repository: https://opensearch-project.github.io/helm-charts/
+    version: 3.3.0
+    condition: openSearch.enabled
+  - name: opensearch-dashboards
+    alias: openSearchDashboards
+    repository: https://opensearch-project.github.io/helm-charts/
+    version: 3.3.0
+    condition: openSearchDashboards.enabled

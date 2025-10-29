@@ -1,0 +1,101 @@
+# OpenChoreo Helm Values for Development Installation
+# This file contains configuration for installing OpenChoreo components in a kind cluster
+
+# Controller Manager configuration
+controllerManager:
+  image:
+    repository: ghcr.io/openchoreo/controller
+    tag: dev
+    pullPolicy: IfNotPresent
+  # Disable AppArmor for local development (not supported on macOS/Kind)
+  containerSecurityContext:
+    appArmorProfile:
+      type: Unconfined
+
+# OpenChoreo API configuration
+openchoreoApi:
+  image:
+    repository: ghcr.io/openchoreo/openchoreo-api
+    tag: dev
+    pullPolicy: IfNotPresent
+  # Disable AppArmor for local development (not supported on macOS/Kind)
+  containerSecurityContext:
+    appArmorProfile:
+      type: Unconfined
+  ingress:
+    enabled: true
+    ingressClassName: cilium
+    hosts:
+      - host: api.openchoreo.localhost
+        paths:
+          - path: /
+            pathType: Prefix
+
+# Backstage UI configuration
+backstage:
+  image:
+    repository: ghcr.io/openchoreo/openchoreo-ui
+    tag: dev
+    pullPolicy: IfNotPresent
+  # Disable AppArmor for local development (not supported on macOS/Kind)
+  containerSecurityContext:
+    appArmorProfile:
+      type: Unconfined
+  ingress:
+    enabled: true
+    ingressClassName: cilium
+    hosts:
+      - host: openchoreo.localhost
+        paths:
+          - path: /
+            pathType: Prefix
+asgardeoThunder:
+  image:
+    repository: ghcr.io/brionmario/thunder
+    tag: 0.0.16
+  securityContext:
+    runAsNonRoot: false
+    runAsUser: 0
+    allowPrivilegeEscalation: true
+    capabilities:
+      drop: []
+  env:
+    - name: NEXT_PUBLIC_AUTHORIZATION_ENDPOINT
+      value: "http://sts.openchoreo.localhost/oauth2/authorize"
+    - name: NEXT_PUBLIC_FLOW_EXECUTION_ENDPOINT
+      value: "http://sts.openchoreo.localhost/flow/execute"
+    - name: ENABLE_HTTPS
+      value: "false"
+    - name: HOST
+      value: "0.0.0.0"
+  config:
+    server:
+      hostname: "0.0.0.0"
+      port: 8090
+      httpOnly: true
+    gateClient:
+      hostname: portal.sts.openchoreo.localhost
+      port: 80
+      scheme: http
+    oauth:
+      jwt:
+        issuer: "thunder"
+  ingress:
+    enabled: true
+    ingressClassName: cilium
+    annotations: {}
+    hosts:
+      - host: sts.openchoreo.localhost
+        paths:
+          - path: /
+            pathType: Prefix
+            port: 8090
+      - host: portal.sts.openchoreo.localhost
+        paths:
+          - path: /
+            pathType: Prefix
+            port: 9090
+  backstagePortal:
+    redirectUrls:
+      - "http://openchoreo.localhost/api/auth/oidc/handler/frame"
+    clientSecret: backstage-portal-secret

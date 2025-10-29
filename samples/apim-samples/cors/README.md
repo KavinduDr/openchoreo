@@ -13,14 +13,6 @@ This sample deploys a reading list service and demonstrates how to configure COR
 - A web browser or tools like `curl` that can make cross-origin requests
 - Make sure you have the `jq` command-line JSON processor installed for parsing responses
 
-## File Structure
-
-```
-cors/
-├── reading-list-service-with-cors.yaml  # Developer resources (Component, Workload, Service)
-└── README.md                            # This guide
-```
-
 ## Step 1: Deploy the Service (Developer)
 
 1. **Review the Service Configuration**
@@ -41,7 +33,7 @@ cors/
    
    Check that all resources were created successfully:
    ```bash
-   kubectl get component,workload,service -l project=default
+   kubectl get component,workload,services.openchoreo.dev reading-list-service-cors
    ```
 
 This creates:
@@ -54,7 +46,7 @@ This creates:
 Port forward the OpenChoreo gateway service to access it locally:
 
 ```bash
-kubectl port-forward -n choreo-system svc/choreo-external-gateway 8443:443 &
+kubectl port-forward -n openchoreo-data-plane svc/gateway-external 8443:443 &
 ```
 
 ## Step 3: Test CORS Configuration
@@ -72,7 +64,7 @@ Before diving into CORS-specific testing, let's add a sample book to make our su
 ```bash
 curl -k -X POST -H "Content-Type: application/json" \
   -d '{"title":"The Hobbit","author":"J.R.R. Tolkien","status":"to_read"}' \
-  "https://development.choreoapis.localhost:8443/default/reading-list-service-cors/api/v1/reading-list/books"
+  "$(kubectl get servicebinding reading-list-service-cors -o jsonpath='{.status.endpoints[0].public.uri}')/books"
 ```
 
 > [!TIP]
@@ -87,7 +79,7 @@ curl -k -X POST -H "Content-Type: application/json" \
    curl -k -X OPTIONS -H "Origin: https://example.com" \
      -H "Access-Control-Request-Method: POST" \
      -H "Access-Control-Request-Headers: Content-Type" \
-     -v "https://development.choreoapis.localhost:8443/default/reading-list-service-cors/api/v1/reading-list/books"
+     -v "$(kubectl get servicebinding reading-list-service-cors -o jsonpath='{.status.endpoints[0].public.uri}')/books"
    ```
    
    You should see CORS headers in the response:
@@ -104,7 +96,7 @@ curl -k -X POST -H "Content-Type: application/json" \
    Make a cross-origin request with a valid Origin header (one that's allowed in the CORS policy):
    ```bash
    curl -k -H "Origin: https://example.com" \
-     -v "https://development.choreoapis.localhost:8443/default/reading-list-service-cors/api/v1/reading-list/books"
+     -v "$(kubectl get servicebinding reading-list-service-cors -o jsonpath='{.status.endpoints[0].public.uri}')/books"
    ```
    
    You should see the CORS headers in the response:
@@ -116,7 +108,7 @@ curl -k -X POST -H "Content-Type: application/json" \
    **Test with a disallowed origin:**
    ```bash
    curl -k -H "Origin: https://disallowed-site.com" \
-     -v "https://development.choreoapis.localhost:8443/default/reading-list-service-cors/api/v1/reading-list/books"
+     -v "$(kubectl get servicebinding reading-list-service-cors -o jsonpath='{.status.endpoints[0].public.uri}')/books"
    ```
    
    This request should not include CORS headers since `https://disallowed-site.com` is not in the allowed origins list.
@@ -211,15 +203,15 @@ Once CORS is working, test the actual API functionality:
 
 ```bash
 # List all books
-curl -k "https://development.choreoapis.localhost:8443/default/reading-list-service-cors/api/v1/reading-list/books"
+curl -k "$(kubectl get servicebinding reading-list-service-cors -o jsonpath='{.status.endpoints[0].public.uri}')/books"
 
 # Add a new book
 curl -k -X POST -H "Content-Type: application/json" \
   -d '{"title":"The Lord of the Rings","author":"J.R.R. Tolkien","status":"to_read"}' \
-  "https://development.choreoapis.localhost:8443/default/reading-list-service-cors/api/v1/reading-list/books"
+  "$(kubectl get servicebinding reading-list-service-cors -o jsonpath='{.status.endpoints[0].public.uri}')/books"
 
 # Get a specific book (replace {id} with actual book ID from previous response)
-curl -k "https://development.choreoapis.localhost:8443/default/reading-list-service-cors/api/v1/reading-list/books/{id}"
+curl -k "$(kubectl get servicebinding reading-list-service-cors -o jsonpath='{.status.endpoints[0].public.uri}')/books/{id}"
 ```
 
 > [!TIP]

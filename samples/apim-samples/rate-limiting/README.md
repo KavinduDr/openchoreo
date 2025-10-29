@@ -12,14 +12,6 @@ This sample deploys a reading list service and demonstrates how to configure rat
 - The `kubectl` CLI tool installed
 - Make sure you have the `jq` command-line JSON processor installed for parsing responses
 
-## File Structure
-
-```
-rate-limiting/
-├── reading-list-service-with-rate-limit.yaml  # Developer resources (Component, Workload, Service)
-└── README.md                                  # This guide
-```
-
 ## Step 1: Deploy the Service (Developer)
 
 1. **Review the Service Configuration**
@@ -40,7 +32,7 @@ rate-limiting/
    
    Check that all resources were created successfully:
    ```bash
-   kubectl get component,workload,service -l project=default
+   kubectl get component,workload,services.openchoreo.dev reading-list-service-rate-limit
    ```
 
 This creates:
@@ -53,7 +45,7 @@ This creates:
 Port forward the OpenChoreo gateway service to access it locally:
 
 ```bash
-kubectl port-forward -n choreo-system svc/choreo-external-gateway 8443:443 &
+kubectl port-forward -n openchoreo-data-plane svc/gateway-external 8443:443 &
 ```
 
 ## Step 3: Test the Rate Limiting
@@ -69,12 +61,12 @@ kubectl port-forward -n choreo-system svc/choreo-external-gateway 8443:443 &
    Make a few requests to verify the service is working:
    ```bash
    # List all books
-   curl -k "https://development.choreoapis.localhost:8443/default/reading-list-service-rate-limit/api/v1/reading-list/books"
+   curl -k "$(kubectl get servicebinding reading-list-service-rate-limit -o jsonpath='{.status.endpoints[0].public.uri}')/books"
    
    # Add a new book
    curl -k -X POST -H "Content-Type: application/json" \
      -d '{"title":"The Hobbit","author":"J.R.R. Tolkien","status":"to_read"}' \
-     "https://development.choreoapis.localhost:8443/default/reading-list-service-rate-limit/api/v1/reading-list/books"
+     "$(kubectl get servicebinding reading-list-service-rate-limit -o jsonpath='{.status.endpoints[0].public.uri}')/books"
    ```
 
 2. **Test Rate Limiting**
@@ -114,7 +106,7 @@ Wait for about a minute and try making requests again:
 ```bash
 # Wait 60+ seconds, then test again
 sleep 65
-curl -k "https://development.choreoapis.localhost:8443/default/reading-list-service-rate-limit/api/v1/reading-list/books"
+curl -k "$(kubectl get servicebinding reading-list-service-rate-limit -o jsonpath='{.status.endpoints[0].public.uri}')/books"
 ```
 
 The requests should succeed again as the rate limit window has reset.

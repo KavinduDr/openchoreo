@@ -7,27 +7,48 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+// ValueFrom defines a common pattern for referencing secrets or providing inline values
+type ValueFrom struct {
+	// SecretRef is a reference to a secret containing the value
+	// +optional
+	SecretRef string `json:"secretRef,omitempty"`
+	// Value is the inline value (optional fallback)
+	// +optional
+	Value string `json:"value,omitempty"`
+}
 
 // KubernetesClusterSpec defines the configuration for the target Kubernetes cluster
 type KubernetesClusterSpec struct {
-	// Name of the Kubernetes cluster
-	Name string `json:"name"`
-	// Credentials contains the authentication details for accessing the Kubernetes API server.
-	Credentials APIServerCredentials `json:"credentials"`
+	// Server is the URL of the Kubernetes API server
+	Server string `json:"server"`
+	// TLS contains the TLS configuration for the connection
+	TLS KubernetesTLS `json:"tls"`
+	// Auth contains the authentication configuration
+	Auth KubernetesAuth `json:"auth"`
 }
 
-// APIServerCredentials holds the TLS credentials to connect securely with a Kubernetes API server.
-type APIServerCredentials struct {
-	// APIServerURL is the URL of the Kubernetes API server.
-	APIServerURL string `json:"apiServerURL"`
-	// CACert is the base64-encoded CA certificate used to verify the server's certificate.
-	CACert string `json:"caCert"`
-	// ClientCert is the base64-encoded client certificate used for authentication.
-	ClientCert string `json:"clientCert"`
-	// ClientKey is the base64-encoded private key corresponding to the client certificate.
-	ClientKey string `json:"clientKey"`
+// KubernetesTLS defines the TLS configuration for the Kubernetes connection
+type KubernetesTLS struct {
+	// CA contains the CA certificate configuration
+	CA ValueFrom `json:"ca"`
+}
+
+// KubernetesAuth defines the authentication configuration for the Kubernetes cluster
+type KubernetesAuth struct {
+	// MTLS contains the certificate-based authentication configuration
+	// +optional
+	MTLS *MTLSAuth `json:"mtls,omitempty"`
+	// BearerToken contains the bearer token authentication configuration
+	// +optional
+	BearerToken *ValueFrom `json:"bearerToken,omitempty"`
+}
+
+// MTLSAuth defines certificate-based authentication (mTLS)
+type MTLSAuth struct {
+	// ClientCert contains the client certificate configuration
+	ClientCert ValueFrom `json:"clientCert"`
+	// ClientKey contains the client private key configuration
+	ClientKey ValueFrom `json:"clientKey"`
 }
 
 // GatewaySpec defines the gateway configuration for the data plane

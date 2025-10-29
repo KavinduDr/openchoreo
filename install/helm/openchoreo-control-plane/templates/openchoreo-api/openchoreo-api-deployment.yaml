@@ -18,10 +18,13 @@ spec:
       serviceAccountName: {{ .Values.controllerManager.name }}
       containers:
       - name: openchoreo-api
-        image: "{{ .Values.openchoreoApi.image }}:{{ .Values.openchoreoApi.tag }}"
+        image: "{{ .Values.openchoreoApi.image }}:{{ .Values.openchoreoApi.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.openchoreoApi.imagePullPolicy }}
         ports:
         - containerPort: 8080
+        env:
+        - name: MCP_TOOLSETS
+          value: {{ .Values.openchoreoApi.mcp.toolsets | quote }}
         resources:
           requests:
             cpu: {{ .Values.openchoreoApi.resources.requests.cpu }}

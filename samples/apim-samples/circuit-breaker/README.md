@@ -20,46 +20,54 @@ When thresholds are exceeded, the circuit breaker will:
 - `kubectl` configured to access your cluster
 - `curl` for testing API endpoints
 
-## File Structure
-
-```
-circuit-breaker/
-├── README.md                                          # This guide
-└── reading-list-service-with-circuit-breaker.yaml     # All CRD resources
-```
-
 ## Step 1: Deploy the Service
 
-Apply the sample configuration to deploy a reading list service with circuit breaker protection:
+1. **Review the Service Configuration**
 
-```bash
-kubectl apply -f https://raw.githubusercontent.com/openchoreo/openchoreo/main/samples/apim-samples/circuit-breaker/reading-list-service-with-circuit-breaker.yaml
-```
+   Examine the service resources that will be deployed:
+   ```bash
+   cat reading-list-service-with-circuit-breaker.yaml
+   ```
+
+2. **Deploy the Reading List Service**
+
+   Apply the service resources:
+   ```bash
+   kubectl apply -f https://raw.githubusercontent.com/openchoreo/openchoreo/main/samples/apim-samples/circuit-breaker/reading-list-service-with-circuit-breaker.yaml
+   ```
+
+3. **Verify Service Deployment**
+
+   Check that all resources were created successfully:
+   ```bash
+   kubectl get component,workload,services.openchoreo.dev reading-list-service-circuit-breaker
+   ```
 
 This creates:
-1. **Component**: Component metadata defining the service type
-2. **Workload**: Container configuration with OpenAPI schema and REST endpoints
-3. **Service**: Runtime configuration using the `default-with-circuit-breaker` APIClass
-
-> **Note**: The `default-with-circuit-breaker` APIClass should be configured with circuit breaker settings like:
-> - `maxPendingRequests`: Maximum pending request queue size (e.g., 0 to disable queuing)
-> - `maxParallelRequests`: Maximum concurrent requests (e.g., 10)
-> - Connection limits and timeout configurations
+- **Component** (`reading-list-service-circuit-breaker`): Component metadata and type definition
+- **Workload** (`reading-list-service-circuit-breaker`): Container configuration with reading list API endpoints
+- **Service** (`reading-list-service-circuit-breaker`): Runtime service configuration using the `default-with-circuit-breaker` APIClass
 
 ## Step 2: Expose the API Gateway
 
 Set up port forwarding to access the service through the gateway:
 
 ```bash
-kubectl port-forward service/choreo-external-gateway 8443:8443 -n openchoreo-data-plane
+kubectl port-forward -n openchoreo-data-plane svc/gateway-external 8443:443 &
 ```
 
 The service will be available at:
-```
-https://development.choreoapis.localhost:8443/default/reading-list-service-circuit-breaker/api/v1/reading-list/books
+```bash
+kubectl get servicebinding reading-list-service-circuit-breaker -o jsonpath='{.status.endpoints[0].public.uri}'
 ```
 
 ## Step 3: Test Circuit Breaker Functionality
+
+> **Note**: The `default-with-circuit-breaker` APIClass used by this example is already configured with circuit breaker settings:
+> - `maxConnections`: 50 (Maximum connections to upstream)
+> - `maxParallelRequests`: 50 (Maximum concurrent requests)
+> - `maxParallelRetries`: 1 (Maximum concurrent retries)
+> - `maxPendingRequests`: 20 (Maximum queued requests)
 
 ### Test 1: Normal Operation
 
@@ -70,103 +78,53 @@ First, verify the service works under normal conditions:
 
 ```bash
 # Add a book to the reading list
-curl -k -X POST https://development.choreoapis.localhost:8443/default/reading-list-service-circuit-breaker/api/v1/reading-list/books \
+curl -k -X POST  \
   -H "Content-Type: application/json" \
-  -d '{"title":"The Hobbit","author":"J.R.R. Tolkien","status":"to_read"}'
+  -d '{"title":"The Hobbit","author":"J.R.R. Tolkien","status":"to_read"}' \
+  "$(kubectl get servicebinding reading-list-service-circuit-breaker -o jsonpath='{.status.endpoints[0].public.uri}')/books"
 
 # Retrieve all books
-curl -k https://development.choreoapis.localhost:8443/default/reading-list-service-circuit-breaker/api/v1/reading-list/books
+curl -k "$(kubectl get servicebinding reading-list-service-circuit-breaker -o jsonpath='{.status.endpoints[0].public.uri}')/books"
 ```
 
-You should see successful responses with the book data.
+> [!NOTE]
+> You can see that each request to `/books` takes about 5 seconds due to the intentional delay. We will use this delay to help trigger the circuit breaker in the next test.
 
 ### Test 2: Trigger Circuit Breaker
 
-Generate load to trigger the circuit breaker and capture detailed metrics for verification:
+Run the [generate-load.sh](./generate-load.sh) to generate a load to trigger the circuit breaker and capture detailed metrics for verification:
 
 ```bash
-# Load test with detailed response tracking
-echo "Starting circuit breaker load test with response tracking..."
-echo "Timestamp,ResponseCode,ResponseTime" > circuit_breaker_results.csv
-
-for i in $(seq 1 100); do 
-  (for j in $(seq 1 10); do 
-    start_time=$(date +%s.%N)
-    response_code=$(curl -k -s -w "%{http_code}" -o /dev/null \
-      https://development.choreoapis.localhost:8443/default/reading-list-service-circuit-breaker/api/v1/reading-list/books 2>/dev/null)
-    end_time=$(date +%s.%N)
-    response_time=$(echo "$end_time - $start_time" | bc -l 2>/dev/null || echo "0")
-    timestamp=$(date +%s)
-    echo "$timestamp,$response_code,$response_time" >> circuit_breaker_results.csv
-  done) &
-done; wait
-
-echo "Load test completed. Results saved to circuit_breaker_results.csv"
+./generate-load.sh
 ```
 
 ### Verify Circuit Breaker Behavior
 
-After running the load test, analyze the results to prove the circuit breaker is working:
+After running the load test, run the [analyze-results.sh](./analyze-results.sh) to analyze the results to prove the circuit breaker is working:
 
 ```bash
-# Analyze the detailed results (if you used the first approach)
-if [ -f circuit_breaker_results.csv ]; then
-  echo "=== Circuit Breaker Analysis ==="
-  echo "Total requests: $(tail -n +2 circuit_breaker_results.csv | wc -l)"
-  echo "Successful responses (200): $(grep ',200,' circuit_breaker_results.csv | wc -l)"
-  echo "Circuit breaker responses (503): $(grep ',503,' circuit_breaker_results.csv | wc -l)"
-  echo "Other errors: $(tail -n +2 circuit_breaker_results.csv | grep -v ',200,' | grep -v ',503,' | wc -l)"
-  
-  # Show timeline of responses to demonstrate circuit breaker activation
-  echo ""
-  echo "=== Response Timeline (First 100 responses) ==="
-  echo "Response Code | Response Time"
-  cat circuit_breaker_results.csv | while IFS=',' read timestamp code time; do
-    printf "%-13s | %.3f seconds\n" "$code" "$time"
-  done
-fi
+./analyze-results.sh
 ```
 
 ### Real-time Monitoring During Load Test
 
-While running the load test, monitor the circuit breaker in real-time:
+While running the load test, run the [real-time-monitor.sh](./real-time-monitor.sh) to monitor the circuit breaker in real-time:
 
 ```bash
-# Terminal 1: Run the load test (use one of the commands above)
-
-# Terminal 2: Monitor gateway logs for circuit breaker decisions
-kubectl logs -l app=choreo-external-gateway -n openchoreo-system -f | grep -i "upstream_reset_before_response_started{overflow}"
-
-# Terminal 3: Monitor real-time response codes
-watch -n 1 'curl -k -s -w "Response: %{http_code} | Time: %{time_total}s\n" -o /dev/null https://development.choreoapis.localhost:8443/default/reading-list-service-circuit-breaker/api/v1/reading-list/books'
+./real-time-monitor.sh
 ```
+
+> [!TIP]
+> Optional information to help a user be more successful.
+> **Usage Instructions:**
+> 1. **Terminal 1 - Load Test**: Run the load test script
+> 2. **Terminal 2 - Real-time Monitor**: Run the monitoring script
+> 3. **Terminal 3 - Gateway Logs** (Optional): 
+>  ```bash
+>  kubectl logs -l gateway.envoyproxy.io/owning-gateway-name=gateway-external -n openchoreo-data-plane -c envoy -f
+>  ```
 
 ### Evidence of Working Circuit Breaker
-
-A properly functioning circuit breaker should show:
-
-1. **Some Success Phase**: Some requests return HTTP 200
-2. **Circuit Breaker Activation**: 
-   - HTTP 503 responses start appearing
-   - Response times become very fast (fail-fast behavior)
-   - Error messages in gateway logs mentioning overflow
-3. **Protection Evidence**:
-   - Service logs show fewer incoming requests despite continued client attempts
-   - Gateway logs show rejected connections
-   - Upstream service remains stable under load
-
-**Expected Output Pattern:**
-```
-Response Code | Response Time
-200          | 5.045 seconds
-200          | 5.052 seconds  
-200          | 5.048 seconds
-503          | 0.003 seconds  <- Circuit breaker activated (fast failure)
-503          | 0.002 seconds
-503          | 0.001 seconds
-200          | 5.051 seconds  <- Some requests still succeed
-503          | 0.002 seconds
-```
 
 **Key Indicators:**
 - ✅ Mix of 200 and 503 responses during load
@@ -180,7 +138,7 @@ After the load test completes, wait a moment and test normal operation again:
 
 ```bash
 # Test that service recovers after load subsides
-curl -k https://development.choreoapis.localhost:8443/default/reading-list-service-circuit-breaker/api/v1/reading-list/books
+curl -k "$(kubectl get servicebinding reading-list-service-circuit-breaker -o jsonpath='{.status.endpoints[0].public.uri}')/books"
 ```
 
 The service should return to normal operation once the circuit breaker allows traffic through again.
@@ -223,7 +181,7 @@ During load testing, you should observe:
 
 ## Tips for Testing
 
-- Adjust load test parameters (`-n` for total requests, `-c` for concurrency) based on your circuit breaker configuration
+- Adjust load test parameters (concurrency, test duration) based on your circuit breaker configuration
 - Use different endpoints (GET, POST, PUT) to test various operations
 - Monitor both client-side responses and server-side logs
 - Experiment with different circuit breaker thresholds to understand their impact
