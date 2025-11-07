@@ -8,6 +8,36 @@ global:
   # minimal: Single replica OpenSearch instance will be deployed
   installationMode: minimal
 
+data-prepper:
+  enabled: true
+  fullnameOverride: "data-prepper"
+
+  pipelineConfig:
+    enabled: true
+    config:
+      trace-pipeline:
+        delay: "100"
+        source:
+          otel_trace_source:
+            ssl: false
+        buffer:
+          bounded_blocking:
+            buffer_size: 12800
+            batch_size: 200
+        sink:
+          - opensearch:
+              hosts: ["http://opensearch:9200"]
+              insecure: true
+              index_type: trace-analytics-raw
+  
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 500Mi
+    requests:
+      cpu: 1000m
+      memory: 500Mi
+
 openSearch:
   enabled: true
 
