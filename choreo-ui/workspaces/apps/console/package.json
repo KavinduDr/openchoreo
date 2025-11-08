@@ -29,7 +29,9 @@
     "@open-choreo/project-listing": "workspace:*",
     "react-intl": "~7.1.11",
     "dayjs": "~1.11.13",
-    "@open-choreo/deployment": "workspace:*"
+    "@open-choreo/deployment": "workspace:*",
+    "@open-choreo/auth-core": "workspace:*",
+    "@open-choreo/thunder-auth-views": "workspace:*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "~3.3.1",

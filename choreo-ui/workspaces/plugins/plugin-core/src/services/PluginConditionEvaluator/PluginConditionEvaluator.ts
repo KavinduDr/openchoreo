@@ -94,7 +94,9 @@ export function evaluateWhenExpression(
 
   try {
     const component = context.component?.data || null;
+
     const project = context.project?.data || null;
+
     const org = context.org?.data || null;
 
     const result = eval(when);

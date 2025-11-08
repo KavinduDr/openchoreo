@@ -2,8 +2,8 @@ import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import { GlobalProviders } from "./providers/GlobalProviders.tsx";
 import { getPluginRegistry } from "./plugins";
+import { GlobalProviders } from "./providers/GlobalProviders.tsx";
 
 async function initializeApp() {
   const pluginRegistry = await getPluginRegistry();
